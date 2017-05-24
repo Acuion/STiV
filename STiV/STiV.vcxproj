@@ -88,12 +88,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\_cpplibs;..\..\_cpplibs\SFML\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Box2D\Include;..\SFML\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\..\_cpplibs\Box2D;..\..\_cpplibs\SFML\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\SFML\lib;..\Box2D\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>box2Dd.lib;sfml-network-d.lib;sfml-audio-d.lib;sfml-system-d.lib;sfml-window-d.lib;sfml-graphics-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -119,14 +119,14 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\_cpplibs;..\..\_cpplibs\SFML\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Box2D\Include;..\SFML\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\..\_cpplibs\Box2D;..\..\_cpplibs\SFML\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\SFML\lib;..\Box2D\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>box2D.lib;sfml-network.lib;sfml-audio.lib;sfml-system.lib;sfml-window.lib;sfml-graphics.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
