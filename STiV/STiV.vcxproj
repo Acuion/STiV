@@ -96,6 +96,10 @@
       <AdditionalLibraryDirectories>..\SFML\lib;..\Box2D\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>box2Dd.lib;sfml-network-d.lib;sfml-audio-d.lib;sfml-system-d.lib;sfml-window-d.lib;sfml-graphics-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>XCOPY "$(ProjectDir)Content" "$(OutDir)Content" /s /i /y
+COPY "$(SolutionDir)SFML\bin\Debug\*" "$(OutDir)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -129,6 +133,10 @@
       <AdditionalLibraryDirectories>..\SFML\lib;..\Box2D\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>box2D.lib;sfml-network.lib;sfml-audio.lib;sfml-system.lib;sfml-window.lib;sfml-graphics.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>XCOPY "$(ProjectDir)Content" "$(OutDir)Content" /s /i /y
+COPY "$(SolutionDir)SFML\bin\Release\*" "$(OutDir)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
