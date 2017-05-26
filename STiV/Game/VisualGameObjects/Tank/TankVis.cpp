@@ -14,12 +14,12 @@ void Tank::launchMissile()
 	switch (mCurrMissleType)
 	{
 	case MissleType::simpleBomb:
-		if (Timer::getElapsedTime() - mLastFire < MissileSimpleBomb::mCd)
+		if (clock() - mLastFire < MissileSimpleBomb::mCd)
 			break;
 		fired = new MissileSimpleBomb(sf::Vector2f(getPosition().x + (50 + 30) * cos(mAngle), getPosition().y + (50 + 30) * sin(mAngle)), mAngle, mBody->GetLinearVelocity());
 		break;
 	case MissleType::sniper:
-		if (Timer::getElapsedTime() - mLastFire < MissileSniper::mCd)
+		if (clock() - mLastFire < MissileSniper::mCd)
 			break;
 		fired = new MissileSniper(sf::Vector2f(getPosition().x + (50 + 30) * cos(mAngle), getPosition().y + (50 + 30) * sin(mAngle)), mAngle, mBody->GetLinearVelocity());
 		break;

@@ -166,6 +166,12 @@ COPY "$(SolutionDir)SFML\bin\Debug\*" "$(OutDir)"</Command>
     <ClCompile Include="Game/Graphics/Shaders/PostProcessingManager.cpp" />
     <ClCompile Include="Game/Graphics/Sprite.cpp" />
     <ClCompile Include="Game/LogicalGameObjects/GameObject.cpp" />
+    <ClCompile Include="Game\VisualGameObjects\BonusVis.cpp" />
+    <ClCompile Include="Game\VisualGameObjects\Tank\Missiles\MissileSimpleBombVis.cpp" />
+    <ClCompile Include="Game\VisualGameObjects\Tank\Missiles\MissileSniperVis.cpp" />
+    <ClCompile Include="Game\VisualGameObjects\Tank\Missiles\TankMissileVis.cpp" />
+    <ClCompile Include="Game\VisualGameObjects\Tank\TankVis.cpp" />
+    <ClCompile Include="Game\VisualGameObjects\Visualizer.cpp" />
     <ClCompile Include="STiV.cpp" />
     <ClCompile Include="Game/STanksGame.cpp" />
     <ClCompile Include="Game/STGClient.cpp" />
@@ -192,6 +198,12 @@ COPY "$(SolutionDir)SFML\bin\Debug\*" "$(OutDir)"</Command>
     <ClInclude Include="Game/LogicalGameObjects/Tank/Missiles/TankMissile.h" />
     <ClInclude Include="Game/Misc/tgMath.h" />
     <ClInclude Include="Game/Misc/Timer.h" />
+    <ClInclude Include="Game\VisualGameObjects\BonusVis.h" />
+    <ClInclude Include="Game\VisualGameObjects\Tank\Missiles\MissileSimpleBombVis.h" />
+    <ClInclude Include="Game\VisualGameObjects\Tank\Missiles\MissileSniperVis.h" />
+    <ClInclude Include="Game\VisualGameObjects\Tank\Missiles\TankMissileVis.h" />
+    <ClInclude Include="Game\VisualGameObjects\Tank\TankVis.h" />
+    <ClInclude Include="Game\VisualGameObjects\Visualizer.h" />
     <ClInclude Include="UI/UIButton.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
