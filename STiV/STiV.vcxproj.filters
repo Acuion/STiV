@@ -22,26 +22,8 @@
     <Filter Include="Заголовочные файлы\Game\Graphics">
       <UniqueIdentifier>{11dfacaf-e78f-4fc0-a73d-a61fd9e7ccdd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Заголовочные файлы\Game\Game objects">
-      <UniqueIdentifier>{66a6c00a-e686-4974-ab54-c4505967a62d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Заголовочные файлы\Game\Game objects\Tank">
-      <UniqueIdentifier>{0ddaed21-8fd9-489f-884b-aa2e34bfba22}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Заголовочные файлы\Game\Game objects\Tank\Missiles">
-      <UniqueIdentifier>{c49378bf-5d71-48dd-8d6b-1b7511a73708}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Файлы исходного кода\Game">
       <UniqueIdentifier>{5034880b-274d-4ebe-b4db-b0250a112783}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Файлы исходного кода\Game\Game objects">
-      <UniqueIdentifier>{cfd233ac-b594-4575-b1d7-e449ff0b11d0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Файлы исходного кода\Game\Game objects\Tank">
-      <UniqueIdentifier>{ab4532fd-2ba0-4f1a-bdd9-67406d993d06}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Файлы исходного кода\Game\Game objects\Tank\Missles">
-      <UniqueIdentifier>{3469d3de-3071-4e1f-9e95-51f3f798f508}</UniqueIdentifier>
     </Filter>
     <Filter Include="Файлы исходного кода\Game\Graphics">
       <UniqueIdentifier>{ab8dcbf7-154c-48ab-92c9-00664def313d}</UniqueIdentifier>
@@ -61,114 +43,132 @@
     <Filter Include="Заголовочные файлы\Game\Graphics\Shaders">
       <UniqueIdentifier>{e21a970c-d61b-4adf-91e6-56cd9a92eecf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы исходного кода\Game\Logical game objects">
+      <UniqueIdentifier>{cfd233ac-b594-4575-b1d7-e449ff0b11d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы исходного кода\Game\Logical game objects\Tank">
+      <UniqueIdentifier>{ab4532fd-2ba0-4f1a-bdd9-67406d993d06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы исходного кода\Game\Logical game objects\Tank\Missles">
+      <UniqueIdentifier>{3469d3de-3071-4e1f-9e95-51f3f798f508}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Заголовочные файлы\Game\Logical game objects">
+      <UniqueIdentifier>{66a6c00a-e686-4974-ab54-c4505967a62d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Заголовочные файлы\Game\Logical game objects\Tank">
+      <UniqueIdentifier>{0ddaed21-8fd9-489f-884b-aa2e34bfba22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Заголовочные файлы\Game\Logical game objects\Tank\Missiles">
+      <UniqueIdentifier>{c49378bf-5d71-48dd-8d6b-1b7511a73708}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="STiV.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Файлы исходного кода\Game\Game objects</Filter>
+    <ClCompile Include="Game/LogicalGameObjects/GameObject.cpp">
+      <Filter>Файлы исходного кода\Game\Logical game objects</Filter>
     </ClCompile>
-    <ClCompile Include="Sprite.cpp">
+    <ClCompile Include="Game/Graphics/Sprite.cpp">
       <Filter>Файлы исходного кода\Game\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="tgMath.cpp">
+    <ClCompile Include="Game/Misc/tgMath.cpp">
       <Filter>Файлы исходного кода\Game\Misc</Filter>
     </ClCompile>
-    <ClCompile Include="UIButton.cpp">
+    <ClCompile Include="UI/UIButton.cpp">
       <Filter>Файлы исходного кода\UI</Filter>
     </ClCompile>
-    <ClCompile Include="GravityObject.cpp">
-      <Filter>Файлы исходного кода\Game\Game objects</Filter>
+    <ClCompile Include="Game/LogicalGameObjects/GravityObject.cpp">
+      <Filter>Файлы исходного кода\Game\Logical game objects</Filter>
     </ClCompile>
-    <ClCompile Include="MaterialStorage.cpp">
+    <ClCompile Include="Game/Misc/MaterialStorage.cpp">
       <Filter>Файлы исходного кода\Game\Misc</Filter>
     </ClCompile>
-    <ClCompile Include="Tank.cpp">
-      <Filter>Файлы исходного кода\Game\Game objects\Tank</Filter>
+    <ClCompile Include="Game/LogicalGameObjects/Tank/Tank.cpp">
+      <Filter>Файлы исходного кода\Game\Logical game objects\Tank</Filter>
     </ClCompile>
-    <ClCompile Include="MissileSimpleBomb.cpp">
-      <Filter>Файлы исходного кода\Game\Game objects\Tank\Missles</Filter>
+    <ClCompile Include="Game/LogicalGameObjects/Tank/Missiles/MissileSimpleBomb.cpp">
+      <Filter>Файлы исходного кода\Game\Logical game objects\Tank\Missles</Filter>
     </ClCompile>
-    <ClCompile Include="TankMissile.cpp">
-      <Filter>Файлы исходного кода\Game\Game objects\Tank\Missles</Filter>
+    <ClCompile Include="Game/LogicalGameObjects/Tank/Missiles/TankMissile.cpp">
+      <Filter>Файлы исходного кода\Game\Logical game objects\Tank\Missles</Filter>
     </ClCompile>
-    <ClCompile Include="GameObjectManager.cpp">
-      <Filter>Файлы исходного кода\Game\Game objects</Filter>
+    <ClCompile Include="Game/LogicalGameObjects/GameObjectManager.cpp">
+      <Filter>Файлы исходного кода\Game\Logical game objects</Filter>
     </ClCompile>
-    <ClCompile Include="MissileSniper.cpp">
-      <Filter>Файлы исходного кода\Game\Game objects\Tank\Missles</Filter>
+    <ClCompile Include="Game/LogicalGameObjects/Tank/Missiles/MissileSniper.cpp">
+      <Filter>Файлы исходного кода\Game\Logical game objects\Tank\Missles</Filter>
     </ClCompile>
-    <ClCompile Include="Bonus.cpp">
-      <Filter>Файлы исходного кода\Game\Game objects</Filter>
+    <ClCompile Include="Game/LogicalGameObjects/Bonus.cpp">
+      <Filter>Файлы исходного кода\Game\Logical game objects</Filter>
     </ClCompile>
-    <ClCompile Include="STanksGame.cpp">
+    <ClCompile Include="Game/STanksGame.cpp">
       <Filter>Файлы исходного кода\Game</Filter>
     </ClCompile>
-    <ClCompile Include="STGClient.cpp">
+    <ClCompile Include="Game/STGClient.cpp">
       <Filter>Файлы исходного кода\Game</Filter>
     </ClCompile>
-    <ClCompile Include="PostProcessingManager.cpp">
+    <ClCompile Include="Game/Graphics/Shaders/PostProcessingManager.cpp">
       <Filter>Файлы исходного кода\Game\Graphics\Shaders</Filter>
     </ClCompile>
-    <ClCompile Include="MultitargetShader.cpp">
+    <ClCompile Include="Game/Graphics/Shaders/MultitargetShader.cpp">
       <Filter>Файлы исходного кода\Game\Graphics\Shaders</Filter>
     </ClCompile>
-    <ClCompile Include="Timer.cpp">
+    <ClCompile Include="Game/Misc/Timer.cpp">
       <Filter>Файлы исходного кода\Game\Misc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameObject.h">
-      <Filter>Заголовочные файлы\Game\Game objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Sprite.h">
+    <ClInclude Include="Game/Graphics/Sprite.h">
       <Filter>Заголовочные файлы\Game\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="tgMath.h">
+    <ClInclude Include="Game/Misc/tgMath.h">
       <Filter>Заголовочные файлы\Game\Misc</Filter>
     </ClInclude>
-    <ClInclude Include="Timer.h">
+    <ClInclude Include="Game/Misc/Timer.h">
       <Filter>Заголовочные файлы\Game\Misc</Filter>
     </ClInclude>
-    <ClInclude Include="GravityObject.h">
-      <Filter>Заголовочные файлы\Game\Game objects</Filter>
+    <ClInclude Include="Game/LogicalGameObjects/GravityObject.h">
+      <Filter>Заголовочные файлы\Game\Logical game objects</Filter>
     </ClInclude>
-    <ClInclude Include="MaterialStorage.h">
+    <ClInclude Include="Game/Misc/MaterialStorage.h">
       <Filter>Заголовочные файлы\Game\Misc</Filter>
     </ClInclude>
-    <ClInclude Include="Tank.h">
-      <Filter>Заголовочные файлы\Game\Game objects\Tank</Filter>
+    <ClInclude Include="Game/LogicalGameObjects/Tank/Tank.h">
+      <Filter>Заголовочные файлы\Game\Logical game objects\Tank</Filter>
     </ClInclude>
-    <ClInclude Include="MissileSimpleBomb.h">
-      <Filter>Заголовочные файлы\Game\Game objects\Tank\Missiles</Filter>
+    <ClInclude Include="Game/LogicalGameObjects/Tank/Missiles/MissileSimpleBomb.h">
+      <Filter>Заголовочные файлы\Game\Logical game objects\Tank\Missiles</Filter>
     </ClInclude>
-    <ClInclude Include="TankMissile.h">
-      <Filter>Заголовочные файлы\Game\Game objects\Tank\Missiles</Filter>
+    <ClInclude Include="Game/LogicalGameObjects/Tank/Missiles/TankMissile.h">
+      <Filter>Заголовочные файлы\Game\Logical game objects\Tank\Missiles</Filter>
     </ClInclude>
-    <ClInclude Include="GameObjectManager.h">
-      <Filter>Заголовочные файлы\Game\Game objects</Filter>
+    <ClInclude Include="Game/LogicalGameObjects/GameObjectManager.h">
+      <Filter>Заголовочные файлы\Game\Logical game objects</Filter>
     </ClInclude>
-    <ClInclude Include="MissileSniper.h">
-      <Filter>Заголовочные файлы\Game\Game objects\Tank\Missiles</Filter>
+    <ClInclude Include="Game/LogicalGameObjects/Tank/Missiles/MissileSniper.h">
+      <Filter>Заголовочные файлы\Game\Logical game objects\Tank\Missiles</Filter>
     </ClInclude>
-    <ClInclude Include="Bonus.h">
-      <Filter>Заголовочные файлы\Game\Game objects</Filter>
+    <ClInclude Include="Game/LogicalGameObjects/Bonus.h">
+      <Filter>Заголовочные файлы\Game\Logical game objects</Filter>
     </ClInclude>
-    <ClInclude Include="STanksGame.h">
+    <ClInclude Include="Game/STanksGame.h">
       <Filter>Заголовочные файлы\Game</Filter>
     </ClInclude>
-    <ClInclude Include="STGClient.h">
+    <ClInclude Include="Game/STGClient.h">
       <Filter>Заголовочные файлы\Game</Filter>
     </ClInclude>
-    <ClInclude Include="UIButton.h">
+    <ClInclude Include="UI/UIButton.h">
       <Filter>Заголовочные файлы\UI</Filter>
     </ClInclude>
-    <ClInclude Include="PostProcessingManager.h">
+    <ClInclude Include="Game/Graphics/Shaders/PostProcessingManager.h">
       <Filter>Заголовочные файлы\Game\Graphics\Shaders</Filter>
     </ClInclude>
-    <ClInclude Include="MultitargetShader.h">
+    <ClInclude Include="Game/Graphics/Shaders/MultitargetShader.h">
       <Filter>Заголовочные файлы\Game\Graphics\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Game/LogicalGameObjects/GameObject.h">
+      <Filter>Заголовочные файлы\Game\Logical game objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

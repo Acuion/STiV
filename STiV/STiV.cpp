@@ -1,7 +1,7 @@
 #include <iostream>
-#include <mutex>
-#include "STanksGame.h"
-#include "PostProcessingManager.h"
+#include "Game/STanksGame.h"
+#include "Game/Graphics/Shaders/PostProcessingManager.h"
+#include "UI/UIButton.h"
 
 namespace Game
 {
