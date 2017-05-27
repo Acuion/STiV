@@ -158,7 +158,7 @@ COPY "$(SolutionDir)SFML\bin\Debug\*" "$(OutDir)"</Command>
   <ItemGroup>
     <ClCompile Include="Game/LogicalGameObjects/Bonus.cpp" />
     <ClCompile Include="Game/LogicalGameObjects/GameObjectManager.cpp" />
-    <ClCompile Include="Game\LogicalGameObjects\GravityPoint.cpp" />
+    <ClCompile Include="Game\LogicalGameObjects\Gravity\GravityPoint.cpp" />
     <ClCompile Include="Game/Misc/MaterialStorage.cpp" />
     <ClCompile Include="Game/LogicalGameObjects/Tank/Missiles/MissileSimpleBomb.cpp" />
     <ClCompile Include="Game/LogicalGameObjects/Tank/Missiles/MissileSniper.cpp" />
@@ -166,7 +166,9 @@ COPY "$(SolutionDir)SFML\bin\Debug\*" "$(OutDir)"</Command>
     <ClCompile Include="Game/Graphics/Shaders/PostProcessingManager.cpp" />
     <ClCompile Include="Game/Graphics/Sprite.cpp" />
     <ClCompile Include="Game/LogicalGameObjects/GameObject.cpp" />
+    <ClCompile Include="Game\LogicalGameObjects\Gravity\Planet.cpp" />
     <ClCompile Include="Game\VisualGameObjects\BonusVis.cpp" />
+    <ClCompile Include="Game\VisualGameObjects\Gravity\PlanetVis.cpp" />
     <ClCompile Include="Game\VisualGameObjects\Tank\Missiles\MissileSimpleBombVis.cpp" />
     <ClCompile Include="Game\VisualGameObjects\Tank\Missiles\MissileSniperVis.cpp" />
     <ClCompile Include="Game\VisualGameObjects\Tank\TankVis.cpp" />
@@ -183,7 +185,7 @@ COPY "$(SolutionDir)SFML\bin\Debug\*" "$(OutDir)"</Command>
   <ItemGroup>
     <ClInclude Include="Game/LogicalGameObjects/Bonus.h" />
     <ClInclude Include="Game/LogicalGameObjects/GameObjectManager.h" />
-    <ClInclude Include="Game\LogicalGameObjects\GravityPoint.h" />
+    <ClInclude Include="Game\LogicalGameObjects\Gravity\GravityPoint.h" />
     <ClInclude Include="Game/Misc/MaterialStorage.h" />
     <ClInclude Include="Game/LogicalGameObjects/Tank/Missiles/MissileSimpleBomb.h" />
     <ClInclude Include="Game/LogicalGameObjects/Tank/Missiles/MissileSniper.h" />
@@ -198,7 +200,9 @@ COPY "$(SolutionDir)SFML\bin\Debug\*" "$(OutDir)"</Command>
     <ClInclude Include="Game/Misc/tgMath.h" />
     <ClInclude Include="Game/Misc/Timer.h" />
     <ClInclude Include="Game\GameObjectsFactory.h" />
+    <ClInclude Include="Game\LogicalGameObjects\Gravity\Planet.h" />
     <ClInclude Include="Game\VisualGameObjects\BonusVis.h" />
+    <ClInclude Include="Game\VisualGameObjects\Gravity\PlanetVis.h" />
     <ClInclude Include="Game\VisualGameObjects\Tank\Missiles\MissileSimpleBombVis.h" />
     <ClInclude Include="Game\VisualGameObjects\Tank\Missiles\MissileSniperVis.h" />
     <ClInclude Include="Game\VisualGameObjects\Tank\TankVis.h" />

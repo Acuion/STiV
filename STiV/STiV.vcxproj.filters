@@ -79,6 +79,18 @@
     <Filter Include="Файлы исходного кода\Game\VisualGameObjects\Tank\Missiles">
       <UniqueIdentifier>{06a7fce5-c961-4995-9a44-ca6e9d2aac0a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы исходного кода\Game\LogicalGameObjects\Gravity">
+      <UniqueIdentifier>{3aef173e-9a50-4981-8641-1207c7f39578}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Заголовочные файлы\Game\LogicalGameObjects\Gravity">
+      <UniqueIdentifier>{dba7a469-6b17-404c-9b0d-b1221e55ffd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы исходного кода\Game\VisualGameObjects\Gravity">
+      <UniqueIdentifier>{93ea82cd-1650-4c5e-aebc-4fb1ccb37512}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Заголовочные файлы\Game\VisualGameObjects\Gravity">
+      <UniqueIdentifier>{e61163fa-d06f-4ca2-9c52-a304eec35a68}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="STiV.cpp">
@@ -147,8 +159,14 @@
     <ClCompile Include="Game\VisualGameObjects\Tank\Missiles\MissileSniperVis.cpp">
       <Filter>Файлы исходного кода\Game\VisualGameObjects\Tank\Missiles</Filter>
     </ClCompile>
-    <ClCompile Include="Game\LogicalGameObjects\GravityPoint.cpp">
-      <Filter>Файлы исходного кода\Game\LogicalGameObjects</Filter>
+    <ClCompile Include="Game\LogicalGameObjects\Gravity\GravityPoint.cpp">
+      <Filter>Файлы исходного кода\Game\LogicalGameObjects\Gravity</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\LogicalGameObjects\Gravity\Planet.cpp">
+      <Filter>Файлы исходного кода\Game\LogicalGameObjects\Gravity</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\VisualGameObjects\Gravity\PlanetVis.cpp">
+      <Filter>Файлы исходного кода\Game\VisualGameObjects\Gravity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -218,8 +236,14 @@
     <ClInclude Include="Game\GameObjectsFactory.h">
       <Filter>Заголовочные файлы\Game</Filter>
     </ClInclude>
-    <ClInclude Include="Game\LogicalGameObjects\GravityPoint.h">
-      <Filter>Заголовочные файлы\Game\LogicalGameObjects</Filter>
+    <ClInclude Include="Game\LogicalGameObjects\Gravity\GravityPoint.h">
+      <Filter>Заголовочные файлы\Game\LogicalGameObjects\Gravity</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\LogicalGameObjects\Gravity\Planet.h">
+      <Filter>Заголовочные файлы\Game\LogicalGameObjects\Gravity</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\VisualGameObjects\Gravity\PlanetVis.h">
+      <Filter>Заголовочные файлы\Game\VisualGameObjects\Gravity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

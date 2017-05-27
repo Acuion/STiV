@@ -1,4 +1,4 @@
-#include "Game/LogicalGameObjects/GravityPoint.h"
+#include "Game/LogicalGameObjects/Gravity/GravityPoint.h"
 #include "Game/LogicalGameObjects/GameObjectManager.h"
 
 GravityPoint::GravityPoint(sf::Vector2f pos, int power)
@@ -11,6 +11,7 @@ GravityPoint::GravityPoint(sf::Vector2f pos, int power)
 
 GravityPoint::~GravityPoint()
 {
+	GameObjectManager::unregisterGravityPoint(this);
 }
 
 void GravityPoint::affect(GameObject& go) const

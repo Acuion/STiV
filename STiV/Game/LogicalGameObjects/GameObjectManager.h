@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Game/LogicalGameObjects/GameObject.h"
-#include "Game/LogicalGameObjects/GravityPoint.h"
+#include "Game/LogicalGameObjects/Gravity/GravityPoint.h"
 #include "Game/Misc/tgMath.h"
 #include <list>
 #include <mutex>
@@ -75,6 +75,11 @@ public:
 	static void registerGravityPoint(GravityPoint* gravo)
 	{
 		mGravityObjects.push_back(gravo);
+	}
+
+	static void unregisterGravityPoint(GravityPoint* gravo)
+	{
+		mGravityObjects.remove(gravo);
 	}
 
 	static void update(int dt)

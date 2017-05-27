@@ -5,7 +5,7 @@
 #include "Game/Graphics/Sprite.h"
 #include "Game/Misc/MaterialStorage.h"
 
-enum ObjectRealType
+enum class ObjectRealType
 {
 	rt_Tank,
 	rt_Missile,

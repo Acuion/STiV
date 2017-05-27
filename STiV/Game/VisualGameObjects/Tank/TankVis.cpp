@@ -25,6 +25,7 @@ TankVis::TankVis()
 TankVis::~TankVis()
 {
 	Visualizer::unregisterSprite(&mBarrel[mCurrMissleType]);
+	delete[] mBarrel;
 }
 
 void TankVis::update()

@@ -1,10 +1,9 @@
 #pragma once
-#include "LogicalGameObjects/Tank/Missiles/MissileSimpleBomb.h"
 #include "VisualGameObjects/Tank/Missiles/MissileSimpleBombVis.h"
-#include "LogicalGameObjects/Tank/Missiles/MissileSniper.h"
-#include "VisualGameObjects/Tank/Missiles/MissileSniperVis.h"
+#include "visualGameObjects/Tank/Missiles/MissileSniperVis.h"
 #include "VisualGameObjects/Tank/TankVis.h"
 #include "VisualGameObjects/BonusVis.h"
+#include "VisualGameObjects/Gravity/PlanetVis.h"
 
 class GameObjectsFactory
 {
@@ -32,6 +31,11 @@ public:
 	static Bonus* newBonus(BonusType bt, int value, sf::Vector2f pos)
 	{
 		return new BonusVis(bt, value, pos);
+	}
+
+	static Planet* newPlanet(sf::Vector2f pos, int radius, int power)
+	{
+		return new PlanetVis(pos, radius, power);
 	}
 
 private:

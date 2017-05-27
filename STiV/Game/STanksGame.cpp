@@ -256,7 +256,7 @@ void STanksGame::loadLevel(std::string name)
     {
         levelfile >> x >> y >> radius >> power;
 
-		new GravityPoint({ (float)x, (float)y }, power);
+		GameObjectsFactory::newPlanet({ (float)x, (float)y }, radius, power);
     }
 
     levelfile >> goc;
