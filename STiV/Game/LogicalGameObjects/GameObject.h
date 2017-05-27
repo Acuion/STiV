@@ -27,10 +27,10 @@ protected:
 	virtual void onColide(std::pair<ObjectRealType, GameObject*>* with) {};
 
 	explicit GameObject(bool damageable = true);
-	void create(ObjectRealType type, const Sprite& sprite, b2BodyDef* bdef, b2FixtureDef* fixture, int HP, bool damageable = true);
+	void create(ObjectRealType type, b2BodyDef* bdef, b2FixtureDef* fixture, int HP, bool damageable = true);
 public:
 
-	GameObject(ObjectRealType type, Sprite sprite, b2BodyDef* bdef, b2FixtureDef* fixture, int HP, bool damageable = true);
+	GameObject(ObjectRealType type, b2BodyDef* bdef, b2FixtureDef* fixture, int HP, bool damageable = true);
 	virtual ~GameObject();
 
 	bool isDamageable() const;
@@ -46,7 +46,7 @@ public:
 
 	virtual void update();
 
-	friend class GravityObject;
+	friend class GravityPoint;
 	friend class GameObjectManager;
 };
 

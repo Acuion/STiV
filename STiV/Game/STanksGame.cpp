@@ -256,15 +256,7 @@ void STanksGame::loadLevel(std::string name)
     {
         levelfile >> x >> y >> radius >> power;
 
-        auto planetbdef = new b2BodyDef();
-        planetbdef->type = b2_staticBody;
-        planetbdef->position.Set(x * tgMath::b2scale, y * tgMath::b2scale);
-        auto planetfdef = new b2FixtureDef();
-        b2CircleShape* planetcs = new b2CircleShape();
-        planetcs->m_radius = radius * tgMath::b2scale;
-        planetfdef->shape = planetcs;
-
-		GameObjectsFactory::newGravityObject(Sprite("planet.png", { (float)x, (float)y }, radius / 200.0f), planetbdef, planetfdef, power);
+		new GravityPoint({ (float)x, (float)y }, power);
     }
 
     levelfile >> goc;

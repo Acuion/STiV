@@ -96,9 +96,6 @@
     <ClCompile Include="UI/UIButton.cpp">
       <Filter>Файлы исходного кода\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Game/LogicalGameObjects/GravityObject.cpp">
-      <Filter>Файлы исходного кода\Game\LogicalGameObjects</Filter>
-    </ClCompile>
     <ClCompile Include="Game/Misc/MaterialStorage.cpp">
       <Filter>Файлы исходного кода\Game\Misc</Filter>
     </ClCompile>
@@ -150,8 +147,8 @@
     <ClCompile Include="Game\VisualGameObjects\Tank\Missiles\MissileSniperVis.cpp">
       <Filter>Файлы исходного кода\Game\VisualGameObjects\Tank\Missiles</Filter>
     </ClCompile>
-    <ClCompile Include="Game\VisualGameObjects\GravityObjectVis.cpp">
-      <Filter>Файлы исходного кода\Game\VisualGameObjects</Filter>
+    <ClCompile Include="Game\LogicalGameObjects\GravityPoint.cpp">
+      <Filter>Файлы исходного кода\Game\LogicalGameObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -163,9 +160,6 @@
     </ClInclude>
     <ClInclude Include="Game/Misc/Timer.h">
       <Filter>Заголовочные файлы\Game\Misc</Filter>
-    </ClInclude>
-    <ClInclude Include="Game/LogicalGameObjects/GravityObject.h">
-      <Filter>Заголовочные файлы\Game\LogicalGameObjects</Filter>
     </ClInclude>
     <ClInclude Include="Game/Misc/MaterialStorage.h">
       <Filter>Заголовочные файлы\Game\Misc</Filter>
@@ -221,11 +215,11 @@
     <ClInclude Include="Game\VisualGameObjects\Tank\Missiles\MissileSniperVis.h">
       <Filter>Заголовочные файлы\Game\VisualGameObjects\Tank\Missiles</Filter>
     </ClInclude>
-    <ClInclude Include="Game\VisualGameObjects\GravityObjectVis.h">
-      <Filter>Заголовочные файлы\Game\VisualGameObjects</Filter>
-    </ClInclude>
     <ClInclude Include="Game\GameObjectsFactory.h">
       <Filter>Заголовочные файлы\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\LogicalGameObjects\GravityPoint.h">
+      <Filter>Заголовочные файлы\Game\LogicalGameObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

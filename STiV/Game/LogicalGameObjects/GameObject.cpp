@@ -2,14 +2,12 @@
 #include "Game/LogicalGameObjects/GameObjectManager.h"
 #include "Game/VisualGameObjects/Visualizer.h"
 
-void GameObject::create(ObjectRealType type, const Sprite& sprite, b2BodyDef * bdef, b2FixtureDef * fixture, int HP, bool damageable)
+void GameObject::create(ObjectRealType type, b2BodyDef * bdef, b2FixtureDef * fixture, int HP, bool damageable)
 {
-	mSprite = sprite;
 	mHP = HP;
 	mDamageable = damageable;
 
 	mBody = GameObjectManager::registerObject(bdef, fixture, this, type);
-	Visualizer::registerSprite(&mSprite);
 }
 
 GameObject::GameObject(bool damageable)
@@ -18,9 +16,9 @@ GameObject::GameObject(bool damageable)
     mHP = 0;
 }
 
-GameObject::GameObject(ObjectRealType type, Sprite sprite, b2BodyDef* bdef, b2FixtureDef* fixture, int HP, bool damageable)
+GameObject::GameObject(ObjectRealType type, b2BodyDef* bdef, b2FixtureDef* fixture, int HP, bool damageable)
 {
-	create(type, sprite, bdef, fixture, HP, damageable);
+	create(type, bdef, fixture, HP, damageable);
 }
 
 GameObject::~GameObject()

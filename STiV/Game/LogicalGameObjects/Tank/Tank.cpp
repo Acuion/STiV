@@ -10,7 +10,7 @@ void Tank::setMissle(MissleType mt)
 	mCurrMissleType = mt;
 }
 
-void Tank::launchMissile()
+bool Tank::tryToLaunchMissile()
 {
 	TankMissile* fired = nullptr;
 	switch (mCurrMissleType)
@@ -29,9 +29,11 @@ void Tank::launchMissile()
 	if (fired)
 	{
 		mBody->ApplyForceToCenter({ fired->getKick() * cos(mAngle), fired->getKick() * sin(mAngle) }, true);
-		mBarrel[mCurrMissleType].playAnimationOnce(1);
 		mLastFire = Timer::getElapsedTime();
+		return true;
 	}
+	else
+		return false;
 }
 
 void Tank::respawnAt(const sf::Vector2i& spawnPoint)
@@ -52,9 +54,7 @@ void Tank::onColide(ObjectRealTypeData * with)
 			mHP = std::min(mMaxHP, mHP + bn->getVal());
 			break;
 		case BonusType::bt_weapon:
-			Visualizer::unregisterSprite(&mBarrel[mCurrMissleType]);
-			mCurrMissleType = (MissleType)bn->getVal();
-			Visualizer::registerSprite(&mBarrel[mCurrMissleType]);
+			setMissle((MissleType)bn->getVal());
 			break;
 		}
 	}
@@ -71,18 +71,9 @@ Tank::Tank(sf::Vector2f pos, bool client) : GameObject()
 	shape->m_radius = 35 * tgMath::b2scale;
 	fdef->shape = shape;
 
-    create(ObjectRealType::rt_Tank, Sprite("tankBody.png", pos, 2, {Sprite::Animation(1, 1), Sprite::Animation(1, 1) }, { 70,70 }), bdef, fdef, 500, true);
-
-
-	mBarrel = new Sprite[2];
-	mBarrel[0] = Sprite("missiles\\simpleBombBarrel.png", pos, 2, { Sprite::Animation(3, 2), Sprite::Animation(3, 30) }, { 70, 40 });
-	mBarrel[0].setOrigin({ 0, 20 });
-
-	mBarrel[1] = Sprite("missiles\\sniperBarrel.png", pos, 2, { Sprite::Animation(3, 15), Sprite::Animation(6, 23) }, { 100, 40 });
-	mBarrel[1].setOrigin({ 0, 20 });
+    create(ObjectRealType::rt_Tank, bdef, fdef, 500, true);
 
 	mCurrMissleType = MissleType::simpleBomb;
-	Visualizer::registerSprite(&mBarrel[0]);
 }
 
 Tank::Tank()
@@ -92,7 +83,6 @@ Tank::Tank()
 
 Tank::~Tank()
 {
-	Visualizer::unregisterSprite(&mBarrel[mCurrMissleType]);
 }
 
 void Tank::handleEvents(const sf::Event & ev)
@@ -101,7 +91,7 @@ void Tank::handleEvents(const sf::Event & ev)
 	{
 	case sf::Event::MouseButtonPressed:
 		if (!mClient)
-			launchMissile();
+			tryToLaunchMissile();
 		else
 			mWantLaunchMissile = true;
 		break;
@@ -118,13 +108,6 @@ void Tank::update()
 	GameObject::update();
 	if (!mClient)
 		mAngle = tgMath::atan2Points(getPosition(), mMousePos);
-	mBarrel[mCurrMissleType].setRotation(tgMath::radToDeg(mAngle));
-	mBarrel[mCurrMissleType].setPosition(getPosition());
-	mBarrel[mCurrMissleType].update();
-	if (!mBarrel[mCurrMissleType].isPlaying())
-	{
-		mBarrel[mCurrMissleType].setAnimation(0);
-	}
 }
 
 void Tank::setBarrelAngle(float angle)

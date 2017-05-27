@@ -5,7 +5,6 @@
 #include "VisualGameObjects/Tank/Missiles/MissileSniperVis.h"
 #include "VisualGameObjects/Tank/TankVis.h"
 #include "VisualGameObjects/BonusVis.h"
-#include "VisualGameObjects/GravityObjectVis.h"
 
 class GameObjectsFactory
 {
@@ -33,11 +32,6 @@ public:
 	static Bonus* newBonus(BonusType bt, int value, sf::Vector2f pos)
 	{
 		return new BonusVis(bt, value, pos);
-	}
-
-	static GravityObject* newGravityObject(Sprite sprite, b2BodyDef* bdef, b2FixtureDef* fdef, int power)
-	{
-		return new GravityObjectVis(sprite, bdef, fdef, power);
 	}
 
 private:

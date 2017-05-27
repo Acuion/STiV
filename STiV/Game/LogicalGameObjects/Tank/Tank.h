@@ -5,19 +5,19 @@
 
 class Tank : public GameObject
 {
-	Sprite* mBarrel = nullptr;
 	sf::Vector2f mMousePos;
-	float mAngle = 0;
 
 	int mLastFire = 0;
 
-	MissleType mCurrMissleType;
-
-	void setMissle(MissleType mt);
 	void onColide(ObjectRealTypeData* with);
 
 	bool mClient = false, mWantLaunchMissile = false;
 protected:
+	float mAngle = 0;
+	MissleType mCurrMissleType;
+
+	virtual void setMissle(MissleType mt);
+
 	Tank(sf::Vector2f pos, bool client = false);
 	Tank();
 	virtual ~Tank();
@@ -25,12 +25,12 @@ protected:
 public:
 	static const int mMaxHP = 500;
 	
-	void launchMissile();
+	virtual bool tryToLaunchMissile();
 	void respawnAt(const sf::Vector2i& spawnPoint);
 
 	void handleEvents(const sf::Event& ev);
 	void updateMousePos(const sf::Vector2f& mousePos);
-	void update();
+	void update() override;
 
 	void setBarrelAngle(float angle);
 	bool wantToLaunchMissile();

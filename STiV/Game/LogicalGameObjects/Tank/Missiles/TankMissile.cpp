@@ -1,21 +1,18 @@
 #include "TankMissile.h"
 #include "Game/VisualGameObjects/Visualizer.h"
 
-void TankMissile::create(const Sprite& sprite, b2FixtureDef* fdef, float force, const sf::Vector2f& pos, float angle,
+void TankMissile::create(b2FixtureDef* fdef, float force, const sf::Vector2f& pos, float angle,
     int damage, float kick, b2Vec2 tankLinVel, bool fixedRotation)
 {
 	b2BodyDef* bdef = new b2BodyDef();
 	bdef->type = b2_dynamicBody;
 
 	mDamage = damage;
-	mSprite = sprite;
 	mBody = GameObjectManager::registerObject(bdef, fdef, this, ObjectRealType::rt_Missile);
 	mBody->SetLinearVelocity(tankLinVel + b2Vec2(force * cos(angle), force * sin(angle)));
 	mBody->SetTransform({ pos.x * tgMath::b2scale, pos.y * tgMath::b2scale }, angle);
 	mBody->SetBullet(true);
 	mBody->SetFixedRotation(fixedRotation);
-
-	Visualizer::registerSprite(&mSprite);
 
 	mKick = kick;
 }

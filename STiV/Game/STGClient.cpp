@@ -66,7 +66,7 @@ bool STGClient::isDisconnected()
 void STGClient::applyEvents()
 {
 	if (mMousePressed)
-		mTank->launchMissile();
+		mTank->tryToLaunchMissile();
 }
 
 void STGClient::checkHP(const sf::Vector2i& spawnPoint)
