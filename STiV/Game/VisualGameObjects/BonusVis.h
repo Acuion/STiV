@@ -1,20 +1,10 @@
 #pragma once
 
-#include "Game/LogicalGameObjects/GameObject.h"
+#include "Game/LogicalGameObjects/Bonus.h"
 
-enum BonusType
+class BonusVis : public Bonus
 {
-	bt_heal,
-	bt_weapon,
-};
-
-class Bonus : public GameObject
-{
-	BonusType mBonusType;
-	int mValue;//HP / weaponNum
 public:
-	Bonus(BonusType bt, int value, sf::Vector2f pos);
-	BonusType getType();
-	int getVal();
+	BonusVis(BonusType bt, int value, sf::Vector2f pos);
 };
 

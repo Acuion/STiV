@@ -37,6 +37,10 @@ Bonus::Bonus(BonusType bt, int value, sf::Vector2f pos)
 	applyForce(1000, (rand() % 600) * 0.01);
 }
 
+Bonus::~Bonus()
+{
+}
+
 BonusType Bonus::getType()
 {
 	return mBonusType;

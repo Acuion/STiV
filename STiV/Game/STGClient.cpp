@@ -1,5 +1,6 @@
 #include "Game/STGClient.h"
 #include <iostream>
+#include "GameObjectsFactory.h"
 
 STGClient::~STGClient()
 {
@@ -9,7 +10,7 @@ STGClient::~STGClient()
 
 STGClient::STGClient(sf::Vector2i spawnPoint, sf::TcpSocket* socket, sf::Vector2i levelSize)
 {
-	mTank = new Tank((sf::Vector2f)spawnPoint, true);
+	mTank = GameObjectsFactory::newTank((sf::Vector2f)spawnPoint, true);
 	mSocket = socket;
 
 	unsigned char* data = new unsigned char[4];

@@ -2,6 +2,8 @@
 #include "Game/LogicalGameObjects/Bonus.h"
 #include <iostream>
 #include <fstream>
+#include "VisualGameObjects/Visualizer.h"
+#include "GameObjectsFactory.h"
 
 STanksGame::STanksGame(sf::RenderWindow & wnd)
     : mWindow(wnd)
@@ -112,7 +114,7 @@ bool STanksGame::setNetworkMode(bool server)
 
         mCenteredView.setSize(mScreenSize.x, mScreenSize.y);
 
-        mPlayerTank = new Tank();
+        mPlayerTank = GameObjectsFactory::newTank();
     }
     mIsServer = server;
     return true;
@@ -129,16 +131,16 @@ void STanksGame::update(int dt)
             sf::Vector2f bonusPos = mBonusSpawnPoints[rand() % mBonusSpawnPoints.size()];
             int rnd = rand();
             if (rnd % 2)
-                new Bonus(BonusType::bt_heal, 10, bonusPos);
+				GameObjectsFactory::newBonus(BonusType::bt_heal, 10, bonusPos);
             else
             {
                 switch (rnd % 3)
                 {
                 case 0:
-                    new Bonus(BonusType::bt_weapon, MissleType::sniper, bonusPos);
+					GameObjectsFactory::newBonus(BonusType::bt_weapon, MissleType::sniper, bonusPos);
                     break;
                 case 1:
-                    new Bonus(BonusType::bt_weapon, MissleType::simpleBomb, bonusPos);
+					GameObjectsFactory::newBonus(BonusType::bt_weapon, MissleType::simpleBomb, bonusPos);
                     break;
                 }
             }
@@ -159,7 +161,7 @@ void STanksGame::update(int dt)
         if (mSendTimer.isExpired())
         {
             int ptr = 2;
-            unsigned char* data = GameObjectManager::pack(ptr);
+            unsigned char* data = Visualizer::pack(ptr);
             int pt0 = 0;
             tgMath::write2Bytes(ptr - 2, data, pt0);
             for (auto& client : mClients)
@@ -183,9 +185,9 @@ void STanksGame::update(int dt)
             delete[] data;
             return;
         }
-        GameObjectManager::unpack(data, size);
+		Visualizer::unpack(data, size);
 
-        mTcpClient.receive(data, GameObjectManager::mSizeofSpecificClientData, size);//x y hp
+        mTcpClient.receive(data, Visualizer::mSizeofSpecificClientData, size);//x y hp
         mPlayerTank->updateFromNetwork(data);
 
         ptr = 0;
@@ -211,7 +213,7 @@ void STanksGame::draw()
 
     mScene.clear(sf::Color::Green);
     mLevelBackground.draw(mScene, viewRect);
-    GameObjectManager::draw(mScene, viewRect);
+	Visualizer::draw(mScene, viewRect);
     mScene.display();
     PostProcessingManager::postprocess(mScene);
     mSceneToWindow.draw(mSceneSprite);
@@ -245,7 +247,7 @@ void STanksGame::loadLevel(std::string name)
     levelfile >> x >> y;
     mSpawnPoint.x = x;
     mSpawnPoint.y = y;
-    mPlayerTank = new Tank({ (float)x, (float)y });
+    mPlayerTank = GameObjectsFactory::newTank({ (float)x, (float)y });
     mCenteredView.setSize(mScreenSize.x, mScreenSize.y);
     mCenteredView.setCenter(x, y);
 
@@ -262,7 +264,7 @@ void STanksGame::loadLevel(std::string name)
         planetcs->m_radius = radius * tgMath::b2scale;
         planetfdef->shape = planetcs;
 
-        new GravityObject(Sprite("planet.png", { (float)x, (float)y }, radius / 200.0f), planetbdef, planetfdef, power);
+		GameObjectsFactory::newGravityObject(Sprite("planet.png", { (float)x, (float)y }, radius / 200.0f), planetbdef, planetfdef, power);
     }
 
     levelfile >> goc;

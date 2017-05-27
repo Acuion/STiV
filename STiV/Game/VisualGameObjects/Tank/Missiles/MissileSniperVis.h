@@ -1,11 +1,10 @@
 #pragma once
 
-#include "Game/LogicalGameObjects/Tank/Missiles/TankMissile.h"
+#include "Game/LogicalGameObjects/Tank/Missiles/MissileSniper.h"
 
-class MissileSniper : public TankMissile
+class MissileSniperVis : public MissileSniper
 {
 public:
-	const static float mCd;
-	MissileSniper(sf::Vector2f pos, float angle, b2Vec2 tankLinVel);
+	MissileSniperVis(sf::Vector2f pos, float angle, b2Vec2 tankLinVel);//todo: virt destr in logical set here a sprite
 };
 

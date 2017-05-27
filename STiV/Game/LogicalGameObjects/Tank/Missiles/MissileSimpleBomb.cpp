@@ -1,6 +1,6 @@
 #include "MissileSimpleBomb.h"
 
-const float MissileSimpleBomb::mCd = 100;
+const float MissileSimpleBomb::mCd = 200;
 
 MissileSimpleBomb::MissileSimpleBomb(sf::Vector2f pos, float angle, b2Vec2 tankLinVel)
 {
@@ -12,4 +12,8 @@ MissileSimpleBomb::MissileSimpleBomb(sf::Vector2f pos, float angle, b2Vec2 tankL
 	create(Sprite("missiles\\simpleBombMissile.png", pos,
         2, { Sprite::Animation(3, 2), Sprite::Animation(3, 30, PostProcessingManager::MultitargetShaderType::Explosion) }, { 20, 20 }),
         fdef, 15, pos, angle, 10, 2000, tankLinVel);
+}
+
+MissileSimpleBomb::~MissileSimpleBomb()
+{
 }

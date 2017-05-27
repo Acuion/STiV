@@ -17,7 +17,9 @@ protected:
     void create(const Sprite& sprite, b2FixtureDef * fdef, float force, const sf::Vector2f& pos,
         float angle, int damage, float kick, b2Vec2 tankLinVel, bool fixedRotation = false);
     virtual void onColide(ObjectRealTypeData* with);
+
+	TankMissile();
+	virtual ~TankMissile();
 public:
-    TankMissile();
     float getKick();
 };

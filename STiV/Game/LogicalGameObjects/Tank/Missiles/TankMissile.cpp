@@ -1,4 +1,5 @@
 #include "TankMissile.h"
+#include "Game/VisualGameObjects/Visualizer.h"
 
 void TankMissile::create(const Sprite& sprite, b2FixtureDef* fdef, float force, const sf::Vector2f& pos, float angle,
     int damage, float kick, b2Vec2 tankLinVel, bool fixedRotation)
@@ -14,7 +15,7 @@ void TankMissile::create(const Sprite& sprite, b2FixtureDef* fdef, float force, 
 	mBody->SetBullet(true);
 	mBody->SetFixedRotation(fixedRotation);
 
-	GameObjectManager::registerSprite(&mSprite);
+	Visualizer::registerSprite(&mSprite);
 
 	mKick = kick;
 }
@@ -27,9 +28,14 @@ void TankMissile::onColide(ObjectRealTypeData* with)
 	with->second->doDamage(mDamage);
 }
 
-TankMissile::TankMissile() : GameObject()
+TankMissile::TankMissile()
+	: GameObject()
 {
 	mHP = 50;
+}
+
+TankMissile::~TankMissile()
+{
 }
 
 float TankMissile::getKick()

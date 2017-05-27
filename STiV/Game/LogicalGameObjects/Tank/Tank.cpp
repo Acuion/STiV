@@ -2,6 +2,8 @@
 #include "Game/LogicalGameObjects/Tank/Missiles/MissileSimpleBomb.h"
 #include "Game/LogicalGameObjects/Tank/Missiles/MissileSniper.h"
 #include "Game/LogicalGameObjects/Bonus.h"
+#include "Game/VisualGameObjects/Visualizer.h"
+#include "Game/GameObjectsFactory.h"
 
 void Tank::setMissle(MissleType mt)
 {
@@ -16,19 +18,19 @@ void Tank::launchMissile()
 	case MissleType::simpleBomb:
 		if (Timer::getElapsedTime() - mLastFire < MissileSimpleBomb::mCd)
 			break;
-		fired = new MissileSimpleBomb(sf::Vector2f(getPosition().x + (50 + 30) * cos(mAngle), getPosition().y + (50 + 30) * sin(mAngle)), mAngle, mBody->GetLinearVelocity());
+		fired = GameObjectsFactory::newMissileSimpleBomb(sf::Vector2f(getPosition().x + (50 + 30) * cos(mAngle), getPosition().y + (50 + 30) * sin(mAngle)), mAngle, mBody->GetLinearVelocity());
 		break;
 	case MissleType::sniper:
 		if (Timer::getElapsedTime() - mLastFire < MissileSniper::mCd)
 			break;
-		fired = new MissileSniper(sf::Vector2f(getPosition().x + (50 + 30) * cos(mAngle), getPosition().y + (50 + 30) * sin(mAngle)), mAngle, mBody->GetLinearVelocity());
+		fired = GameObjectsFactory::newMissileSniper(sf::Vector2f(getPosition().x + (50 + 30) * cos(mAngle), getPosition().y + (50 + 30) * sin(mAngle)), mAngle, mBody->GetLinearVelocity());
 		break;
 	}
 	if (fired)
 	{
 		mBody->ApplyForceToCenter({ fired->getKick() * cos(mAngle), fired->getKick() * sin(mAngle) }, true);
 		mBarrel[mCurrMissleType].playAnimationOnce(1);
-		mLastFire = clock();
+		mLastFire = Timer::getElapsedTime();
 	}
 }
 
@@ -50,9 +52,9 @@ void Tank::onColide(ObjectRealTypeData * with)
 			mHP = std::min(mMaxHP, mHP + bn->getVal());
 			break;
 		case BonusType::bt_weapon:
-			GameObjectManager::unregisterSprite(&mBarrel[mCurrMissleType]);
+			Visualizer::unregisterSprite(&mBarrel[mCurrMissleType]);
 			mCurrMissleType = (MissleType)bn->getVal();
-			GameObjectManager::registerSprite(&mBarrel[mCurrMissleType]);
+			Visualizer::registerSprite(&mBarrel[mCurrMissleType]);
 			break;
 		}
 	}
@@ -80,7 +82,7 @@ Tank::Tank(sf::Vector2f pos, bool client) : GameObject()
 	mBarrel[1].setOrigin({ 0, 20 });
 
 	mCurrMissleType = MissleType::simpleBomb;
-	GameObjectManager::registerSprite(&mBarrel[0]);
+	Visualizer::registerSprite(&mBarrel[0]);
 }
 
 Tank::Tank()
@@ -90,7 +92,7 @@ Tank::Tank()
 
 Tank::~Tank()
 {
-	GameObjectManager::unregisterSprite(&mBarrel[mCurrMissleType]);
+	Visualizer::unregisterSprite(&mBarrel[mCurrMissleType]);
 }
 
 void Tank::handleEvents(const sf::Event & ev)

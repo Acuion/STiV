@@ -7,6 +7,10 @@ GravityObject::GravityObject(Sprite sprite, b2BodyDef* bdef, b2FixtureDef* fdef,
 	GameObjectManager::registerGravityObject(this);
 }
 
+GravityObject::~GravityObject()
+{
+}
+
 void GravityObject::affect(GameObject& go)
 {
 	float angle = tgMath::atan2Points(go.getPosition(), getPosition());

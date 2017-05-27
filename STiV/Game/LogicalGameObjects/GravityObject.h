@@ -5,7 +5,9 @@
 class GravityObject : public GameObject
 {
 	int mPower;
-public:
+protected:
 	GravityObject(Sprite sprite, b2BodyDef* bdef, b2FixtureDef* fdef, int power);
+	virtual ~GravityObject();
+public:
 	void affect(GameObject & go);
 };

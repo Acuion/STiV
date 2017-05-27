@@ -12,8 +12,10 @@ class Bonus : public GameObject
 {
 	BonusType mBonusType;
 	int mValue;//HP / weaponNum
-public:
+protected:
 	Bonus(BonusType bt, int value, sf::Vector2f pos);
+	virtual ~Bonus();
+public:
 	BonusType getType();
 	int getVal();
 };

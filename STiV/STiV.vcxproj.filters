@@ -150,8 +150,8 @@
     <ClCompile Include="Game\VisualGameObjects\Tank\Missiles\MissileSniperVis.cpp">
       <Filter>Файлы исходного кода\Game\VisualGameObjects\Tank\Missiles</Filter>
     </ClCompile>
-    <ClCompile Include="Game\VisualGameObjects\Tank\Missiles\TankMissileVis.cpp">
-      <Filter>Файлы исходного кода\Game\VisualGameObjects\Tank\Missiles</Filter>
+    <ClCompile Include="Game\VisualGameObjects\GravityObjectVis.cpp">
+      <Filter>Файлы исходного кода\Game\VisualGameObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -221,8 +221,11 @@
     <ClInclude Include="Game\VisualGameObjects\Tank\Missiles\MissileSniperVis.h">
       <Filter>Заголовочные файлы\Game\VisualGameObjects\Tank\Missiles</Filter>
     </ClInclude>
-    <ClInclude Include="Game\VisualGameObjects\Tank\Missiles\TankMissileVis.h">
-      <Filter>Заголовочные файлы\Game\VisualGameObjects\Tank\Missiles</Filter>
+    <ClInclude Include="Game\VisualGameObjects\GravityObjectVis.h">
+      <Filter>Заголовочные файлы\Game\VisualGameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\GameObjectsFactory.h">
+      <Filter>Заголовочные файлы\Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

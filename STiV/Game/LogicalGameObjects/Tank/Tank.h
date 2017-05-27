@@ -17,12 +17,13 @@ class Tank : public GameObject
 	void onColide(ObjectRealTypeData* with);
 
 	bool mClient = false, mWantLaunchMissile = false;
-	~Tank();
-public:
-	static const int mMaxHP = 500;
-	
+protected:
 	Tank(sf::Vector2f pos, bool client = false);
 	Tank();
+	virtual ~Tank();
+
+public:
+	static const int mMaxHP = 500;
 	
 	void launchMissile();
 	void respawnAt(const sf::Vector2i& spawnPoint);

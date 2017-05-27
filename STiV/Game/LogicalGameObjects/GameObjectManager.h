@@ -11,13 +11,9 @@ class GameObjectManager
     static b2World* mWorld;
     static std::list<GameObject*> mObjects;
     static std::list<GravityObject*> mGravityObjects;
-    static std::list<Sprite*> mDrawLayer;
     static std::mutex mObjectsAccess;
     GameObjectManager() {};
 public:
-    static const size_t mSizeofSpecificClientData = 5;
-    static const size_t mSizeofPackedSprite = 10;
-
     static void reset(int sizeX, int sizeY)
     {
         auto iter = mObjects.begin();
@@ -71,19 +67,14 @@ public:
         return body;
     }
 
+	static void unregisterObject(b2Body* body)
+    {
+		mWorld->DestroyBody(body);
+    }
+
     static void registerGravityObject(GravityObject* gravo)
     {
         mGravityObjects.push_back(gravo);
-    }
-
-    static void registerSprite(Sprite* sp)
-    {
-        mDrawLayer.push_back(sp);
-    }
-
-    static void unregisterSprite(Sprite* sp)
-    {
-        mDrawLayer.remove(sp);
     }
 
     static void update(int dt)
@@ -102,8 +93,6 @@ public:
                 (*iter)->update();
             else
             {
-                mWorld->DestroyBody((*iter)->mBody);
-                mDrawLayer.remove(&(*iter)->mSprite);
                 delete *iter;
                 iter = mObjects.erase(iter);
             }
@@ -121,50 +110,10 @@ public:
         {
             if (*iter == obj)
             {
-                mWorld->DestroyBody((*iter)->mBody);
-                mDrawLayer.remove(&(*iter)->mSprite);
                 delete *iter;
                 iter = mObjects.erase(iter);
                 return;
             }
         }
-    }
-
-    static void draw(sf::RenderTexture& wnd, sf::FloatRect viewRect)
-    {
-        mObjectsAccess.lock();
-        for (auto iter = mDrawLayer.rbegin(); iter != mDrawLayer.rend(); ++iter)
-            (*iter)->draw(wnd, viewRect);
-        mObjectsAccess.unlock();
-    }
-
-    static unsigned char* pack(int& ptr)
-    {
-        mObjectsAccess.lock();
-        unsigned char* data = new unsigned char[mDrawLayer.size() * mSizeofPackedSprite + mSizeofSpecificClientData + 2];//2bytes for sizeof msg
-        for (auto s : mDrawLayer)
-            s->pack(data, ptr);
-        mObjectsAccess.unlock();
-        return data;
-    }
-
-    static void unpack(unsigned char* data, int count)
-    {
-        mObjectsAccess.lock();
-        while (mDrawLayer.size())
-        {
-            delete *mDrawLayer.begin();
-            mDrawLayer.pop_front();
-        }
-        count /= mSizeofPackedSprite;
-        Sprite* sp;
-        int ptr = 0;
-        for (int i = 0; i < count; ++i)
-        {
-            sp = new Sprite();
-            sp->unpack(data, ptr);
-            mDrawLayer.push_back(sp);
-        }
-        mObjectsAccess.unlock();
     }
 };

@@ -1,11 +1,10 @@
 #pragma once
 
-#include "Game/LogicalGameObjects/Tank/Missiles/TankMissile.h"
+#include "Game/LogicalGameObjects/Tank/Missiles/MissileSimpleBomb.h"
 
-class MissileSimpleBomb : public TankMissile 
+class MissileSimpleBombVis : public MissileSimpleBomb
 {
 public:
-	const static float mCd;
-	MissileSimpleBomb(sf::Vector2f pos, float angle, b2Vec2 tankLinVel);
+	MissileSimpleBombVis(sf::Vector2f pos, float angle, b2Vec2 tankLinVel);
 };
 
