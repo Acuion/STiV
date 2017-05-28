@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "STiV", "STiVClient\STiVClient.vcxproj", "{4D17C941-5F19-4197-A84F-C7C983048B33}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "STiVClient", "STiVClient\STiVClient.vcxproj", "{4D17C941-5F19-4197-A84F-C7C983048B33}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "STiVServer", "STiVServer\STiVServer.vcxproj", "{DB60FECE-4D6E-4657-A167-381E8BAF8979}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,14 @@ Global
 		{4D17C941-5F19-4197-A84F-C7C983048B33}.Release|x64.Build.0 = Release|x64
 		{4D17C941-5F19-4197-A84F-C7C983048B33}.Release|x86.ActiveCfg = Release|Win32
 		{4D17C941-5F19-4197-A84F-C7C983048B33}.Release|x86.Build.0 = Release|Win32
+		{DB60FECE-4D6E-4657-A167-381E8BAF8979}.Debug|x64.ActiveCfg = Debug|x64
+		{DB60FECE-4D6E-4657-A167-381E8BAF8979}.Debug|x64.Build.0 = Debug|x64
+		{DB60FECE-4D6E-4657-A167-381E8BAF8979}.Debug|x86.ActiveCfg = Debug|Win32
+		{DB60FECE-4D6E-4657-A167-381E8BAF8979}.Debug|x86.Build.0 = Debug|Win32
+		{DB60FECE-4D6E-4657-A167-381E8BAF8979}.Release|x64.ActiveCfg = Release|x64
+		{DB60FECE-4D6E-4657-A167-381E8BAF8979}.Release|x64.Build.0 = Release|x64
+		{DB60FECE-4D6E-4657-A167-381E8BAF8979}.Release|x86.ActiveCfg = Release|Win32
+		{DB60FECE-4D6E-4657-A167-381E8BAF8979}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

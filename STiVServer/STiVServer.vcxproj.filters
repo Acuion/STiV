@@ -1,0 +1,215 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Файлы ресурсов">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Заголовочные файлы">
+      <UniqueIdentifier>{8189a908-820a-45e3-885c-73de1b788bc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы исходного кода">
+      <UniqueIdentifier>{5034880b-274d-4ebe-b4db-b0250a112783}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source\Graphics">
+      <UniqueIdentifier>{ab8dcbf7-154c-48ab-92c9-00664def313d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Graphics\Shaders">
+      <UniqueIdentifier>{d3422266-eaed-4d52-b91d-b0e7d2796e6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\UI">
+      <UniqueIdentifier>{bedd6e10-f66e-4dc1-b52e-b1510303d7d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\LogicalGameObjects">
+      <UniqueIdentifier>{cfd233ac-b594-4575-b1d7-e449ff0b11d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\VisualGameObjects">
+      <UniqueIdentifier>{c013f990-aea9-4077-a111-eef8c126191b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\VisualGameObjects\Tank">
+      <UniqueIdentifier>{9fd4f9af-a3fd-423b-a3e5-16a552653031}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\VisualGameObjects\Tank\Missiles">
+      <UniqueIdentifier>{06a7fce5-c961-4995-9a44-ca6e9d2aac0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\VisualGameObjects\Gravity">
+      <UniqueIdentifier>{93ea82cd-1650-4c5e-aebc-4fb1ccb37512}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Core">
+      <UniqueIdentifier>{d77324c7-a9d1-4fe0-9f05-74c5c95b1472}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Core\LogicalGameObjects">
+      <UniqueIdentifier>{81bc8157-f6f9-49ef-a8b1-da7229a4233a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Core\Misc">
+      <UniqueIdentifier>{9ab21ca1-8abf-4bbf-b738-a9d053533426}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Core\LogicalGameObjects\Tank">
+      <UniqueIdentifier>{2c73b1b4-4fb5-4226-8d2e-a48afa3192da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Core\LogicalGameObjects\Tank\Missiles">
+      <UniqueIdentifier>{6539d0c5-c9dc-44d8-a56b-dd5adb022166}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Core\LogicalGameObjects\Gravity">
+      <UniqueIdentifier>{9d039b29-b857-41d1-adf0-f2a59681c14d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="LogicalGameObjects/GameObject.cpp">
+      <Filter>Source\LogicalGameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics/Sprite.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="UI/UIButton.cpp">
+      <Filter>Source\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics/Shaders/PostProcessingManager.cpp">
+      <Filter>Source\Graphics\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics/Shaders/MultitargetShader.cpp">
+      <Filter>Source\Graphics\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="VisualGameObjects\BonusVis.cpp">
+      <Filter>Source\VisualGameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="VisualGameObjects\Visualizer.cpp">
+      <Filter>Source\VisualGameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="VisualGameObjects\Tank\TankVis.cpp">
+      <Filter>Source\VisualGameObjects\Tank</Filter>
+    </ClCompile>
+    <ClCompile Include="VisualGameObjects\Tank\Missiles\MissileSimpleBombVis.cpp">
+      <Filter>Source\VisualGameObjects\Tank\Missiles</Filter>
+    </ClCompile>
+    <ClCompile Include="VisualGameObjects\Tank\Missiles\MissileSniperVis.cpp">
+      <Filter>Source\VisualGameObjects\Tank\Missiles</Filter>
+    </ClCompile>
+    <ClCompile Include="VisualGameObjects\Gravity\PlanetVis.cpp">
+      <Filter>Source\VisualGameObjects\Gravity</Filter>
+    </ClCompile>
+    <ClCompile Include="STanksGame.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="STGClient.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\STiVCore\Misc\MaterialStorage.cpp">
+      <Filter>Source\Core\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\STiVCore\Misc\tgMath.cpp">
+      <Filter>Source\Core\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\STiVCore\Misc\Timer.cpp">
+      <Filter>Source\Core\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\STiVCore\LogicalGameObjects\Bonus.cpp">
+      <Filter>Source\Core\LogicalGameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\STiVCore\LogicalGameObjects\GameObjectManager.cpp">
+      <Filter>Source\Core\LogicalGameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\STiVCore\LogicalGameObjects\Tank\Tank.cpp">
+      <Filter>Source\Core\LogicalGameObjects\Tank</Filter>
+    </ClCompile>
+    <ClCompile Include="..\STiVCore\LogicalGameObjects\Tank\Missiles\MissileSimpleBomb.cpp">
+      <Filter>Source\Core\LogicalGameObjects\Tank\Missiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\STiVCore\LogicalGameObjects\Tank\Missiles\MissileSniper.cpp">
+      <Filter>Source\Core\LogicalGameObjects\Tank\Missiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\STiVCore\LogicalGameObjects\Tank\Missiles\TankMissile.cpp">
+      <Filter>Source\Core\LogicalGameObjects\Tank\Missiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\STiVCore\LogicalGameObjects\Gravity\GravityPoint.cpp">
+      <Filter>Source\Core\LogicalGameObjects\Gravity</Filter>
+    </ClCompile>
+    <ClCompile Include="..\STiVCore\LogicalGameObjects\Gravity\Planet.cpp">
+      <Filter>Source\Core\LogicalGameObjects\Gravity</Filter>
+    </ClCompile>
+    <ClCompile Include="STiVServer.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GameObjectsFactory.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="STanksGame.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="STGClient.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Sprite.h">
+      <Filter>Source\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Shaders\MultitargetShader.h">
+      <Filter>Source\Graphics\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Shaders\PostProcessingManager.h">
+      <Filter>Source\Graphics\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="LogicalGameObjects\GameObject.h">
+      <Filter>Source\LogicalGameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UIButton.h">
+      <Filter>Source\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="VisualGameObjects\BonusVis.h">
+      <Filter>Source\VisualGameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="VisualGameObjects\Visualizer.h">
+      <Filter>Source\VisualGameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="VisualGameObjects\Gravity\PlanetVis.h">
+      <Filter>Source\VisualGameObjects\Gravity</Filter>
+    </ClInclude>
+    <ClInclude Include="VisualGameObjects\Tank\TankVis.h">
+      <Filter>Source\VisualGameObjects\Tank</Filter>
+    </ClInclude>
+    <ClInclude Include="VisualGameObjects\Tank\Missiles\MissileSimpleBombVis.h">
+      <Filter>Source\VisualGameObjects\Tank\Missiles</Filter>
+    </ClInclude>
+    <ClInclude Include="VisualGameObjects\Tank\Missiles\MissileSniperVis.h">
+      <Filter>Source\VisualGameObjects\Tank\Missiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\STiVCore\Misc\MaterialStorage.h">
+      <Filter>Source\Core\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\STiVCore\Misc\tgMath.h">
+      <Filter>Source\Core\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\STiVCore\Misc\Timer.h">
+      <Filter>Source\Core\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\STiVCore\LogicalGameObjects\Bonus.h">
+      <Filter>Source\Core\LogicalGameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\STiVCore\LogicalGameObjects\GameObjectManager.h">
+      <Filter>Source\Core\LogicalGameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\STiVCore\LogicalGameObjects\Tank\Tank.h">
+      <Filter>Source\Core\LogicalGameObjects\Tank</Filter>
+    </ClInclude>
+    <ClInclude Include="..\STiVCore\LogicalGameObjects\Tank\Missiles\MissileSimpleBomb.h">
+      <Filter>Source\Core\LogicalGameObjects\Tank\Missiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\STiVCore\LogicalGameObjects\Tank\Missiles\MissileSniper.h">
+      <Filter>Source\Core\LogicalGameObjects\Tank\Missiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\STiVCore\LogicalGameObjects\Tank\Missiles\TankMissile.h">
+      <Filter>Source\Core\LogicalGameObjects\Tank\Missiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\STiVCore\LogicalGameObjects\Gravity\GravityPoint.h">
+      <Filter>Source\Core\LogicalGameObjects\Gravity</Filter>
+    </ClInclude>
+    <ClInclude Include="..\STiVCore\LogicalGameObjects\Gravity\Planet.h">
+      <Filter>Source\Core\LogicalGameObjects\Gravity</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
