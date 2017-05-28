@@ -89,12 +89,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir);..\Box2D\Include;..\SFML\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)Box2D\Include;$(SolutionDir)SFML\include;$(SolutionDir)STiVCore</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\SFML\lib;..\Box2D\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)SFML\lib;$(SolutionDir)Box2D\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>box2Dd.lib;sfml-network-d.lib;sfml-audio-d.lib;sfml-system-d.lib;sfml-window-d.lib;sfml-graphics-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
@@ -125,18 +125,20 @@ COPY "$(SolutionDir)SFML\bin\Debug\*" "$(OutDir)"</Command>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir);..\Box2D\Include;..\SFML\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)Box2D\Include;$(SolutionDir)SFML\include;$(SolutionDir)STiVCore</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\SFML\lib;..\Box2D\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)SFML\lib;$(SolutionDir)Box2D\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>box2D.lib;sfml-network.lib;sfml-audio.lib;sfml-system.lib;sfml-window.lib;sfml-graphics.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>XCOPY "$(ProjectDir)Content" "$(OutDir)Content" /s /i /y</Command>
+      <Command>XCOPY "$(ProjectDir)Content" "$(OutDir)Content" /s /i /y
+XCOPY "$(ProjectDir)Levels" "$(OutDir)Levels" /s /i /y
+COPY "$(SolutionDir)SFML\bin\Release\*" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -157,58 +159,58 @@ COPY "$(SolutionDir)SFML\bin\Debug\*" "$(OutDir)"</Command>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Game/LogicalGameObjects/Bonus.cpp" />
-    <ClCompile Include="Game/LogicalGameObjects/GameObjectManager.cpp" />
-    <ClCompile Include="Game\LogicalGameObjects\Gravity\GravityPoint.cpp" />
-    <ClCompile Include="Game/Misc/MaterialStorage.cpp" />
-    <ClCompile Include="Game/LogicalGameObjects/Tank/Missiles/MissileSimpleBomb.cpp" />
-    <ClCompile Include="Game/LogicalGameObjects/Tank/Missiles/MissileSniper.cpp" />
-    <ClCompile Include="Game/Graphics/Shaders/MultitargetShader.cpp" />
-    <ClCompile Include="Game/Graphics/Shaders/PostProcessingManager.cpp" />
-    <ClCompile Include="Game/Graphics/Sprite.cpp" />
-    <ClCompile Include="Game/LogicalGameObjects/GameObject.cpp" />
-    <ClCompile Include="Game\LogicalGameObjects\Gravity\Planet.cpp" />
-    <ClCompile Include="Game\VisualGameObjects\BonusVis.cpp" />
-    <ClCompile Include="Game\VisualGameObjects\Gravity\PlanetVis.cpp" />
-    <ClCompile Include="Game\VisualGameObjects\Tank\Missiles\MissileSimpleBombVis.cpp" />
-    <ClCompile Include="Game\VisualGameObjects\Tank\Missiles\MissileSniperVis.cpp" />
-    <ClCompile Include="Game\VisualGameObjects\Tank\TankVis.cpp" />
-    <ClCompile Include="Game\VisualGameObjects\Visualizer.cpp" />
+    <ClCompile Include="..\STiVCore\LogicalGameObjects\Bonus.cpp" />
+    <ClCompile Include="..\STiVCore\LogicalGameObjects\GameObjectManager.cpp" />
+    <ClCompile Include="..\STiVCore\LogicalGameObjects\Gravity\GravityPoint.cpp" />
+    <ClCompile Include="..\STiVCore\LogicalGameObjects\Gravity\Planet.cpp" />
+    <ClCompile Include="..\STiVCore\LogicalGameObjects\Tank\Missiles\MissileSimpleBomb.cpp" />
+    <ClCompile Include="..\STiVCore\LogicalGameObjects\Tank\Missiles\MissileSniper.cpp" />
+    <ClCompile Include="..\STiVCore\LogicalGameObjects\Tank\Missiles\TankMissile.cpp" />
+    <ClCompile Include="..\STiVCore\LogicalGameObjects\Tank\Tank.cpp" />
+    <ClCompile Include="..\STiVCore\Misc\MaterialStorage.cpp" />
+    <ClCompile Include="..\STiVCore\Misc\tgMath.cpp" />
+    <ClCompile Include="..\STiVCore\Misc\Timer.cpp" />
+    <ClCompile Include="Graphics/Shaders/MultitargetShader.cpp" />
+    <ClCompile Include="Graphics/Shaders/PostProcessingManager.cpp" />
+    <ClCompile Include="Graphics/Sprite.cpp" />
+    <ClCompile Include="LogicalGameObjects/GameObject.cpp" />
+    <ClCompile Include="VisualGameObjects\BonusVis.cpp" />
+    <ClCompile Include="VisualGameObjects\Gravity\PlanetVis.cpp" />
+    <ClCompile Include="VisualGameObjects\Tank\Missiles\MissileSimpleBombVis.cpp" />
+    <ClCompile Include="VisualGameObjects\Tank\Missiles\MissileSniperVis.cpp" />
+    <ClCompile Include="VisualGameObjects\Tank\TankVis.cpp" />
+    <ClCompile Include="VisualGameObjects\Visualizer.cpp" />
     <ClCompile Include="STiVClient.cpp" />
-    <ClCompile Include="Game/STanksGame.cpp" />
-    <ClCompile Include="Game/STGClient.cpp" />
-    <ClCompile Include="Game/LogicalGameObjects/Tank/Tank.cpp" />
-    <ClCompile Include="Game/LogicalGameObjects/Tank/Missiles/TankMissile.cpp" />
-    <ClCompile Include="Game/Misc/tgMath.cpp" />
-    <ClCompile Include="Game/Misc/Timer.cpp" />
+    <ClCompile Include="STanksGame.cpp" />
+    <ClCompile Include="STGClient.cpp" />
     <ClCompile Include="UI/UIButton.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game/LogicalGameObjects/Bonus.h" />
-    <ClInclude Include="Game/LogicalGameObjects/GameObjectManager.h" />
-    <ClInclude Include="Game\LogicalGameObjects\Gravity\GravityPoint.h" />
-    <ClInclude Include="Game/Misc/MaterialStorage.h" />
-    <ClInclude Include="Game/LogicalGameObjects/Tank/Missiles/MissileSimpleBomb.h" />
-    <ClInclude Include="Game/LogicalGameObjects/Tank/Missiles/MissileSniper.h" />
-    <ClInclude Include="Game/Graphics/Shaders/MultitargetShader.h" />
-    <ClInclude Include="Game/Graphics/Shaders/PostProcessingManager.h" />
-    <ClInclude Include="Game/Graphics/Sprite.h" />
-    <ClInclude Include="Game/LogicalGameObjects/GameObject.h" />
-    <ClInclude Include="Game/STanksGame.h" />
-    <ClInclude Include="Game/STGClient.h" />
-    <ClInclude Include="Game/LogicalGameObjects/Tank/Tank.h" />
-    <ClInclude Include="Game/LogicalGameObjects/Tank/Missiles/TankMissile.h" />
-    <ClInclude Include="Game/Misc/tgMath.h" />
-    <ClInclude Include="Game/Misc/Timer.h" />
-    <ClInclude Include="Game\GameObjectsFactory.h" />
-    <ClInclude Include="Game\LogicalGameObjects\Gravity\Planet.h" />
-    <ClInclude Include="Game\VisualGameObjects\BonusVis.h" />
-    <ClInclude Include="Game\VisualGameObjects\Gravity\PlanetVis.h" />
-    <ClInclude Include="Game\VisualGameObjects\Tank\Missiles\MissileSimpleBombVis.h" />
-    <ClInclude Include="Game\VisualGameObjects\Tank\Missiles\MissileSniperVis.h" />
-    <ClInclude Include="Game\VisualGameObjects\Tank\TankVis.h" />
-    <ClInclude Include="Game\VisualGameObjects\Visualizer.h" />
-    <ClInclude Include="UI/UIButton.h" />
+    <ClInclude Include="..\STiVCore\LogicalGameObjects\Bonus.h" />
+    <ClInclude Include="..\STiVCore\LogicalGameObjects\GameObjectManager.h" />
+    <ClInclude Include="..\STiVCore\LogicalGameObjects\Gravity\GravityPoint.h" />
+    <ClInclude Include="..\STiVCore\LogicalGameObjects\Gravity\Planet.h" />
+    <ClInclude Include="..\STiVCore\LogicalGameObjects\Tank\Missiles\MissileSimpleBomb.h" />
+    <ClInclude Include="..\STiVCore\LogicalGameObjects\Tank\Missiles\MissileSniper.h" />
+    <ClInclude Include="..\STiVCore\LogicalGameObjects\Tank\Missiles\TankMissile.h" />
+    <ClInclude Include="..\STiVCore\LogicalGameObjects\Tank\Tank.h" />
+    <ClInclude Include="..\STiVCore\Misc\MaterialStorage.h" />
+    <ClInclude Include="..\STiVCore\Misc\tgMath.h" />
+    <ClInclude Include="..\STiVCore\Misc\Timer.h" />
+    <ClInclude Include="GameObjectsFactory.h" />
+    <ClInclude Include="Graphics\Shaders\MultitargetShader.h" />
+    <ClInclude Include="Graphics\Shaders\PostProcessingManager.h" />
+    <ClInclude Include="Graphics\Sprite.h" />
+    <ClInclude Include="LogicalGameObjects\GameObject.h" />
+    <ClInclude Include="STanksGame.h" />
+    <ClInclude Include="STGClient.h" />
+    <ClInclude Include="UI\UIButton.h" />
+    <ClInclude Include="VisualGameObjects\BonusVis.h" />
+    <ClInclude Include="VisualGameObjects\Gravity\PlanetVis.h" />
+    <ClInclude Include="VisualGameObjects\Tank\Missiles\MissileSimpleBombVis.h" />
+    <ClInclude Include="VisualGameObjects\Tank\Missiles\MissileSniperVis.h" />
+    <ClInclude Include="VisualGameObjects\Tank\TankVis.h" />
+    <ClInclude Include="VisualGameObjects\Visualizer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

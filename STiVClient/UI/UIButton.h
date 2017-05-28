@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "Game/Graphics/Sprite.h"
+#include "Graphics/Sprite.h"
 
 class UIButton
 {

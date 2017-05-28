@@ -1,6 +1,6 @@
 #include <iostream>
-#include "Game/STanksGame.h"
-#include "Game/Graphics/Shaders/PostProcessingManager.h"
+#include "STanksGame.h"
+#include "Graphics/Shaders/PostProcessingManager.h"
 #include "UI/UIButton.h"
 
 namespace Game
