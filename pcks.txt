@@ -1,0 +1,20 @@
+объекты:
+Bonus(BonusType bt, int value, sf::Vector2f pos)
+Tank(sf::Vector2f pos)
+MissileSniper(sf::Vector2f pos, float angle, b2Vec2 tankLinVel)
+MissileSimpleBomb(sf::Vector2f pos, float angle, b2Vec2 tankLinVel)
+Planet(sf::Vector2f pos, int radius, int power)
+
+пакет:
+
+2байта - количество блоков, содержащих инфу о новых объектах
+[1 байт - тип объекта
+2 байта - номер объекта
+далее - соотв инфа для конструктора объекта]
+
+2 байта - количество блоков, содержащих инфу о существующих объектах
+[2 байта - номер обновляемого объекта
+? байт - позиция x,y
+? байт - линейная скорость x, y
+? байт - угол
+? байт - угловая скорость]

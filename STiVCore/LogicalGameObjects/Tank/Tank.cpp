@@ -123,12 +123,3 @@ bool Tank::wantToLaunchMissile()
 	mWantLaunchMissile = false;
 	return ans;
 }
-
-void Tank::updateFromNetwork(unsigned char * data)
-{
-	assert(mClient);
-
-	int ptr = 0;
-	mSprite.setPosition({ (float)tgMath::read2Bytes(data, ptr), (float)tgMath::read2Bytes(data, ptr) });
-	mHP = data[ptr++] * 10;
-}

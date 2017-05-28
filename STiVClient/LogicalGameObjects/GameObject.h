@@ -17,7 +17,7 @@ class GameObject
 {
 	bool mDamageable;
 	bool mDeathAnimPlaying = false;
-	bool mDeathAnimFinished = false;
+	bool mMayBeDeleted = false;
 
 protected:
 	Sprite mSprite;
@@ -35,8 +35,8 @@ public:
 
 	bool isDamageable() const;
 
-	bool mayBeDeleted();
-	int getHP();
+	bool mayBeDeleted() const;
+	int getHP() const;
 
 	sf::Vector2f getPosition() const;
 

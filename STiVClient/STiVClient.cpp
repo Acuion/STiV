@@ -24,7 +24,7 @@ namespace Game
     //
     Sprite menu_Logo, menu_MissileI, menu_leftBarrel, menu_rightBarrel;
     UIButton menu_newGame, menu_toggleFullscreen, menu_exit;
-    UIButton menu_asServer, menu_asClient, menu_Back;
+    UIButton menu_asClient, menu_Back;
     //
 
     void createMenu()
@@ -41,7 +41,6 @@ namespace Game
         menu_toggleFullscreen = UIButton(sf::IntRect(currRes.x / 2.0f, 500, 365, 35), Sprite("menu\\menu_toggleFullscreen.png", { currRes.x / 2.0f, 500 }, 3, { Sprite::Animation(1, 1), Sprite::Animation(1, 1), Sprite::Animation(1, 1) }, { 730, 100 }));
         menu_exit = UIButton(sf::IntRect(currRes.x / 2.0f, 600, 110, 35), Sprite("menu\\menu_exit.png", { currRes.x / 2.0f, 600 }, 3, { Sprite::Animation(1, 1), Sprite::Animation(1, 1), Sprite::Animation(1, 1) }, { 220, 100 }));
 
-        menu_asServer = UIButton(sf::IntRect(currRes.x / 2.0f, 400, 300, 35), Sprite("menu\\menu_asServer.png", { currRes.x / 2.0f, 400 }, 3, { Sprite::Animation(1, 1), Sprite::Animation(1, 1), Sprite::Animation(1, 1) }, { 600, 100 }));
         menu_asClient = UIButton(sf::IntRect(currRes.x / 2.0f, 500, 300, 35), Sprite("menu\\menu_asClient.png", { currRes.x / 2.0f, 500 }, 3, { Sprite::Animation(1, 1), Sprite::Animation(1, 1), Sprite::Animation(1, 1) }, { 600, 100 }));
         menu_Back = UIButton(sf::IntRect(currRes.x / 2.0f, 600, 150, 35), Sprite("menu\\menu_back.png", { currRes.x / 2.0f, 600 }, 3, { Sprite::Animation(1, 1), Sprite::Animation(1, 1), Sprite::Animation(1, 1) }, { 300, 100 }));
     }
@@ -58,7 +57,6 @@ namespace Game
         menu_newGame.setPosition({ currRes.x / 2.0f, 400 });
         menu_toggleFullscreen.setPosition({ currRes.x / 2.0f, 500 });
         menu_exit.setPosition({ currRes.x / 2.0f, 600 });
-        menu_asServer.setPosition({ currRes.x / 2.0f, 400 });
         menu_asClient.setPosition({ currRes.x / 2.0f, 500 });
         menu_Back.setPosition({ currRes.x / 2.0f, 600 });
     }
@@ -86,7 +84,6 @@ namespace Game
     {
         srand(time(0));
         MaterialStorage::initMaterials();
-        TextureManager::InfosInit();
         PostProcessingManager::init();
 
         createMenu();
@@ -124,22 +121,10 @@ namespace Game
                 window.close();
             break;
         case GameState::mainMenuSelectMode:
-            if (menu_asServer.wasPressed(event, mousePos))
-            {
-                STG = new STanksGame(window);
-                if (!STG->setNetworkMode(true))
-                {
-                    delete STG;
-                    break;
-                }
-                STG->loadLevel("test");
-                STG->setResolution(currRes);
-                currentGameState = GameState::game;
-            }
             if (menu_asClient.wasPressed(event, mousePos))
             {
                 STG = new STanksGame(window);
-                if (!STG->setNetworkMode(false))
+                if (!STG->connect("127.0.0.1", 58000))
                 {
                     delete STG;
                     break;
@@ -186,7 +171,6 @@ namespace Game
             menu_leftBarrel.update();
             menu_rightBarrel.update();
 
-            menu_asServer.update();
             menu_asClient.update();
             menu_Back.update();
             break;
@@ -222,7 +206,6 @@ namespace Game
             menu_Logo.draw(window);
             menu_MissileI.draw(window);
 
-            menu_asServer.draw(window);
             menu_asClient.draw(window);
             menu_Back.draw(window);
             break;
@@ -242,15 +225,15 @@ int main()
     Game::window.setVerticalSyncEnabled(true);
     Game::window.setMouseCursorGrabbed(true);
 
-    int lastLoop = Timer::getElapsedTime();
+	Timer updateTimer(10);
 
     while (Game::window.isOpen())
     {
         sf::Event event;
         while (Game::window.pollEvent(event))
             Game::handleEvent(event);
-        Game::update(Timer::getElapsedTime() - lastLoop);
-        lastLoop = Timer::getElapsedTime();
+		if (updateTimer.isExpired())
+			Game::update(10);
         Game::draw();
     }
 

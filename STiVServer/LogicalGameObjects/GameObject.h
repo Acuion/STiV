@@ -2,7 +2,6 @@
 
 #include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
-#include "Graphics/Sprite.h"
 #include "Misc/MaterialStorage.h"
 
 enum class ObjectRealType
@@ -17,10 +16,9 @@ class GameObject
 {
 	bool mDamageable;
 	bool mDeathAnimPlaying = false;
-	bool mDeathAnimFinished = false;
+	bool mMayBeDeleted = false;
 
 protected:
-	Sprite mSprite;
 	int mHP;
 	b2Body* mBody = nullptr;
 
@@ -35,8 +33,8 @@ public:
 
 	bool isDamageable() const;
 
-	bool mayBeDeleted();
-	int getHP();
+	bool mayBeDeleted() const;
+	int getHP() const;
 
 	sf::Vector2f getPosition() const;
 

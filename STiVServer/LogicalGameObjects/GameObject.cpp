@@ -1,6 +1,5 @@
 #include "LogicalGameObjects/GameObject.h"
 #include "LogicalGameObjects/GameObjectManager.h"
-#include "VisualGameObjects/Visualizer.h"
 
 void GameObject::create(ObjectRealType type, b2BodyDef * bdef, b2FixtureDef * fixture, int HP, bool damageable)
 {
@@ -13,7 +12,7 @@ void GameObject::create(ObjectRealType type, b2BodyDef * bdef, b2FixtureDef * fi
 GameObject::GameObject(bool damageable)
 {
 	mDamageable = damageable;
-    mHP = 0;
+	mHP = 0;
 }
 
 GameObject::GameObject(ObjectRealType type, b2BodyDef* bdef, b2FixtureDef* fixture, int HP, bool damageable)
@@ -23,7 +22,6 @@ GameObject::GameObject(ObjectRealType type, b2BodyDef* bdef, b2FixtureDef* fixtu
 
 GameObject::~GameObject()
 {
-	Visualizer::unregisterSprite(&mSprite);
 	GameObjectManager::unregisterObject(mBody);
 }
 
@@ -32,19 +30,19 @@ bool GameObject::isDamageable() const
 	return mDamageable;
 }
 
-bool GameObject::mayBeDeleted()
+bool GameObject::mayBeDeleted() const
 {
-	return mDeathAnimFinished;
+	return mMayBeDeleted;
 }
 
-int GameObject::getHP()
+int GameObject::getHP() const
 {
 	return mHP;
 }
 
 sf::Vector2f GameObject::getPosition() const
 {
-	return mSprite.getPosition();
+	return { mBody->GetPosition().x / tgMath::b2scale, mBody->GetPosition().y / tgMath::b2scale };
 }
 
 void GameObject::doDamage(int dmg)
@@ -54,24 +52,15 @@ void GameObject::doDamage(int dmg)
 
 void GameObject::applyForce(float force, float angle)
 {
-	mBody->ApplyForceToCenter({force * cos(angle), force * sin(angle)}, true);
+	mBody->ApplyForceToCenter({ force * cos(angle), force * sin(angle) }, true);
 }
 
 void GameObject::update()
 {
 	if (mHP <= 0 && mDamageable)
 	{
-		if (!mDeathAnimPlaying)
-		{
-			mSprite.playAnimationOnce(1);
-			mDeathAnimPlaying = true;
-		}
-		if (!mSprite.isPlaying())
-			mDeathAnimFinished = true;
+		mMayBeDeleted = true;
 	}
-	mSprite.setPosition({ mBody->GetPosition().x / tgMath::b2scale, mBody->GetPosition().y / tgMath::b2scale });
-	mSprite.setRotation(tgMath::radToDeg(mBody->GetAngle()));
-	mSprite.update();
 
 	for (auto cs = mBody->GetContactList(); cs; cs = cs->next)
 	{

@@ -32,19 +32,19 @@ bool GameObject::isDamageable() const
 	return mDamageable;
 }
 
-bool GameObject::mayBeDeleted()
+bool GameObject::mayBeDeleted() const
 {
-	return mDeathAnimFinished;
+	return mMayBeDeleted;
 }
 
-int GameObject::getHP()
+int GameObject::getHP() const
 {
 	return mHP;
 }
 
 sf::Vector2f GameObject::getPosition() const
 {
-	return mSprite.getPosition();
+	return { mBody->GetPosition().x / tgMath::b2scale, mBody->GetPosition().y / tgMath::b2scale };
 }
 
 void GameObject::doDamage(int dmg)
@@ -63,11 +63,15 @@ void GameObject::update()
 	{
 		if (!mDeathAnimPlaying)
 		{
+			//b2Filter& filter = mBody->GetFixtureList()->GetFilterData();
+			//filter.maskBits = 0;
+			//mBody->GetFixtureList()->SetFilterData(filter);
+			//TODO: ignore collisions
 			mSprite.playAnimationOnce(1);
 			mDeathAnimPlaying = true;
 		}
 		if (!mSprite.isPlaying())
-			mDeathAnimFinished = true;
+			mMayBeDeleted = true;
 	}
 	mSprite.setPosition({ mBody->GetPosition().x / tgMath::b2scale, mBody->GetPosition().y / tgMath::b2scale });
 	mSprite.setRotation(tgMath::radToDeg(mBody->GetAngle()));

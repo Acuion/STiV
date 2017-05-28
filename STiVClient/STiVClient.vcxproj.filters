@@ -98,9 +98,6 @@
     <ClCompile Include="STanksGame.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="STGClient.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\STiVCore\Misc\MaterialStorage.cpp">
       <Filter>Source\Core\Misc</Filter>
     </ClCompile>
@@ -140,9 +137,6 @@
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="STanksGame.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="STGClient.h">
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="Graphics\Sprite.h">

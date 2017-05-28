@@ -1,36 +1,23 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
 #include <SFML/Network.hpp>
 #include <thread>
 #include <chrono>
-#include "LogicalGameObjects/GameObject.h"
 #include "LogicalGameObjects/GameObjectManager.h"
-#include "LogicalGameObjects/Tank/Tank.h"
 #include "STGClient.h"
+#include "Misc/Timer.h"
 
 using namespace std::chrono_literals;
 
 class STanksGame
 {
-	sf::RenderWindow & mWindow;
-    sf::RenderTexture mScene, mSceneToWindow;
-    sf::Sprite mSceneSprite, mSceneToWindowSprite;
-
 	sf::Vector2i mScreenSize;
 	sf::Vector2f mHalfScreen;
 	sf::Vector2i mCurrLevelSize;
 	sf::Vector2i mSpawnPoint;
 
-	bool mPaused = false;
-
-	sf::Vector2i mMousePos;
-
 	Timer mSpawnBonus;
 	std::vector<sf::Vector2f> mBonusSpawnPoints;
-
-	Tank *mPlayerTank = nullptr;
-	sf::View mCenteredView;
 
 	sf::TcpListener mTcpServer;
 	std::thread* mAccThread = nullptr, *mLsnThread = nullptr;
@@ -41,31 +28,19 @@ class STanksGame
 
 	sf::TcpSocket mTcpClient;
 
-	bool mIsServer = true;
 	bool mIsWorking = true;
-	bool mIsReturningToMainMenu = false;
-
-    Sprite mLevelBackground;
-	sf::Text mHpText;
-	sf::Font mConsolas;
-public:
-	STanksGame(sf::RenderWindow & wnd);
-
-	~STanksGame();
 
 	void acceptClients();
 	void listenClients();
+public:
+	STanksGame();
 
-	bool setNetworkMode(bool server);
+	~STanksGame();
+
+	bool listen(int srvPort);
 
 	void update(int dt);
-	void draw();
-	void handleEvent(const sf::Event& event);
-
-	void setResolution(const sf::Vector2i& res);
 
 	void loadLevel(std::string name);
-
-	bool isReturningToMainMenu();
 };
 

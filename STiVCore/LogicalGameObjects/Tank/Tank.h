@@ -34,7 +34,5 @@ public:
 
 	void setBarrelAngle(float angle);
 	bool wantToLaunchMissile();
-
-	void updateFromNetwork(unsigned char* data);
 };
 

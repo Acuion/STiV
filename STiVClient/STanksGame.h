@@ -2,12 +2,10 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Network.hpp>
-#include <thread>
 #include <chrono>
 #include "LogicalGameObjects/GameObject.h"
 #include "LogicalGameObjects/GameObjectManager.h"
 #include "LogicalGameObjects/Tank/Tank.h"
-#include "STGClient.h"
 
 using namespace std::chrono_literals;
 
@@ -22,27 +20,13 @@ class STanksGame
 	sf::Vector2i mCurrLevelSize;
 	sf::Vector2i mSpawnPoint;
 
-	bool mPaused = false;
-
 	sf::Vector2i mMousePos;
-
-	Timer mSpawnBonus;
-	std::vector<sf::Vector2f> mBonusSpawnPoints;
 
 	Tank *mPlayerTank = nullptr;
 	sf::View mCenteredView;
 
-	sf::TcpListener mTcpServer;
-	std::thread* mAccThread = nullptr, *mLsnThread = nullptr;
-	std::list<STGClient> mClients;
-	std::mutex mClientsWork;
-	sf::SocketSelector mSocketSelector;
-	Timer mSendTimer;
-
 	sf::TcpSocket mTcpClient;
 
-	bool mIsServer = true;
-	bool mIsWorking = true;
 	bool mIsReturningToMainMenu = false;
 
     Sprite mLevelBackground;
@@ -53,10 +37,7 @@ public:
 
 	~STanksGame();
 
-	void acceptClients();
-	void listenClients();
-
-	bool setNetworkMode(bool server);
+	bool STanksGame::connect(std::string srvIp, int srvPort);
 
 	void update(int dt);
 	void draw();
@@ -64,8 +45,6 @@ public:
 
 	void setResolution(const sf::Vector2i& res);
 
-	void loadLevel(std::string name);
-
-	bool isReturningToMainMenu();
+	bool isReturningToMainMenu() const;
 };
 

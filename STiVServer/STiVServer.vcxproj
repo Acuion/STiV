@@ -170,20 +170,15 @@ COPY "$(SolutionDir)SFML\bin\Release\*" "$(OutDir)"</Command>
     <ClCompile Include="..\STiVCore\Misc\MaterialStorage.cpp" />
     <ClCompile Include="..\STiVCore\Misc\tgMath.cpp" />
     <ClCompile Include="..\STiVCore\Misc\Timer.cpp" />
-    <ClCompile Include="Graphics/Shaders/MultitargetShader.cpp" />
-    <ClCompile Include="Graphics/Shaders/PostProcessingManager.cpp" />
-    <ClCompile Include="Graphics/Sprite.cpp" />
     <ClCompile Include="LogicalGameObjects/GameObject.cpp" />
-    <ClCompile Include="VisualGameObjects\BonusVis.cpp" />
-    <ClCompile Include="VisualGameObjects\Gravity\PlanetVis.cpp" />
-    <ClCompile Include="VisualGameObjects\Tank\Missiles\MissileSimpleBombVis.cpp" />
-    <ClCompile Include="VisualGameObjects\Tank\Missiles\MissileSniperVis.cpp" />
-    <ClCompile Include="VisualGameObjects\Tank\TankVis.cpp" />
-    <ClCompile Include="VisualGameObjects\Visualizer.cpp" />
+    <ClCompile Include="ServerGameObjects\BonusSrv.cpp" />
+    <ClCompile Include="ServerGameObjects\Gravity\PlanetSrv.cpp" />
+    <ClCompile Include="ServerGameObjects\Tank\Missiles\MissileSimpleBombSrv.cpp" />
+    <ClCompile Include="ServerGameObjects\Tank\Missiles\MissileSniperSrv.cpp" />
+    <ClCompile Include="ServerGameObjects\Tank\TankSrv.cpp" />
     <ClCompile Include="STiVServer.cpp" />
     <ClCompile Include="STanksGame.cpp" />
     <ClCompile Include="STGClient.cpp" />
-    <ClCompile Include="UI/UIButton.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\STiVCore\LogicalGameObjects\Bonus.h" />
@@ -198,19 +193,14 @@ COPY "$(SolutionDir)SFML\bin\Release\*" "$(OutDir)"</Command>
     <ClInclude Include="..\STiVCore\Misc\tgMath.h" />
     <ClInclude Include="..\STiVCore\Misc\Timer.h" />
     <ClInclude Include="GameObjectsFactory.h" />
-    <ClInclude Include="Graphics\Shaders\MultitargetShader.h" />
-    <ClInclude Include="Graphics\Shaders\PostProcessingManager.h" />
-    <ClInclude Include="Graphics\Sprite.h" />
     <ClInclude Include="LogicalGameObjects\GameObject.h" />
+    <ClInclude Include="ServerGameObjects\BonusSrv.h" />
+    <ClInclude Include="ServerGameObjects\Gravity\PlanetSrv.h" />
+    <ClInclude Include="ServerGameObjects\Tank\Missiles\MissileSimpleBombSrv.h" />
+    <ClInclude Include="ServerGameObjects\Tank\Missiles\MissileSniperSrv.h" />
+    <ClInclude Include="ServerGameObjects\Tank\TankSrv.h" />
     <ClInclude Include="STanksGame.h" />
     <ClInclude Include="STGClient.h" />
-    <ClInclude Include="UI\UIButton.h" />
-    <ClInclude Include="VisualGameObjects\BonusVis.h" />
-    <ClInclude Include="VisualGameObjects\Gravity\PlanetVis.h" />
-    <ClInclude Include="VisualGameObjects\Tank\Missiles\MissileSimpleBombVis.h" />
-    <ClInclude Include="VisualGameObjects\Tank\Missiles\MissileSniperVis.h" />
-    <ClInclude Include="VisualGameObjects\Tank\TankVis.h" />
-    <ClInclude Include="VisualGameObjects\Visualizer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

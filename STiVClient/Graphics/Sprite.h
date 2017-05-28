@@ -10,42 +10,7 @@
 class TextureManager
 {
 	static std::map<std::string, sf::Texture> mTextures;
-	static std::map<char, std::pair<sf::Vector2f, std::string>> mTxtInfos;
-	static std::map<std::string, char> mNumByName;
 public:
-	static void InfosInit()
-	{
-		mTxtInfos[1] = { {70, 70}, "tankBody.png" };
-		mNumByName["Content\\tankBody.png"] = 1;
-		mTxtInfos[2] = { {400, 400}, "planet.png" };
-		mNumByName["Content\\planet.png"] = 2;
-		mTxtInfos[3] = { {70, 40}, "missiles\\simpleBombBarrel.png" };
-		mNumByName["Content\\missiles\\simpleBombBarrel.png"] = 3;
-		mTxtInfos[4] = { {20, 20}, "missiles\\simpleBombMissile.png" };
-		mNumByName["Content\\missiles\\simpleBombMissile.png"] = 4;
-		mTxtInfos[5] = { {100, 40}, "missiles\\SniperBarrel.png" };
-		mNumByName["Content\\missiles\\sniperBarrel.png"] = 5;
-		mTxtInfos[6] = { {25, 24}, "missiles\\sniperMissile.png" };
-		mNumByName["Content\\missiles\\sniperMissile.png"] = 6;
-		mTxtInfos[7] = { {50, 50}, "bonuses\\heal.png" };
-		mNumByName["Content\\bonuses\\heal.png"] = 7;
-		mTxtInfos[8] = { { 50, 50 }, "bonuses\\weapon_simpleBomb.png" };
-		mNumByName["Content\\bonuses\\weapon_simpleBomb.png"] = 8;
-		mTxtInfos[9] = { { 50, 50 }, "bonuses\\weapon_sniper.png" };
-		mNumByName["Content\\bonuses\\weapon_sniper.png"] = 9;
-	}
-
-	static char numByTxtName(const std::string& name)
-	{
-        //TODO: register new textures
-		return mNumByName[name];
-	}
-
-	static std::pair<sf::Vector2f, std::string>& GetTextureInfoByNum(char num)
-	{
-		return mTxtInfos[num];
-	}
-
 	static sf::Texture& GetTexture(std::string& path)
 	{
 		path = "Content\\" + path;
@@ -57,6 +22,7 @@ public:
 		}
 		return mTextures[path];
 	}
+
 	static sf::Texture& GetPlaceholder(const sf::Vector2f& size, sf::Color fill)
 	{
 		std::string plh = std::to_string(size.x) + std::to_string(size.y) + std::to_string(fill.toInteger());
@@ -92,7 +58,7 @@ public:
         }
     };
 
-	Sprite() {};
+	Sprite() {}
 	Sprite(std::string texture, sf::Vector2f pos, int animationsCount, std::vector<Animation> animations,
         sf::Vector2i frameSize, float rotation = 0);//animated
 	Sprite(std::string texture, sf::Vector2f pos, float scale = 1, float rotation = 0);//static
@@ -117,16 +83,12 @@ public:
 	void update();
 	void draw(sf::RenderTexture & txt, const sf::FloatRect& viewRect);
     void draw(sf::RenderWindow& wnd);
-
-	void pack(unsigned char* data, int& ptr);
-	void unpack(unsigned char* data, int& ptr);
 private:
     sf::Sprite mSprite;
     sf::Vector2f mCenterPos;
     int mAnimationsCount;
     int mAnimationIndex = 0;//y
     int mFrame = 0;//x
-    int mTextureNumber;
     sf::Vector2i mFrameSize;
     std::vector<Animation> mAnimations;
     Timer mAnimTim;

@@ -1,14 +1,11 @@
 #include "Sprite.h"
 
 std::map<std::string, sf::Texture> TextureManager::mTextures;
-std::map<char, std::pair<sf::Vector2f, std::string>> TextureManager::mTxtInfos;
-std::map<std::string, char> TextureManager::mNumByName;
 
 Sprite::Sprite(std::string texture, sf::Vector2f pos, int animationsCount, std::vector<Animation> animations,
     sf::Vector2i frameSize, float rotation)
 {
     mSprite.setTexture(TextureManager::GetTexture(texture));
-    mTextureNumber = TextureManager::numByTxtName(texture);
     mCenterPos = pos;
     mAnimationsCount = animationsCount;
     mAnimations = animations;
@@ -24,7 +21,6 @@ Sprite::Sprite(std::string texture, sf::Vector2f pos, int animationsCount, std::
 Sprite::Sprite(std::string texture, sf::Vector2f pos, float scale, float rotation)
 {
     sf::Texture& txt = TextureManager::GetTexture(texture);
-    mTextureNumber = TextureManager::numByTxtName(texture);
     mSprite.setTexture(txt);
     mSprite.setScale(scale, scale);
     mCenterPos = pos;
@@ -37,7 +33,6 @@ Sprite::Sprite(std::string texture, sf::Vector2f pos, float scale, float rotatio
 Sprite::Sprite(std::string texture, sf::Vector2f pos, sf::Vector2f size, float rotation)
 {
     sf::Texture& txt = TextureManager::GetTexture(texture);
-    mTextureNumber = TextureManager::numByTxtName(texture);
     txt.setRepeated(true);
     mSprite.setTexture(txt);
     mCenterPos = pos;
@@ -154,44 +149,4 @@ void Sprite::draw(sf::RenderWindow & wnd)
         PostProcessingManager::addTargetToShaderProcessing(mAnimations[mAnimationIndex].mShaderToApply,
             mCenterPos, mAnimations[mAnimationIndex].mStartTime);
     wnd.draw(mSprite);
-}
-
-void Sprite::pack(unsigned char * data, int & ptr)
-{
-    if (mTextureNumber == 0)
-        return;
-    data[ptr++] = mAnimationIndex;
-    if (mSprite.getOrigin().x == 0)
-        data[ptr - 1] |= 128;//barrel
-    data[ptr++] = mFrame;//TODO: pass shader 'time' to clients
-    data[ptr++] = mTextureNumber;
-    tgMath::write2Bytes(mCenterPos.x, data, ptr);
-    tgMath::write2Bytes(mCenterPos.y, data, ptr);
-    tgMath::write2Bytes(mSprite.getRotation(), data, ptr);
-    data[ptr++] = mSprite.getScale().x * 100;
-}
-
-void Sprite::unpack(unsigned char * data, int& ptr)
-{
-    mAnimationIndex = data[ptr++];
-    mFrame = data[ptr++];
-    mTextureNumber = data[ptr++];
-    mCenterPos.x = tgMath::read2Bytes(data, ptr);
-    mCenterPos.y = tgMath::read2Bytes(data, ptr);
-    auto inf = TextureManager::GetTextureInfoByNum(mTextureNumber);
-    mSprite = sf::Sprite(TextureManager::GetTexture(inf.second));
-    mFrameSize = (sf::Vector2i)inf.first;
-    mSprite.setPosition(mCenterPos);
-    mSprite.setRotation(tgMath::read2Bytes(data, ptr));
-    float scale = data[ptr++] * 0.01f;
-    mSprite.setScale(scale, scale);
-    if ((mAnimationIndex & 128) == 0)
-        mSprite.setOrigin(mFrameSize.x / 2, mFrameSize.y / 2);
-    else
-    {
-        mSprite.setOrigin(0, 20);
-        mAnimationIndex ^= 128;
-    }
-
-    mSprite.setTextureRect(sf::IntRect(mFrame * mFrameSize.x, mAnimationIndex * mFrameSize.y, mFrameSize.x, mFrameSize.y));
 }
