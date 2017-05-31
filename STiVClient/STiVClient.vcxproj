@@ -168,7 +168,7 @@ COPY "$(SolutionDir)SFML\bin\Release\*" "$(OutDir)"</Command>
     <ClCompile Include="..\STiVCore\LogicalGameObjects\Tank\Missiles\TankMissile.cpp" />
     <ClCompile Include="..\STiVCore\LogicalGameObjects\Tank\Tank.cpp" />
     <ClCompile Include="..\STiVCore\Misc\MaterialStorage.cpp" />
-    <ClCompile Include="..\STiVCore\Misc\tgMath.cpp" />
+    <ClCompile Include="..\STiVCore\Misc\Utilites.cpp" />
     <ClCompile Include="..\STiVCore\Misc\Timer.cpp" />
     <ClCompile Include="Graphics/Shaders/MultitargetShader.cpp" />
     <ClCompile Include="Graphics/Shaders/PostProcessingManager.cpp" />
@@ -194,7 +194,7 @@ COPY "$(SolutionDir)SFML\bin\Release\*" "$(OutDir)"</Command>
     <ClInclude Include="..\STiVCore\LogicalGameObjects\Tank\Missiles\TankMissile.h" />
     <ClInclude Include="..\STiVCore\LogicalGameObjects\Tank\Tank.h" />
     <ClInclude Include="..\STiVCore\Misc\MaterialStorage.h" />
-    <ClInclude Include="..\STiVCore\Misc\tgMath.h" />
+    <ClInclude Include="..\STiVCore\Misc\Utilites.h" />
     <ClInclude Include="..\STiVCore\Misc\Timer.h" />
     <ClInclude Include="GameObjectsFactory.h" />
     <ClInclude Include="Graphics\Shaders\MultitargetShader.h" />

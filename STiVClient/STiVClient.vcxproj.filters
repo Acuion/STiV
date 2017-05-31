@@ -101,9 +101,6 @@
     <ClCompile Include="..\STiVCore\Misc\MaterialStorage.cpp">
       <Filter>Source\Core\Misc</Filter>
     </ClCompile>
-    <ClCompile Include="..\STiVCore\Misc\tgMath.cpp">
-      <Filter>Source\Core\Misc</Filter>
-    </ClCompile>
     <ClCompile Include="..\STiVCore\Misc\Timer.cpp">
       <Filter>Source\Core\Misc</Filter>
     </ClCompile>
@@ -130,6 +127,9 @@
     </ClCompile>
     <ClCompile Include="..\STiVCore\LogicalGameObjects\Gravity\Planet.cpp">
       <Filter>Source\Core\LogicalGameObjects\Gravity</Filter>
+    </ClCompile>
+    <ClCompile Include="..\STiVCore\Misc\Utilites.cpp">
+      <Filter>Source\Core\Misc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -175,9 +175,6 @@
     <ClInclude Include="..\STiVCore\Misc\MaterialStorage.h">
       <Filter>Source\Core\Misc</Filter>
     </ClInclude>
-    <ClInclude Include="..\STiVCore\Misc\tgMath.h">
-      <Filter>Source\Core\Misc</Filter>
-    </ClInclude>
     <ClInclude Include="..\STiVCore\Misc\Timer.h">
       <Filter>Source\Core\Misc</Filter>
     </ClInclude>
@@ -204,6 +201,9 @@
     </ClInclude>
     <ClInclude Include="..\STiVCore\LogicalGameObjects\Gravity\Planet.h">
       <Filter>Source\Core\LogicalGameObjects\Gravity</Filter>
+    </ClInclude>
+    <ClInclude Include="..\STiVCore\Misc\Utilites.h">
+      <Filter>Source\Core\Misc</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

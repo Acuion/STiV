@@ -18,3 +18,4 @@ Planet(sf::Vector2f pos, int radius, int power)
 ? байт - линейная скорость x, y
 ? байт - угол
 ? байт - угловая скорость]
+

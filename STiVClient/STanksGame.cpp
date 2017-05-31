@@ -6,7 +6,6 @@
 
 STanksGame::STanksGame(sf::RenderWindow & wnd)
 	: mWindow(wnd)
-	//TODO: load background from server
 {
 	mConsolas.loadFromFile("Content\\consola.ttf");
 	mHpText.setFont(mConsolas);
@@ -17,7 +16,6 @@ STanksGame::STanksGame(sf::RenderWindow & wnd)
 
 STanksGame::~STanksGame()
 {
-	delete mLevelBackground;
 }
 
 bool STanksGame::connect(std::string srvIp, int srvPort)
@@ -30,8 +28,8 @@ bool STanksGame::connect(std::string srvIp, int srvPort)
 	unsigned char* data = new unsigned char[4];
 	mTcpClient.receive(data, 4, rec);
 	int ptr = 0;
-	mCurrLevelSize.x = tgMath::read2Bytes(data, ptr);
-	mCurrLevelSize.y = tgMath::read2Bytes(data, ptr);
+	mCurrLevelSize.x = Utilites::readShort(data, ptr);
+	mCurrLevelSize.y = Utilites::readShort(data, ptr);
 	mScene.create(mCurrLevelSize.x, mCurrLevelSize.y);
 	mSceneSprite = sf::Sprite(mScene.getTexture());
 	delete[] data;
@@ -41,7 +39,7 @@ bool STanksGame::connect(std::string srvIp, int srvPort)
 	mPlayerTank = GameObjectsFactory::newTank();
 
 	mLevelBackground = Sprite("globalBackground.png", { mCurrLevelSize.x / 2.0f, mCurrLevelSize.y / 2.0f },
-		{ (float)mCurrLevelSize.x, (float)mCurrLevelSize.y });
+		{ (float)mCurrLevelSize.x, (float)mCurrLevelSize.y });//TODO: load background from server
 
 	return true;
 }
@@ -50,9 +48,9 @@ void STanksGame::update(int dt)
 {
 	unsigned char* data = new unsigned char[2];
 	unsigned int size = 0;
-	mTcpClient.receive(data, 2, size);//количество байт в состоянии мира
+	mTcpClient.receive(data, 2, size);//количество блоков новых объектов
 	int ptr = 0;
-	size = tgMath::read2Bytes(data, ptr);
+	size = Utilites::read2Bytes(data, ptr);
 	delete[] data;
 	data = new unsigned char[size];
 	if (mTcpClient.receive(data, size, size) == sf::Socket::Disconnected)//состояние мира
@@ -66,8 +64,8 @@ void STanksGame::update(int dt)
 	mTcpClient.receive(data, Visualizer::mSizeofSpecificClientData, size);//x y hp
 
 	ptr = 0;
-	int angle = tgMath::radToDeg(tgMath::atan2Points(mPlayerTank->getPosition(), mSceneToWindow.mapPixelToCoords(mMousePos))) + 600;
-	tgMath::write2Bytes(angle, data, ptr);
+	int angle = Utilites::radToDeg(Utilites::atan2Points(mPlayerTank->getPosition(), mSceneToWindow.mapPixelToCoords(mMousePos))) + 600;
+	Utilites::write2Bytes(angle, data, ptr);
 	data[ptr++] = mPlayerTank->wantToLaunchMissile();
 	mTcpClient.send(data, 3, size);//угол нажатость
 

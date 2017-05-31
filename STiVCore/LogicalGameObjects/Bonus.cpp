@@ -8,11 +8,11 @@ Bonus::Bonus(BonusType bt, int value, sf::Vector2f pos)
 
 	b2BodyDef* bdef = new b2BodyDef();
 	bdef->type = b2_dynamicBody;
-	bdef->position.Set(pos.x * tgMath::b2scale, pos.y * tgMath::b2scale);
+	bdef->position.Set(pos.x * Utilites::b2scale, pos.y * Utilites::b2scale);
 
 	b2FixtureDef* fdef = MaterialStorage::getMaterial("missle");
 	b2CircleShape* cs = new b2CircleShape();
-	cs->m_radius = 25 * tgMath::b2scale;
+	cs->m_radius = 25 * Utilites::b2scale;
 	fdef->shape = cs;
 
 	create(ObjectRealType::rt_Bonus, bdef, fdef, 30, true);

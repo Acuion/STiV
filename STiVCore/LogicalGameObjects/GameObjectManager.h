@@ -2,7 +2,7 @@
 
 #include "LogicalGameObjects/GameObject.h"
 #include "LogicalGameObjects/Gravity/GravityPoint.h"
-#include "Misc/tgMath.h"
+#include "Misc/Utilites.h"
 #include <list>
 #include <mutex>
 
@@ -32,26 +32,26 @@ public:
 
 		b2FixtureDef* fdefH = new b2FixtureDef();
 		b2PolygonShape* shapeH = new b2PolygonShape();
-		shapeH->SetAsBox((float)sizeX * tgMath::b2scale, 20 * tgMath::b2scale);
+		shapeH->SetAsBox((float)sizeX * Utilites::b2scale, 20 * Utilites::b2scale);
 		fdefH->shape = shapeH;
 
 		b2FixtureDef* fdefV = new b2FixtureDef();
 		b2PolygonShape* shapeV = new b2PolygonShape();
-		shapeV->SetAsBox(20 * tgMath::b2scale, (float)sizeY* tgMath::b2scale);
+		shapeV->SetAsBox(20 * Utilites::b2scale, (float)sizeY* Utilites::b2scale);
 		fdefV->shape = shapeV;
 
 		b2BodyDef* bh1 = new b2BodyDef(*borderDef);
-		bh1->position.Set(sizeX * tgMath::b2scale / 2, -20 * tgMath::b2scale);
+		bh1->position.Set(sizeX * Utilites::b2scale / 2, -20 * Utilites::b2scale);
 		new GameObject(ObjectRealType::rt_Static, bh1, new b2FixtureDef(*fdefH), 0, false);
 		b2BodyDef* bv1 = new b2BodyDef(*borderDef);
-		bv1->position.Set(-20 * tgMath::b2scale, sizeY * tgMath::b2scale / 2);
+		bv1->position.Set(-20 * Utilites::b2scale, sizeY * Utilites::b2scale / 2);
 		new GameObject(ObjectRealType::rt_Static, bv1, new b2FixtureDef(*fdefV), 0, false);
 
 		b2BodyDef* bh2 = new b2BodyDef(*borderDef);
-		bh2->position.Set(sizeX * tgMath::b2scale / 2, sizeY * tgMath::b2scale + 20 * tgMath::b2scale);
+		bh2->position.Set(sizeX * Utilites::b2scale / 2, sizeY * Utilites::b2scale + 20 * Utilites::b2scale);
 		new GameObject(ObjectRealType::rt_Static, bh2, new b2FixtureDef(*fdefH), 0, false);
 		b2BodyDef* bv2 = new b2BodyDef(*borderDef);
-		bv2->position.Set(sizeX * tgMath::b2scale + 20 * tgMath::b2scale, sizeY * tgMath::b2scale / 2);
+		bv2->position.Set(sizeX * Utilites::b2scale + 20 * Utilites::b2scale, sizeY * Utilites::b2scale / 2);
 		new GameObject(ObjectRealType::rt_Static, bv2, new b2FixtureDef(*fdefV), 0, false);
 
 		delete fdefH;

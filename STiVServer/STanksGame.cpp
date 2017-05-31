@@ -117,7 +117,7 @@ void STanksGame::update(int dt)
 		int ptr = 2;
 		unsigned char* data = Visualizer::pack(ptr);
 		int pt0 = 0;
-		tgMath::write2Bytes(ptr - 2, data, pt0);
+		Utilites::write2Bytes(ptr - 2, data, pt0);
 		for (auto& client : mClients)
 			client.sendWorld(data, ptr);
 		delete[] data;

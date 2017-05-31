@@ -152,8 +152,8 @@ namespace Game
             }
             break;
         case GameState::mainMenu:
-            menu_leftBarrel.setRotation(tgMath::radToDeg(tgMath::atan2Points(menu_leftBarrel.getPosition(), mousePos)));
-            menu_rightBarrel.setRotation(tgMath::radToDeg(tgMath::atan2Points(menu_rightBarrel.getPosition(), mousePos)));
+            menu_leftBarrel.setRotation(Utilites::radToDeg(Utilites::atan2Points(menu_leftBarrel.getPosition(), mousePos)));
+            menu_rightBarrel.setRotation(Utilites::radToDeg(Utilites::atan2Points(menu_rightBarrel.getPosition(), mousePos)));
             menu_Logo.update();
             menu_MissileI.update();
             menu_leftBarrel.update();
@@ -164,8 +164,8 @@ namespace Game
             menu_exit.update();
             break;
         case GameState::mainMenuSelectMode:
-            menu_leftBarrel.setRotation(tgMath::radToDeg(tgMath::atan2Points(menu_leftBarrel.getPosition(), mousePos)));
-            menu_rightBarrel.setRotation(tgMath::radToDeg(tgMath::atan2Points(menu_rightBarrel.getPosition(), mousePos)));
+            menu_leftBarrel.setRotation(Utilites::radToDeg(Utilites::atan2Points(menu_leftBarrel.getPosition(), mousePos)));
+            menu_rightBarrel.setRotation(Utilites::radToDeg(Utilites::atan2Points(menu_rightBarrel.getPosition(), mousePos)));
             menu_Logo.update();
             menu_MissileI.update();
             menu_leftBarrel.update();

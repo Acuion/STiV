@@ -10,7 +10,7 @@ void TankMissile::create(b2FixtureDef* fdef, float force, const sf::Vector2f& po
 	mDamage = damage;
 	mBody = GameObjectManager::registerObject(bdef, fdef, this, ObjectRealType::rt_Missile);
 	mBody->SetLinearVelocity(tankLinVel + b2Vec2(force * cos(angle), force * sin(angle)));
-	mBody->SetTransform({ pos.x * tgMath::b2scale, pos.y * tgMath::b2scale }, angle);
+	mBody->SetTransform({ pos.x * Utilites::b2scale, pos.y * Utilites::b2scale }, angle);
 	mBody->SetBullet(true);
 	mBody->SetFixedRotation(fixedRotation);
 
@@ -19,7 +19,7 @@ void TankMissile::create(b2FixtureDef* fdef, float force, const sf::Vector2f& po
 
 void TankMissile::onColide(ObjectRealTypeData* with)
 {
-	with->second->applyForce(mDamage * 100, tgMath::atan2Points(getPosition(), with->second->getPosition()));
+	with->second->applyForce(mDamage * 100, Utilites::atan2Points(getPosition(), with->second->getPosition()));
 	mBody->SetLinearVelocity({ 0,0 });
 	mHP = 0;
 	with->second->doDamage(mDamage);

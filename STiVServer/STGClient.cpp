@@ -15,8 +15,8 @@ STGClient::STGClient(sf::Vector2i spawnPoint, sf::TcpSocket* socket, sf::Vector2
 
 	unsigned char* data = new unsigned char[4];
 	int ptr = 0;
-	tgMath::write2Bytes(levelSize.x, data, ptr);
-	tgMath::write2Bytes(levelSize.y, data, ptr);
+	Utilites::write2Bytes(levelSize.x, data, ptr);
+	Utilites::write2Bytes(levelSize.y, data, ptr);
 	mSocket->send(data, 4);
 	delete[] data;
 }
@@ -28,8 +28,8 @@ void STGClient::unselectSocket(sf::SocketSelector & selector)
 
 void STGClient::sendWorld(unsigned char * world, int size)
 {
-	tgMath::write2Bytes(mTank->getPosition().x, world, size);
-	tgMath::write2Bytes(mTank->getPosition().y, world, size);
+	Utilites::write2Bytes(mTank->getPosition().x, world, size);
+	Utilites::write2Bytes(mTank->getPosition().y, world, size);
 	world[size++] = mTank->getHP() / 10;
 	mSocket->send(world, size);
 }
@@ -52,10 +52,10 @@ void STGClient::updateFromNetwork()
 		std::cout << "Client disconnected\n";
 		return;
 	}
-	angle = tgMath::read2Bytes(data, ptr) - 600;
+	angle = Utilites::read2Bytes(data, ptr) - 600;
 	mMousePressed = data[ptr++];
 
-	mTank->setBarrelAngle(tgMath::degToRad(angle));
+	mTank->setBarrelAngle(Utilites::degToRad(angle));
 }
 
 bool STGClient::isDisconnected()

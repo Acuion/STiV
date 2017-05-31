@@ -16,8 +16,8 @@ GravityPoint::~GravityPoint()
 
 void GravityPoint::affect(GameObject& go) const
 {
-	float angle = tgMath::atan2Points(go.getPosition(), mPosition);
-	float dist = tgMath::distBetweenPoints(go.getPosition(), mPosition);
+	float angle = Utilites::atan2Points(go.getPosition(), mPosition);
+	float dist = Utilites::distBetweenPoints(go.getPosition(), mPosition);
 	dist *= dist;
 	if (!dist)
 		return;

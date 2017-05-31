@@ -29,34 +29,4 @@ public:
             (*iter)->draw(wnd, viewRect);
         mObjectsAccess.unlock();
     }
-
-    static unsigned char* pack(int& ptr)
-    {
-        mObjectsAccess.lock();
-        unsigned char* data = new unsigned char[mDrawLayer.size() * mSizeofPackedSprite + mSizeofSpecificClientData + 2];//2bytes for sizeof msg
-        for (auto s : mDrawLayer)
-            s->pack(data, ptr);
-        mObjectsAccess.unlock();
-        return data;
-    }
-
-    static void unpack(unsigned char* data, int count)
-    {
-        mObjectsAccess.lock();
-        while (mDrawLayer.size())
-        {
-            delete *mDrawLayer.begin();
-            mDrawLayer.pop_front();
-        }
-        count /= mSizeofPackedSprite;
-        Sprite* sp;
-        int ptr = 0;
-        for (int i = 0; i < count; ++i)
-        {
-            sp = new Sprite();
-            sp->unpack(data, ptr);
-            mDrawLayer.push_back(sp);
-        }
-        mObjectsAccess.unlock();
-    }
 };

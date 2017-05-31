@@ -44,7 +44,7 @@ int GameObject::getHP() const
 
 sf::Vector2f GameObject::getPosition() const
 {
-	return { mBody->GetPosition().x / tgMath::b2scale, mBody->GetPosition().y / tgMath::b2scale };
+	return { mBody->GetPosition().x / Utilites::b2scale, mBody->GetPosition().y / Utilites::b2scale };
 }
 
 void GameObject::doDamage(int dmg)
@@ -73,8 +73,8 @@ void GameObject::update()
 		if (!mSprite.isPlaying())
 			mMayBeDeleted = true;
 	}
-	mSprite.setPosition({ mBody->GetPosition().x / tgMath::b2scale, mBody->GetPosition().y / tgMath::b2scale });
-	mSprite.setRotation(tgMath::radToDeg(mBody->GetAngle()));
+	mSprite.setPosition({ mBody->GetPosition().x / Utilites::b2scale, mBody->GetPosition().y / Utilites::b2scale });
+	mSprite.setRotation(Utilites::radToDeg(mBody->GetAngle()));
 	mSprite.update();
 
 	for (auto cs = mBody->GetContactList(); cs; cs = cs->next)

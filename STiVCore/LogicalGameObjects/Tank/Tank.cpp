@@ -38,7 +38,7 @@ bool Tank::tryToLaunchMissile()
 void Tank::respawnAt(const sf::Vector2i& spawnPoint)
 {
 	mHP = mMaxHP;
-	mBody->SetTransform(tgMath::f2tob2({ spawnPoint.x * tgMath::b2scale, spawnPoint.y * tgMath::b2scale }), 0);
+	mBody->SetTransform(Utilites::f2tob2({ spawnPoint.x * Utilites::b2scale, spawnPoint.y * Utilites::b2scale }), 0);
 }
 
 void Tank::onColide(ObjectRealTypeData * with)
@@ -64,10 +64,10 @@ Tank::Tank(sf::Vector2f pos, bool client) : GameObject()
 	mClient = client;
 	b2BodyDef* bdef = new b2BodyDef();
 	bdef->type = b2_dynamicBody;
-	bdef->position.Set(pos.x * tgMath::b2scale, pos.y * tgMath::b2scale);
+	bdef->position.Set(pos.x * Utilites::b2scale, pos.y * Utilites::b2scale);
 	b2FixtureDef* fdef = MaterialStorage::getMaterial("default");
 	auto shape = new b2CircleShape();
-	shape->m_radius = 35 * tgMath::b2scale;
+	shape->m_radius = 35 * Utilites::b2scale;
 	fdef->shape = shape;
 
     create(ObjectRealType::rt_Tank, bdef, fdef, 500, true);
@@ -106,7 +106,7 @@ void Tank::update()
 {
 	GameObject::update();
 	if (!mClient)
-		mAngle = tgMath::atan2Points(getPosition(), mMousePos);
+		mAngle = Utilites::atan2Points(getPosition(), mMousePos);
 }
 
 void Tank::setBarrelAngle(float angle)
