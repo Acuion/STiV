@@ -11,9 +11,24 @@ using namespace std::chrono_literals;
 
 class STanksGame
 {
+public:
+	STanksGame(sf::RenderWindow & wnd);
+
+	~STanksGame();
+
+	bool STanksGame::connect(std::string srvIp, int srvPort);
+
+	void update(int dt);
+	void draw();
+	void handleEvent(const sf::Event& event);
+
+	void setResolution(const sf::Vector2i& res);
+
+	bool isReturningToMainMenu() const;
+private:
 	sf::RenderWindow & mWindow;
-    sf::RenderTexture mScene, mSceneToWindow;
-    sf::Sprite mSceneSprite, mSceneToWindowSprite;
+	sf::RenderTexture mScene, mSceneToWindow;
+	sf::Sprite mSceneSprite, mSceneToWindowSprite;
 
 	sf::Vector2i mScreenSize;
 	sf::Vector2f mHalfScreen;
@@ -29,22 +44,8 @@ class STanksGame
 
 	bool mIsReturningToMainMenu = false;
 
-    Sprite mLevelBackground;
+	Sprite mLevelBackground;
 	sf::Text mHpText;
 	sf::Font mConsolas;
-public:
-	STanksGame(sf::RenderWindow & wnd);
-
-	~STanksGame();
-
-	bool STanksGame::connect(std::string srvIp, int srvPort);
-
-	void update(int dt);
-	void draw();
-	void handleEvent(const sf::Event& event);
-
-	void setResolution(const sf::Vector2i& res);
-
-	bool isReturningToMainMenu() const;
 };
 

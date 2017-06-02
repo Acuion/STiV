@@ -1,5 +1,6 @@
 #include "TankMissile.h"
 #include "VisualGameObjects/Visualizer.h"
+#include "GameObjectsFactory.h"
 
 void TankMissile::create(b2FixtureDef* fdef, float force, const sf::Vector2f& pos, float angle,
     int damage, float kick, b2Vec2 tankLinVel, bool fixedRotation)
@@ -8,7 +9,7 @@ void TankMissile::create(b2FixtureDef* fdef, float force, const sf::Vector2f& po
 	bdef->type = b2_dynamicBody;
 
 	mDamage = damage;
-	mBody = GameObjectManager::registerObject(bdef, fdef, this, ObjectRealType::rt_Missile);
+	mBody = GameObjectsFactory::instanceOfGoM().registerObject(bdef, fdef, this, ObjectRealType::rt_Missile);
 	mBody->SetLinearVelocity(tankLinVel + b2Vec2(force * cos(angle), force * sin(angle)));
 	mBody->SetTransform({ pos.x * Utilites::b2scale, pos.y * Utilites::b2scale }, angle);
 	mBody->SetBullet(true);

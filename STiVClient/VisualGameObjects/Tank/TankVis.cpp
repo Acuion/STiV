@@ -1,7 +1,7 @@
 #include "TankVis.h"
 #include "VisualGameObjects/Visualizer.h"
 
-TankVis::TankVis(sf::Vector2f pos, bool client = false)
+TankVis::TankVis(sf::Vector2f pos, bool client)
 	: Tank(pos, client)
 {
 	mSprite = Sprite("tankBody.png", pos, 2, { Sprite::Animation(1, 1), Sprite::Animation(1, 1) }, { 70,70 });

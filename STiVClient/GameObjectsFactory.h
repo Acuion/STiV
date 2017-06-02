@@ -4,6 +4,7 @@
 #include "VisualGameObjects/Tank/TankVis.h"
 #include "VisualGameObjects/BonusVis.h"
 #include "VisualGameObjects/Gravity/PlanetVis.h"
+#include "LogicalGameObjects/ClientGameObjectManager.h"
 
 class GameObjectsFactory
 {
@@ -36,6 +37,11 @@ public:
 	static Planet* newPlanet(sf::Vector2f pos, int radius, int power)
 	{
 		return new PlanetVis(pos, radius, power);
+	}
+
+	static GameObjectManager& instanceOfGoM()
+	{
+		return ClientGameObjectManager::getInstance();
 	}
 
 private:

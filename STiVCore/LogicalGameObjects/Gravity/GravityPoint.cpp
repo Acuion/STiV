@@ -1,17 +1,18 @@
 #include "LogicalGameObjects/Gravity/GravityPoint.h"
 #include "LogicalGameObjects/GameObjectManager.h"
+#include "GameObjectsFactory.h"
 
 GravityPoint::GravityPoint(sf::Vector2f pos, int power)
 	: mPower(power)
 	, mPosition(pos)
 {
 	mPower = power;
-	GameObjectManager::registerGravityPoint(this);
+	GameObjectsFactory::instanceOfGoM().registerGravityPoint(this);
 }
 
 GravityPoint::~GravityPoint()
 {
-	GameObjectManager::unregisterGravityPoint(this);
+	GameObjectsFactory::instanceOfGoM().unregisterGravityPoint(this);
 }
 
 void GravityPoint::affect(GameObject& go) const

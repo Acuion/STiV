@@ -3,6 +3,8 @@
 #include <fstream>
 #include "VisualGameObjects/Visualizer.h"
 #include "GameObjectsFactory.h"
+#include "Network/NetworkUtils.h"
+#include "LogicalGameObjects/ClientGameObjectManager.h"
 
 STanksGame::STanksGame(sf::RenderWindow & wnd)
 	: mWindow(wnd)
@@ -25,51 +27,25 @@ bool STanksGame::connect(std::string srvIp, int srvPort)
 		return false;
 
 	size_t rec;
-	unsigned char* data = new unsigned char[4];
-	mTcpClient.receive(data, 4, rec);
-	int ptr = 0;
-	mCurrLevelSize.x = Utilites::readShort(data, ptr);
-	mCurrLevelSize.y = Utilites::readShort(data, ptr);
+	mTcpClient.receive(&mCurrLevelSize, sizeof(mCurrLevelSize), rec);
 	mScene.create(mCurrLevelSize.x, mCurrLevelSize.y);
 	mSceneSprite = sf::Sprite(mScene.getTexture());
-	delete[] data;
 
 	mCenteredView.setSize(mScreenSize.x, mScreenSize.y);
 
 	mPlayerTank = GameObjectsFactory::newTank();
 
 	mLevelBackground = Sprite("globalBackground.png", { mCurrLevelSize.x / 2.0f, mCurrLevelSize.y / 2.0f },
-		{ (float)mCurrLevelSize.x, (float)mCurrLevelSize.y });//TODO: load background from server
+	{ (float)mCurrLevelSize.x, (float)mCurrLevelSize.y });//TODO: load background from server
 
 	return true;
 }
 
 void STanksGame::update(int dt)
 {
-	unsigned char* data = new unsigned char[2];
-	unsigned int size = 0;
-	mTcpClient.receive(data, 2, size);//количество блоков новых объектов
-	int ptr = 0;
-	size = Utilites::read2Bytes(data, ptr);
-	delete[] data;
-	data = new unsigned char[size];
-	if (mTcpClient.receive(data, size, size) == sf::Socket::Disconnected)//состояние мира
-	{
-		mIsReturningToMainMenu = true;
-		delete[] data;
-		return;
-	}
-	Visualizer::unpack(data, size);
+	ClientGameObjectManager::getInstance().update(dt);//todo: pass the socket, client version of GOM
 
-	mTcpClient.receive(data, Visualizer::mSizeofSpecificClientData, size);//x y hp
-
-	ptr = 0;
-	int angle = Utilites::radToDeg(Utilites::atan2Points(mPlayerTank->getPosition(), mSceneToWindow.mapPixelToCoords(mMousePos))) + 600;
-	Utilites::write2Bytes(angle, data, ptr);
-	data[ptr++] = mPlayerTank->wantToLaunchMissile();
-	mTcpClient.send(data, 3, size);//угол нажатость
-
-	delete[] data;
+	//mIsReturningToMainMenu = true; <- disc
 
 	mCenteredView.setCenter({ std::min(std::max(mPlayerTank->getPosition().x, mHalfScreen.x), mCurrLevelSize.x - mHalfScreen.x),
 		std::min(std::max(mPlayerTank->getPosition().y, mHalfScreen.y), mCurrLevelSize.y - mHalfScreen.y) });
@@ -99,7 +75,7 @@ void STanksGame::draw()
 void STanksGame::setResolution(const sf::Vector2i& res)
 {
 	mScreenSize = res;
-	mCenteredView.setSize((sf::Vector2f)res);
+	mCenteredView.setSize(static_cast<sf::Vector2f>(res));
 	mSceneToWindow.create(res.x, res.y);
 	mSceneToWindowSprite.setTexture(mSceneToWindow.getTexture());
 	mHalfScreen = { res.x / 2.0f,res.y / 2.0f };

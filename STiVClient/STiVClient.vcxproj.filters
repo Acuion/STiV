@@ -57,6 +57,9 @@
     <Filter Include="Source\Core\LogicalGameObjects\Gravity">
       <UniqueIdentifier>{9d039b29-b857-41d1-adf0-f2a59681c14d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Core\Network">
+      <UniqueIdentifier>{fef34f21-bc1b-41f6-bf53-2cdfa130a566}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LogicalGameObjects/GameObject.cpp">
@@ -131,6 +134,9 @@
     <ClCompile Include="..\STiVCore\Misc\Utilites.cpp">
       <Filter>Source\Core\Misc</Filter>
     </ClCompile>
+    <ClCompile Include="LogicalGameObjects\ClientGameObjectManager.cpp">
+      <Filter>Source\LogicalGameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObjectsFactory.h">
@@ -204,6 +210,12 @@
     </ClInclude>
     <ClInclude Include="..\STiVCore\Misc\Utilites.h">
       <Filter>Source\Core\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\STiVCore\Network\NetworkUtils.h">
+      <Filter>Source\Core\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="LogicalGameObjects\ClientGameObjectManager.h">
+      <Filter>Source\LogicalGameObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

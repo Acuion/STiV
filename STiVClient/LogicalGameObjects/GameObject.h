@@ -48,6 +48,7 @@ public:
 
 	friend class GravityPoint;
 	friend class GameObjectManager;
+	friend class ClientGameObjectManager;
 };
 
 using ObjectRealTypeData = std::pair<ObjectRealType, GameObject*>;

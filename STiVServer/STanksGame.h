@@ -6,6 +6,7 @@
 #include "LogicalGameObjects/GameObjectManager.h"
 #include "STGClient.h"
 #include "Misc/Timer.h"
+#include <mutex>
 
 using namespace std::chrono_literals;
 

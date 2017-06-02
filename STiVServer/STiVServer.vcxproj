@@ -192,6 +192,7 @@ COPY "$(SolutionDir)SFML\bin\Release\*" "$(OutDir)"</Command>
     <ClInclude Include="..\STiVCore\Misc\MaterialStorage.h" />
     <ClInclude Include="..\STiVCore\Misc\tgMath.h" />
     <ClInclude Include="..\STiVCore\Misc\Timer.h" />
+    <ClInclude Include="..\STiVCore\Network\ObjectEnums.h" />
     <ClInclude Include="GameObjectsFactory.h" />
     <ClInclude Include="LogicalGameObjects\GameObject.h" />
     <ClInclude Include="ServerGameObjects\BonusSrv.h" />
