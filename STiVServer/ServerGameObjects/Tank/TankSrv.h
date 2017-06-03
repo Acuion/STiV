@@ -5,7 +5,7 @@
 class TankSrv : public Tank
 {
 public:
-	TankSrv(sf::Vector2f pos, bool client = false);
-	TankSrv();
-	~TankSrv();
+    TankSrv(sf::Vector2f pos, bool client = false);
+    TankSrv();
+    ~TankSrv();
 };

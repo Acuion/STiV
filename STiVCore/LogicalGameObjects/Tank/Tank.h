@@ -5,35 +5,35 @@
 
 class Tank : public GameObject
 {
-	sf::Vector2f mMousePos;
+    sf::Vector2f mMousePos;
 
-	int mLastFire = 0;
+    int mLastFire = 0;
 
-	void onColide(ObjectRealTypeData* with) override;
+    void onColide(ObjectRealTypeData* with) override;
 
-	bool mClient = false, mWantLaunchMissile = false;
+    bool mClient = false, mWantLaunchMissile = false;
 protected:
-	float mBarrelAngle = 0;
-	MissleType mCurrMissleType;
+    float mBarrelAngle = 0;
+    MissleType mCurrMissleType;
 
-	virtual void setMissle(MissleType mt);
+    virtual void setMissle(MissleType mt);
 
-	Tank(sf::Vector2f pos, bool client = false);
-	Tank();
-	virtual ~Tank();
+    Tank(sf::Vector2f pos, bool client = false);
+    Tank();
+    virtual ~Tank();
 
 public:
-	static const int mMaxHP = 500;
-	
-	virtual bool tryToLaunchMissile();
-	void respawnAt(const sf::Vector2i& spawnPoint);
+    static const int mMaxHP = 500;
 
-	void handleEvents(const sf::Event& ev);
-	void updateMousePos(const sf::Vector2f& mousePos);
-	void update() override;
+    virtual bool tryToLaunchMissile();
+    void respawnAt(const sf::Vector2i& spawnPoint);
 
-	void setBarrelAngle(float angle);
-	float getBarrelAngle() const;
-	bool wantToLaunchMissile();
+    void handleEvents(const sf::Event& ev);
+    void updateMousePos(const sf::Vector2f& mousePos);
+    void update() override;
+
+    void setBarrelAngle(float angle);
+    float getBarrelAngle() const;
+    bool wantToLaunchMissile();
 };
 

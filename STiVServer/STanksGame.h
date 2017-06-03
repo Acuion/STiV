@@ -12,36 +12,36 @@ using namespace std::chrono_literals;
 
 class STanksGame
 {
-	sf::Vector2i mScreenSize;
-	sf::Vector2f mHalfScreen;
-	sf::Vector2i mCurrLevelSize;
-	sf::Vector2i mSpawnPoint;
+    sf::Vector2i mScreenSize;
+    sf::Vector2f mHalfScreen;
+    sf::Vector2i mCurrLevelSize;
+    sf::Vector2i mSpawnPoint;
 
-	Timer mSpawnBonus;
-	std::vector<sf::Vector2f> mBonusSpawnPoints;
+    Timer mSpawnBonus;
+    std::vector<sf::Vector2f> mBonusSpawnPoints;
 
-	sf::TcpListener mTcpServer;
-	std::thread* mAccThread = nullptr, *mLsnThread = nullptr;
-	std::list<STGClient> mClients;
-	std::mutex mClientsWork;
-	sf::SocketSelector mSocketSelector;
-	Timer mSendTimer;
+    sf::TcpListener mTcpServer;
+    std::thread* mAccThread = nullptr, *mLsnThread = nullptr;
+    std::list<STGClient> mClients;
+    std::mutex mClientsWork;
+    sf::SocketSelector mSocketSelector;
+    Timer mSendTimer;
 
-	sf::TcpSocket mTcpClient;
+    sf::TcpSocket mTcpClient;
 
-	bool mIsWorking = true;
+    bool mIsWorking = true;
 
-	void acceptClients();
-	void listenClients();
+    void acceptClients();
+    void listenClients();
 public:
-	STanksGame();
+    STanksGame();
 
-	~STanksGame();
+    ~STanksGame();
 
-	bool listen(int srvPort);
+    bool listen(int srvPort);
 
-	void update(int dt);
+    void update(int dt);
 
-	void loadLevel(std::string name);
+    void loadLevel(std::string name);
 };
 

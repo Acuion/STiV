@@ -7,19 +7,19 @@
 
 namespace Utilites
 {
-	using byte = unsigned char;
+    using byte = unsigned char;
 
-	const float b2scale = 0.04f;
+    const float b2scale = 0.04f;
 
-	bool floatEq(float a, float b);
+    bool floatEq(float a, float b);
 
-	float distBetweenPoints(const sf::Vector2f& p1, const sf::Vector2f& p2);
+    float distBetweenPoints(const sf::Vector2f& p1, const sf::Vector2f& p2);
 
-	float atan2Points(const sf::Vector2f& p1, const sf::Vector2f& p2);
+    float atan2Points(const sf::Vector2f& p1, const sf::Vector2f& p2);
 
-	float degToRad(float deg);
-	float radToDeg(float rad);
+    float degToRad(float deg);
+    float radToDeg(float rad);
 
-	sf::Vector2f b2to2f(const b2Vec2& vec);
-	b2Vec2 f2tob2(const sf::Vector2f& vec);
+    sf::Vector2f b2to2f(const b2Vec2& vec);
+    b2Vec2 f2tob2(const sf::Vector2f& vec);
 }

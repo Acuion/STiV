@@ -5,24 +5,24 @@
 
 class Timer
 {
-	int mLastTick, mPeriod;
+    int mLastTick, mPeriod;
     static sf::Clock mClock;
 public:
-	Timer() {};
-	Timer(int periodInMs)
-	{
-		mPeriod = periodInMs;
-		mLastTick = clock();
-	}
-	bool isExpired()
-	{
-		if (clock() - mLastTick >= mPeriod)
-		{
-			mLastTick = clock();
-			return true;
-		}
-		return false;
-	}
+    Timer() {};
+    Timer(int periodInMs)
+    {
+        mPeriod = periodInMs;
+        mLastTick = clock();
+    }
+    bool isExpired()
+    {
+        if (clock() - mLastTick >= mPeriod)
+        {
+            mLastTick = clock();
+            return true;
+        }
+        return false;
+    }
     static int getElapsedTime()
     {
         return mClock.getElapsedTime().asMilliseconds();

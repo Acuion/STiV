@@ -3,19 +3,19 @@
 
 int main()
 {
-	std::ios_base::sync_with_stdio(0);
-	srand(time(0));
-	
-	MaterialStorage::initMaterials();
+    std::ios_base::sync_with_stdio(0);
+    srand(time(0));
 
-	STanksGame* STG = new STanksGame();
-	STG->loadLevel("test");
-	STG->listen(58000);
+    MaterialStorage::initMaterials();
 
-	while (true)
-	{
-		STG->update(10);
-	}
+    STanksGame* STG = new STanksGame();
+    STG->loadLevel("test");
+    STG->listen(58000);
 
-	return 0;
+    while (true)
+    {
+        STG->update(10);
+    }
+
+    return 0;
 }

@@ -5,8 +5,8 @@
 
 class Planet : public GameObject
 {
-	GravityPoint mGravityPoint;
+    GravityPoint mGravityPoint;
 protected:
-	Planet(sf::Vector2f pos, int radius, int power);
-	virtual ~Planet();
+    Planet(sf::Vector2f pos, int radius, int power);
+    virtual ~Planet();
 };

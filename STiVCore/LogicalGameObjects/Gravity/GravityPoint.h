@@ -6,12 +6,12 @@ class GameObject;
 class GravityPoint
 {
 protected:
-	int mPower;
-	sf::Vector2f mPosition;
+    int mPower;
+    sf::Vector2f mPosition;
 
 public:
-	GravityPoint(sf::Vector2f pos, int power);
-	virtual ~GravityPoint();
+    GravityPoint(sf::Vector2f pos, int power);
+    virtual ~GravityPoint();
 
-	void affect(GameObject & go) const;
+    void affect(GameObject & go) const;
 };

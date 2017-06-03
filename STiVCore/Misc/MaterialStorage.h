@@ -5,19 +5,19 @@
 
 class MaterialStorage
 {
-	static std::map<std::string, b2FixtureDef> mMaterials;
+    static std::map<std::string, b2FixtureDef> mMaterials;
 public:
-	static void initMaterials()
-	{
-		b2FixtureDef mat;
-		mat.density = 1.0f;
-		mat.friction = 0.3f;
-		mMaterials["default"] = mat;
-	}
+    static void initMaterials()
+    {
+        b2FixtureDef mat;
+        mat.density = 1.0f;
+        mat.friction = 0.3f;
+        mMaterials["default"] = mat;
+    }
 
-	static b2FixtureDef* getMaterial(const std::string& name)
-	{
-		return new b2FixtureDef(mMaterials[name]);
-	}
+    static b2FixtureDef* getMaterial(const std::string& name)
+    {
+        return new b2FixtureDef(mMaterials[name]);
+    }
 };
 

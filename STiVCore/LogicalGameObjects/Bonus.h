@@ -4,19 +4,19 @@
 
 enum BonusType
 {
-	bt_heal,
-	bt_weapon,
+    bt_heal,
+    bt_weapon,
 };
 
 class Bonus : public GameObject
 {
-	BonusType mBonusType;
-	int mValue;//HP / weaponNum
+    BonusType mBonusType;
+    int mValue;//HP / weaponNum
 protected:
-	Bonus(BonusType bt, int value, sf::Vector2f pos);
-	virtual ~Bonus();
+    Bonus(BonusType bt, int value, sf::Vector2f pos);
+    virtual ~Bonus();
 public:
-	BonusType getType() const;
-	int getVal() const;
+    BonusType getType() const;
+    int getVal() const;
 };
 

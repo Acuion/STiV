@@ -5,6 +5,6 @@
 class MissileSimpleBombSrv : public MissileSimpleBomb
 {
 public:
-	MissileSimpleBombSrv(sf::Vector2f pos, float angle, b2Vec2 tankLinVel);
+    MissileSimpleBombSrv(sf::Vector2f pos, float angle, b2Vec2 tankLinVel);
 };
 

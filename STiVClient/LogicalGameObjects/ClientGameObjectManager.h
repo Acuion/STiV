@@ -8,13 +8,13 @@ class Tank;
 class ClientGameObjectManager : public GameObjectManager
 {
 public:
-	static ClientGameObjectManager& getInstance();
+    static ClientGameObjectManager& getInstance();
 
-	void updateFromServer(sf::TcpSocket& socket);
-	Tank* fillFromServerAndGetPlayerTank(sf::TcpSocket& socket);
+    void updateFromServer(sf::TcpSocket& socket);
+    Tank* fillFromServerAndGetPlayerTank(sf::TcpSocket& socket);
 private:
-	ClientGameObjectManager();
-	ClientGameObjectManager operator=(const ClientGameObjectManager&) = delete;
+    ClientGameObjectManager();
+    ClientGameObjectManager operator=(const ClientGameObjectManager&) = delete;
 
-	std::map<int, GameObject*> mObjectsIndex;
+    std::map<int, GameObject*> mObjectsIndex;
 };

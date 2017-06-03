@@ -5,5 +5,5 @@
 class PlanetSrv : public Planet
 {
 public:
-	PlanetSrv(sf::Vector2f pos, int radius, int power);
+    PlanetSrv(sf::Vector2f pos, int radius, int power);
 };

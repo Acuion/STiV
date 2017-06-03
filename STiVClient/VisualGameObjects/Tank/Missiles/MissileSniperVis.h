@@ -5,6 +5,5 @@
 class MissileSniperVis : public MissileSniper
 {
 public:
-	MissileSniperVis(sf::Vector2f pos, float angle, b2Vec2 tankLinVel);
+    MissileSniperVis(sf::Vector2f pos, float angle, b2Vec2 tankLinVel);
 };
-

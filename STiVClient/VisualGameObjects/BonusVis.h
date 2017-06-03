@@ -5,6 +5,6 @@
 class BonusVis : public Bonus
 {
 public:
-	BonusVis(BonusType bt, int value, sf::Vector2f pos);
+    BonusVis(BonusType bt, int value, sf::Vector2f pos);
 };
 

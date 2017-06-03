@@ -6,7 +6,7 @@ MultitargetShader::MultitargetShader(const std::string & pathToShader)
 {
     mShader = new sf::Shader();
     mShader->loadFromFile(pathToShader, sf::Shader::Type::Fragment);
- }
+}
 
 MultitargetShader::MultitargetShader(MultitargetShader && ms) noexcept
 {

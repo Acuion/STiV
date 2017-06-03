@@ -5,14 +5,14 @@
 class TankVis : public Tank
 {
 public:
-	TankVis(sf::Vector2f pos, bool client = false);
-	TankVis();
-	~TankVis();
+    TankVis(sf::Vector2f pos, bool client = false);
+    TankVis();
+    ~TankVis();
 
-	void update() override;
-	bool tryToLaunchMissile() override;
+    void update() override;
+    bool tryToLaunchMissile() override;
 private:
-	void setMissle(MissleType mt) override;
+    void setMissle(MissleType mt) override;
 
-	Sprite* mBarrel = nullptr;
+    Sprite* mBarrel = nullptr;
 };

@@ -7,48 +7,48 @@
 
 enum class ObjectRealType
 {
-	rt_Tank,
-	rt_Missile,
-	rt_Bonus,
-	rt_Static
+    rt_Tank,
+    rt_Missile,
+    rt_Bonus,
+    rt_Static
 };
 
 class GameObject
 {
-	bool mDamageable;
-	bool mDeathAnimPlaying = false;
-	bool mMayBeDeleted = false;
+    bool mDamageable;
+    bool mDeathAnimPlaying = false;
+    bool mMayBeDeleted = false;
 
 protected:
-	Sprite mSprite;
-	int mHP;
-	b2Body* mBody = nullptr;
+    Sprite mSprite;
+    int mHP;
+    b2Body* mBody = nullptr;
 
-	virtual void onColide(std::pair<ObjectRealType, GameObject*>* with) {};
+    virtual void onColide(std::pair<ObjectRealType, GameObject*>* with) {};
 
-	explicit GameObject(bool damageable = true);
-	void create(ObjectRealType type, b2BodyDef* bdef, b2FixtureDef* fixture, int HP, bool damageable = true);
+    explicit GameObject(bool damageable = true);
+    void create(ObjectRealType type, b2BodyDef* bdef, b2FixtureDef* fixture, int HP, bool damageable = true);
 public:
 
-	GameObject(ObjectRealType type, b2BodyDef* bdef, b2FixtureDef* fixture, int HP, bool damageable = true);
-	virtual ~GameObject();
+    GameObject(ObjectRealType type, b2BodyDef* bdef, b2FixtureDef* fixture, int HP, bool damageable = true);
+    virtual ~GameObject();
 
-	bool isDamageable() const;
+    bool isDamageable() const;
 
-	bool mayBeDeleted() const;
-	int getHP() const;
+    bool mayBeDeleted() const;
+    int getHP() const;
 
-	sf::Vector2f getPosition() const;
+    sf::Vector2f getPosition() const;
 
-	void doDamage(int dmg);
+    void doDamage(int dmg);
 
-	void applyForce(float force, float angle);
+    void applyForce(float force, float angle);
 
-	virtual void update();
+    virtual void update();
 
-	friend class GravityPoint;
-	friend class GameObjectManager;
-	friend class ClientGameObjectManager;
+    friend class GravityPoint;
+    friend class GameObjectManager;
+    friend class ClientGameObjectManager;
 };
 
 using ObjectRealTypeData = std::pair<ObjectRealType, GameObject*>;

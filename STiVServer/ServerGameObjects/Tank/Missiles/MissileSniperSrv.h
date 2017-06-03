@@ -5,6 +5,6 @@
 class MissileSniperSrv : public MissileSniper
 {
 public:
-	MissileSniperSrv(sf::Vector2f pos, float angle, b2Vec2 tankLinVel);
+    MissileSniperSrv(sf::Vector2f pos, float angle, b2Vec2 tankLinVel);
 };
 

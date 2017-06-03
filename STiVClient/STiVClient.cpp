@@ -224,15 +224,15 @@ int main()
     Game::window.setVerticalSyncEnabled(true);
     Game::window.setMouseCursorGrabbed(true);
 
-	Timer updateTimer(10);
+    Timer updateTimer(10);
 
     while (Game::window.isOpen())
     {
         sf::Event event;
         while (Game::window.pollEvent(event))
             Game::handleEvent(event);
-		if (updateTimer.isExpired())
-			Game::update(10);
+        if (updateTimer.isExpired())
+            Game::update(10);
         Game::draw();
     }
 

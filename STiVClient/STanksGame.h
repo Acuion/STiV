@@ -12,40 +12,40 @@ using namespace std::chrono_literals;
 class STanksGame
 {
 public:
-	STanksGame(sf::RenderWindow & wnd);
+    STanksGame(sf::RenderWindow & wnd);
 
-	~STanksGame();
+    ~STanksGame();
 
-	bool STanksGame::connect(std::string srvIp, int srvPort);
+    bool STanksGame::connect(std::string srvIp, int srvPort);
 
-	void update(int dt);
-	void draw();
-	void handleEvent(const sf::Event& event);
+    void update(int dt);
+    void draw();
+    void handleEvent(const sf::Event& event);
 
-	void setResolution(const sf::Vector2i& res);
+    void setResolution(const sf::Vector2i& res);
 
-	bool isReturningToMainMenu() const;
+    bool isReturningToMainMenu() const;
 private:
-	sf::RenderWindow & mWindow;
-	sf::RenderTexture mScene, mSceneToWindow;
-	sf::Sprite mSceneSprite, mSceneToWindowSprite;
+    sf::RenderWindow & mWindow;
+    sf::RenderTexture mScene, mSceneToWindow;
+    sf::Sprite mSceneSprite, mSceneToWindowSprite;
 
-	sf::Vector2i mScreenSize;
-	sf::Vector2f mHalfScreen;
-	sf::Vector2i mCurrLevelSize;
-	sf::Vector2i mSpawnPoint;
+    sf::Vector2i mScreenSize;
+    sf::Vector2f mHalfScreen;
+    sf::Vector2i mCurrLevelSize;
+    sf::Vector2i mSpawnPoint;
 
-	sf::Vector2i mMousePos;
+    sf::Vector2i mMousePos;
 
-	Tank *mPlayerTank = nullptr;
-	sf::View mCenteredView;
+    Tank *mPlayerTank = nullptr;
+    sf::View mCenteredView;
 
-	sf::TcpSocket mTcpClient;
+    sf::TcpSocket mTcpClient;
 
-	bool mIsReturningToMainMenu = false;
+    bool mIsReturningToMainMenu = false;
 
-	Sprite mLevelBackground;
-	sf::Text mHpText;
-	sf::Font mConsolas;
+    Sprite mLevelBackground;
+    sf::Text mHpText;
+    sf::Font mConsolas;
 };
 

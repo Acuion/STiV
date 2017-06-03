@@ -6,7 +6,7 @@
 class MultitargetShader
 {
 public:
-	explicit MultitargetShader(const std::string& pathToShader);
+    explicit MultitargetShader(const std::string& pathToShader);
     MultitargetShader(MultitargetShader&& ms) noexcept;
     ~MultitargetShader();
     void addTarget(sf::Vector2f where, int startTime);
