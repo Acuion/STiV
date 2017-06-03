@@ -3,6 +3,7 @@
 #include "LogicalGameObjects/Tank/Missiles/MissileSniper.h"
 #include "LogicalGameObjects/Bonus.h"
 #include "GameObjectsFactory.h"
+#include "Misc/Timer.h"
 
 void Tank::setMissle(MissleType mt)
 {
@@ -17,17 +18,17 @@ bool Tank::tryToLaunchMissile()
 	case MissleType::simpleBomb:
 		if (Timer::getElapsedTime() - mLastFire < MissileSimpleBomb::mCd)
 			break;
-		fired = GameObjectsFactory::newMissileSimpleBomb(sf::Vector2f(getPosition().x + (50 + 30) * cos(mAngle), getPosition().y + (50 + 30) * sin(mAngle)), mAngle, mBody->GetLinearVelocity());
+		fired = GameObjectsFactory::newMissileSimpleBomb(sf::Vector2f(getPosition().x + (50 + 30) * cos(mBarrelAngle), getPosition().y + (50 + 30) * sin(mBarrelAngle)), mBarrelAngle, mBody->GetLinearVelocity());
 		break;
 	case MissleType::sniper:
 		if (Timer::getElapsedTime() - mLastFire < MissileSniper::mCd)
 			break;
-		fired = GameObjectsFactory::newMissileSniper(sf::Vector2f(getPosition().x + (50 + 30) * cos(mAngle), getPosition().y + (50 + 30) * sin(mAngle)), mAngle, mBody->GetLinearVelocity());
+		fired = GameObjectsFactory::newMissileSniper(sf::Vector2f(getPosition().x + (50 + 30) * cos(mBarrelAngle), getPosition().y + (50 + 30) * sin(mBarrelAngle)), mBarrelAngle, mBody->GetLinearVelocity());
 		break;
 	}
 	if (fired)
 	{
-		mBody->ApplyForceToCenter({ fired->getKick() * cos(mAngle), fired->getKick() * sin(mAngle) }, true);
+		mBody->ApplyForceToCenter({ fired->getKick() * cos(mBarrelAngle), fired->getKick() * sin(mBarrelAngle) }, true);
 		mLastFire = Timer::getElapsedTime();
 		return true;
 	}
@@ -45,7 +46,7 @@ void Tank::onColide(ObjectRealTypeData * with)
 {
 	if (with->first == ObjectRealType::rt_Bonus)
 	{
-		Bonus* bn = (Bonus*)with->second;
+		Bonus* bn = static_cast<Bonus*>(with->second);
 		bn->doDamage(50);//bonus hp
 		switch (bn->getType())
 		{
@@ -53,7 +54,7 @@ void Tank::onColide(ObjectRealTypeData * with)
 			mHP = std::min(mMaxHP, mHP + bn->getVal());
 			break;
 		case BonusType::bt_weapon:
-			setMissle((MissleType)bn->getVal());
+			setMissle(static_cast<MissleType>(bn->getVal()));
 			break;
 		}
 	}
@@ -106,14 +107,19 @@ void Tank::update()
 {
 	GameObject::update();
 	if (!mClient)
-		mAngle = Utilites::atan2Points(getPosition(), mMousePos);
+		mBarrelAngle = Utilites::atan2Points(getPosition(), mMousePos);
 }
 
 void Tank::setBarrelAngle(float angle)
 {
 	assert(mClient);
 
-	mAngle = angle;
+	mBarrelAngle = angle;
+}
+
+float Tank::getBarrelAngle() const
+{
+	return mBarrelAngle;
 }
 
 bool Tank::wantToLaunchMissile()

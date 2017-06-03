@@ -86,11 +86,11 @@ void GameObject::update()
 		auto b2 = cs->contact->GetFixtureB()->GetBody();
 		if (b1 != mBody)
 		{
-			onColide(((std::pair<ObjectRealType, GameObject*>*)b1->GetUserData()));
+			onColide(static_cast<std::pair<ObjectRealType, GameObject*>*>(b1->GetUserData()));
 		}
 		else
 		{
-			onColide(((std::pair<ObjectRealType, GameObject*>*)b2->GetUserData()));
+			onColide(static_cast<std::pair<ObjectRealType, GameObject*>*>(b2->GetUserData()));
 		}
 	}
 }

@@ -1,6 +1,5 @@
 #include "STanksGame.h"
 #include "LogicalGameObjects/Bonus.h"
-#include <fstream>
 #include "VisualGameObjects/Visualizer.h"
 #include "GameObjectsFactory.h"
 #include "Network/NetworkUtils.h"
@@ -26,26 +25,53 @@ bool STanksGame::connect(std::string srvIp, int srvPort)
 	if (res != sf::Socket::Done)
 		return false;
 
-	size_t rec;
-	mTcpClient.receive(&mCurrLevelSize, sizeof(mCurrLevelSize), rec);
+	try
+	{
+		NetworkUtils::receiveDisconnectCheck(mTcpClient, mCurrLevelSize);
+		mPlayerTank = ClientGameObjectManager::getInstance().fillFromServerAndGetPlayerTank(mTcpClient);
+	}
+	catch(...)
+	{
+		return false;
+	}
+
 	mScene.create(mCurrLevelSize.x, mCurrLevelSize.y);
 	mSceneSprite = sf::Sprite(mScene.getTexture());
 
-	mCenteredView.setSize(mScreenSize.x, mScreenSize.y);
+	mCenteredView.setSize(static_cast<float>(mScreenSize.x), static_cast<float>(mScreenSize.y));
 
 	mPlayerTank = GameObjectsFactory::newTank();
 
 	mLevelBackground = Sprite("globalBackground.png", { mCurrLevelSize.x / 2.0f, mCurrLevelSize.y / 2.0f },
-	{ (float)mCurrLevelSize.x, (float)mCurrLevelSize.y });//TODO: load background from server
+	{ 1.0f * mCurrLevelSize.x, 1.0f * mCurrLevelSize.y });//TODO: load background from server
 
 	return true;
 }
 
 void STanksGame::update(int dt)
 {
-	ClientGameObjectManager::getInstance().update(dt);//todo: pass the socket, client version of GOM
+	try
+	{
+		ClientGameObjectManager::getInstance().updateFromServer(mTcpClient);
+	}
+	catch(...)
+	{
+		mIsReturningToMainMenu = true;
+		return;
+	}
 
-	//mIsReturningToMainMenu = true; <- disc
+	ClientGameObjectManager::getInstance().update(dt);
+
+	try
+	{
+		NetworkUtils::sendDisconenctCheck(mTcpClient, mPlayerTank->getBarrelAngle());
+		NetworkUtils::sendDisconenctCheck(mTcpClient, mPlayerTank->wantToLaunchMissile());
+	}
+	catch(...)
+	{
+		mIsReturningToMainMenu = true;
+		return;
+	}
 
 	mCenteredView.setCenter({ std::min(std::max(mPlayerTank->getPosition().x, mHalfScreen.x), mCurrLevelSize.x - mHalfScreen.x),
 		std::min(std::max(mPlayerTank->getPosition().y, mHalfScreen.y), mCurrLevelSize.y - mHalfScreen.y) });

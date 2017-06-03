@@ -10,8 +10,8 @@ public:
 	static void initMaterials()
 	{
 		b2FixtureDef mat;
-		mat.density = 1;
-		mat.friction = 0.3;
+		mat.density = 1.0f;
+		mat.friction = 0.3f;
 		mMaterials["default"] = mat;
 	}
 

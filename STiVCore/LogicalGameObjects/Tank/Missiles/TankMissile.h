@@ -16,10 +16,10 @@ protected:
     int mDamage;
     void create(b2FixtureDef * fdef, float force, const sf::Vector2f& pos,
         float angle, int damage, float kick, b2Vec2 tankLinVel, bool fixedRotation = false);
-    virtual void onColide(ObjectRealTypeData* with);
+	void onColide(ObjectRealTypeData* with) override;
 
 	TankMissile();
 	virtual ~TankMissile();
 public:
-    float getKick();
+    float getKick() const;
 };

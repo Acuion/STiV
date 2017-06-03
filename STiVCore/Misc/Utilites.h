@@ -3,13 +3,13 @@
 #include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
 
-#define M_PI 3.14
+#define M_PI 3.141592f
 
 namespace Utilites
 {
 	using byte = unsigned char;
 
-	const float b2scale = 0.04;
+	const float b2scale = 0.04f;
 
 	bool floatEq(float a, float b);
 

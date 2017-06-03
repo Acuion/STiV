@@ -16,19 +16,19 @@ Bonus::Bonus(BonusType bt, int value, sf::Vector2f pos)
 	fdef->shape = cs;
 
 	create(ObjectRealType::rt_Bonus, bdef, fdef, 30, true);
-	applyForce(1000, (rand() % 600) * 0.01);
+	applyForce(1000, (rand() % 600) * 0.01f);
 }
 
 Bonus::~Bonus()
 {
 }
 
-BonusType Bonus::getType()
+BonusType Bonus::getType() const
 {
 	return mBonusType;
 }
 
-int Bonus::getVal()
+int Bonus::getVal() const
 {
 	return mValue;
 }

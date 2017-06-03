@@ -46,7 +46,7 @@ public:
         int mFramesCount;
         int mFps;
         PostProcessingManager::MultitargetShaderType mShaderToApply;
-        float mStartTime;
+        int mStartTime;
 
         Animation(int framesCount, int fps,
             PostProcessingManager::MultitargetShaderType shader = PostProcessingManager::MultitargetShaderType::None)
@@ -72,7 +72,7 @@ public:
 	void setOrigin(const sf::Vector2f& orig);
 
 	void playAnimationOnce(int index);
-	bool isPlaying();
+	bool isPlaying() const;
 
 	void move(const sf::Vector2f& delta);
 	void rotate(float deltaDeg);

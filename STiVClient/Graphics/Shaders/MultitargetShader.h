@@ -6,8 +6,8 @@
 class MultitargetShader
 {
 public:
-    MultitargetShader(const std::string& pathToShader);
-    MultitargetShader(MultitargetShader&& ms);
+	explicit MultitargetShader(const std::string& pathToShader);
+    MultitargetShader(MultitargetShader&& ms) noexcept;
     ~MultitargetShader();
     void addTarget(sf::Vector2f where, int startTime);
     void apply(sf::RenderTexture& rt);

@@ -28,7 +28,7 @@ bool UIButton::wasPressed(const sf::Event& ev, const sf::Vector2f& mousePos)
 		}
 		break;
 	case sf::Event::MouseMoved:
-		if (mButtonRect.contains((sf::Vector2i)mousePos))
+		if (mButtonRect.contains(static_cast<sf::Vector2i>(mousePos)))
 		{
 			if (mCurrState != State::pressedInside)
 				mCurrState = State::inside;
@@ -46,8 +46,8 @@ bool UIButton::wasPressed(const sf::Event& ev, const sf::Vector2f& mousePos)
 void UIButton::setPosition(const sf::Vector2f& pos)
 {
 	mSprites.setPosition(pos);
-	mButtonRect.left = pos.x - mButtonRect.width / 2;
-	mButtonRect.top = pos.y - mButtonRect.height / 2;
+	mButtonRect.left = static_cast<int>(pos.x - mButtonRect.width / 2);
+	mButtonRect.top = static_cast<int>(pos.y - mButtonRect.height / 2);
 }
 
 void UIButton::update()

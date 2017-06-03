@@ -13,10 +13,10 @@ public:
         Explosion
     };
     static void init();
-    static void addTargetToShaderProcessing(MultitargetShaderType shader, const sf::Vector2f& where, float time);
+    static void addTargetToShaderProcessing(MultitargetShaderType shader, const sf::Vector2f& where, int time);
     static void postprocess(sf::RenderTexture& rt);
 private:
-    PostProcessingManager();
+    PostProcessingManager() = delete;
     static std::map<MultitargetShaderType, MultitargetShader> mShaderFromType;
 };
 

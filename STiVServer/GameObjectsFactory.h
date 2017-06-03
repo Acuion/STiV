@@ -38,6 +38,11 @@ public:
 		return new PlanetSrv(pos, radius, power);
 	}
 
+	static GameObjectManager& instanceOfGoM()
+	{
+		return ServerGameObjectManager::getInstance();//todo: для каждого клиена свой, получается о_О
+	}
+
 private:
 	GameObjectsFactory();
 };

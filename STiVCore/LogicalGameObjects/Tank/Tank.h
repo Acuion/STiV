@@ -9,11 +9,11 @@ class Tank : public GameObject
 
 	int mLastFire = 0;
 
-	void onColide(ObjectRealTypeData* with);
+	void onColide(ObjectRealTypeData* with) override;
 
 	bool mClient = false, mWantLaunchMissile = false;
 protected:
-	float mAngle = 0;
+	float mBarrelAngle = 0;
 	MissleType mCurrMissleType;
 
 	virtual void setMissle(MissleType mt);
@@ -33,6 +33,7 @@ public:
 	void update() override;
 
 	void setBarrelAngle(float angle);
+	float getBarrelAngle() const;
 	bool wantToLaunchMissile();
 };
 

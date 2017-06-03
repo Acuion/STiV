@@ -175,7 +175,7 @@
     <ClInclude Include="ServerGameObjects\Tank\Missiles\MissileSniperSrv.h">
       <Filter>Source\ServerGameObjects\Tank\Missiles</Filter>
     </ClInclude>
-    <ClInclude Include="..\STiVCore\Network\ObjectEnums.h">
+    <ClInclude Include="..\STiVCore\Network\NetworkUtils.h">
       <Filter>Source\Core\Network</Filter>
     </ClInclude>
   </ItemGroup>

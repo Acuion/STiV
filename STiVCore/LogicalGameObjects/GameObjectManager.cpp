@@ -18,12 +18,12 @@ void GameObjectManager::reset(int sizeX, int sizeY)
 
 	b2FixtureDef* fdefH = new b2FixtureDef();
 	b2PolygonShape* shapeH = new b2PolygonShape();
-	shapeH->SetAsBox((float)sizeX * Utilites::b2scale, 20 * Utilites::b2scale);
+	shapeH->SetAsBox(static_cast<float>(sizeX * Utilites::b2scale), 20 * Utilites::b2scale);
 	fdefH->shape = shapeH;
 
 	b2FixtureDef* fdefV = new b2FixtureDef();
 	b2PolygonShape* shapeV = new b2PolygonShape();
-	shapeV->SetAsBox(20 * Utilites::b2scale, (float)sizeY* Utilites::b2scale);
+	shapeV->SetAsBox(20 * Utilites::b2scale, static_cast<float>(sizeY * Utilites::b2scale));
 	fdefV->shape = shapeV;
 
 	b2BodyDef* bh1 = new b2BodyDef(*borderDef);
@@ -89,7 +89,7 @@ void GameObjectManager::update(int dt)
 			break;
 	}
 
-	mWorld->Step(0.001*dt, 8, 3);
+	mWorld->Step(0.001f*dt, 8, 3);
 }
 
 void GameObjectManager::forcedDelete(GameObject* obj)

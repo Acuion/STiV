@@ -16,7 +16,7 @@ protected:
 	Bonus(BonusType bt, int value, sf::Vector2f pos);
 	virtual ~Bonus();
 public:
-	BonusType getType();
-	int getVal();
+	BonusType getType() const;
+	int getVal() const;
 };
 

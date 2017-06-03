@@ -2,7 +2,6 @@
 
 #include "LogicalGameObjects/GameObject.h"
 #include "LogicalGameObjects/Gravity/GravityPoint.h"
-#include "Misc/Utilites.h"
 #include <list>
 
 class GameObjectManager

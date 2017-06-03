@@ -20,4 +20,12 @@ namespace NetworkUtils
 		if (rcvSocket.receive(&obj, sizeof(obj), size) != sf::Socket::Status::Done)
 			throw sf::Socket::Status::Disconnected;
 	}
+
+	template<typename T>
+	void sendDisconenctCheck(sf::TcpSocket& sndSocket, const T& obj)
+	{
+		size_t size;
+		if (sndSocket.send(&obj, sizeof(obj), size) != sf::Socket::Status::Done)
+			throw sf::Socket::Status::Disconnected;
+	}
 }

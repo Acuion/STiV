@@ -32,7 +32,7 @@ void TankVis::update()
 {
 	Tank::update();
 
-	mBarrel[mCurrMissleType].setRotation(Utilites::radToDeg(mAngle));
+	mBarrel[mCurrMissleType].setRotation(Utilites::radToDeg(mBarrelAngle));
 	mBarrel[mCurrMissleType].setPosition(getPosition());
 	mBarrel[mCurrMissleType].update();
 	if (!mBarrel[mCurrMissleType].isPlaying())

@@ -20,7 +20,7 @@ void TankMissile::create(b2FixtureDef* fdef, float force, const sf::Vector2f& po
 
 void TankMissile::onColide(ObjectRealTypeData* with)
 {
-	with->second->applyForce(mDamage * 100, Utilites::atan2Points(getPosition(), with->second->getPosition()));
+	with->second->applyForce(mDamage * 100.0f, Utilites::atan2Points(getPosition(), with->second->getPosition()));
 	mBody->SetLinearVelocity({ 0,0 });
 	mHP = 0;
 	with->second->doDamage(mDamage);
@@ -36,7 +36,7 @@ TankMissile::~TankMissile()
 {
 }
 
-float TankMissile::getKick()
+float TankMissile::getKick() const
 {
 	return -mKick;
 }

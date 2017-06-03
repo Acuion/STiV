@@ -1,4 +1,3 @@
-#include <iostream>
 #include "STanksGame.h"
 #include "Graphics/Shaders/PostProcessingManager.h"
 #include "UI/UIButton.h"
@@ -37,17 +36,17 @@ namespace Game
         menu_rightBarrel = Sprite("missiles\\sniperBarrel.png", { currRes.x / 2.0f + 192, 186 }, 2, { Sprite::Animation(3, 15), Sprite::Animation(6, 23) }, { 100, 40 }, 50);
         menu_rightBarrel.setOrigin({ 0, 20 });
 
-        menu_newGame = UIButton(sf::IntRect(currRes.x / 2.0f, 400, 210, 35), Sprite("menu\\menu_newGame.png", { currRes.x / 2.0f, 400 }, 3, { Sprite::Animation(1, 1), Sprite::Animation(1, 1), Sprite::Animation(1, 1) }, { 500, 100 }));
-        menu_toggleFullscreen = UIButton(sf::IntRect(currRes.x / 2.0f, 500, 365, 35), Sprite("menu\\menu_toggleFullscreen.png", { currRes.x / 2.0f, 500 }, 3, { Sprite::Animation(1, 1), Sprite::Animation(1, 1), Sprite::Animation(1, 1) }, { 730, 100 }));
-        menu_exit = UIButton(sf::IntRect(currRes.x / 2.0f, 600, 110, 35), Sprite("menu\\menu_exit.png", { currRes.x / 2.0f, 600 }, 3, { Sprite::Animation(1, 1), Sprite::Animation(1, 1), Sprite::Animation(1, 1) }, { 220, 100 }));
+        menu_newGame = UIButton(sf::IntRect(static_cast<int>(currRes.x / 2.0f), 400, 210, 35), Sprite("menu\\menu_newGame.png", sf::Vector2f(currRes.x / 2.0f, 400), 3, { Sprite::Animation(1, 1), Sprite::Animation(1, 1), Sprite::Animation(1, 1) }, { 500, 100 }));
+        menu_toggleFullscreen = UIButton(sf::IntRect(static_cast<int>(currRes.x / 2.0f), 500, 365, 35), Sprite("menu\\menu_toggleFullscreen.png", sf::Vector2f(currRes.x / 2.0f, 500), 3, { Sprite::Animation(1, 1), Sprite::Animation(1, 1), Sprite::Animation(1, 1) }, { 730, 100 }));
+        menu_exit = UIButton(sf::IntRect(static_cast<int>(currRes.x / 2.0f), 600, 110, 35), Sprite("menu\\menu_exit.png", sf::Vector2f(currRes.x / 2.0f, 600), 3, { Sprite::Animation(1, 1), Sprite::Animation(1, 1), Sprite::Animation(1, 1) }, { 220, 100 }));
 
-        menu_asClient = UIButton(sf::IntRect(currRes.x / 2.0f, 500, 300, 35), Sprite("menu\\menu_asClient.png", { currRes.x / 2.0f, 500 }, 3, { Sprite::Animation(1, 1), Sprite::Animation(1, 1), Sprite::Animation(1, 1) }, { 600, 100 }));
-        menu_Back = UIButton(sf::IntRect(currRes.x / 2.0f, 600, 150, 35), Sprite("menu\\menu_back.png", { currRes.x / 2.0f, 600 }, 3, { Sprite::Animation(1, 1), Sprite::Animation(1, 1), Sprite::Animation(1, 1) }, { 300, 100 }));
+        menu_asClient = UIButton(sf::IntRect(static_cast<int>(currRes.x / 2.0f), 500, 300, 35), Sprite("menu\\menu_asClient.png", sf::Vector2f(currRes.x / 2.0f, 500), 3, { Sprite::Animation(1, 1), Sprite::Animation(1, 1), Sprite::Animation(1, 1) }, { 600, 100 }));
+        menu_Back = UIButton(sf::IntRect(static_cast<int>(currRes.x / 2.0f), 600, 150, 35), Sprite("menu\\menu_back.png", sf::Vector2f(currRes.x / 2.0f, 600), 3, { Sprite::Animation(1, 1), Sprite::Animation(1, 1), Sprite::Animation(1, 1) }, { 300, 100 }));
     }
 
     void setResolution(const sf::Vector2i& res)
     {
-        window.setSize((sf::Vector2u)res);
+        window.setSize(static_cast<sf::Vector2u>(res));
 
         menuBackground.setPosition({ currRes.x / 2.0f, currRes.y / 2.0f });
         menu_Logo.setPosition({ currRes.x / 2.0f, 200 });
@@ -72,7 +71,7 @@ namespace Game
         else
         {
             window.create(sf::VideoMode::getDesktopMode(), "STiV!", sf::Style::Fullscreen);
-            currRes = { (int)sf::VideoMode::getDesktopMode().width, (int)sf::VideoMode::getDesktopMode().height };
+            currRes = { static_cast<int>(sf::VideoMode::getDesktopMode().width), static_cast<int>(sf::VideoMode::getDesktopMode().height) };
         }
         window.setVerticalSyncEnabled(true);
         window.setMouseCursorGrabbed(true);
@@ -82,7 +81,7 @@ namespace Game
     //Загрузка контента, который должен присутствовать на момент первой отрсовки окна
     void preloadContent()
     {
-        srand(time(0));
+        srand(static_cast<unsigned int>(time(nullptr)));
         MaterialStorage::initMaterials();
         PostProcessingManager::init();
 
@@ -97,7 +96,7 @@ namespace Game
         switch (event.type)
         {
         case sf::Event::MouseMoved:
-            mousePos = (sf::Vector2f)sf::Mouse::getPosition(window);
+            mousePos = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
             break;
         case sf::Event::Closed:
             window.close();
@@ -217,7 +216,7 @@ namespace Game
 
 int main()
 {
-    std::ios_base::sync_with_stdio(0);
+    std::ios_base::sync_with_stdio(false);
 
     Game::preloadContent();
 

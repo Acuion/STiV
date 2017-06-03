@@ -1,5 +1,10 @@
-on connect:
-Vector2i = level size
+клиент не может создавать объекты, только выражать желание
+
+приветственное сообщение (сервер должен создать танк до отправления инфы):
+Vector2i - размер уровня
+int колво объектов в мире
+конструкторы всего + сразу инфа о них
+int - номер объекта, являющегося танком игрока
 
 объекты:
 Bonus(BonusType bt, int value, sf::Vector2f pos)
@@ -8,7 +13,7 @@ MissileSniper(sf::Vector2f pos, float angle, b2Vec2 tankLinVel)
 MissileSimpleBomb(sf::Vector2f pos, float angle, b2Vec2 tankLinVel)
 Planet(sf::Vector2f pos, int radius, int power)
 
-пакет:
+пакет обновления мира:
 
 4байта - количество блоков, содержащих инфу о новых объектах
 [4 байта - тип объекта
@@ -22,4 +27,6 @@ Planet(sf::Vector2f pos, int radius, int power)
 ? байт - угол
 ? байт - угловая скорость]
 
-клиент не может создавать объекты, только выражать желание
+Пакет от клиента:
+float - угол дула
+byte - хочу выстрелить
