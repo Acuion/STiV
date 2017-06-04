@@ -171,6 +171,7 @@ COPY "$(SolutionDir)SFML\bin\Release\*" "$(OutDir)"</Command>
     <ClCompile Include="..\STiVCore\Misc\tgMath.cpp" />
     <ClCompile Include="..\STiVCore\Misc\Timer.cpp" />
     <ClCompile Include="LogicalGameObjects/GameObject.cpp" />
+    <ClCompile Include="LogicalGameObjects\ServerGameObjectManager.cpp" />
     <ClCompile Include="ServerGameObjects\BonusSrv.cpp" />
     <ClCompile Include="ServerGameObjects\Gravity\PlanetSrv.cpp" />
     <ClCompile Include="ServerGameObjects\Tank\Missiles\MissileSimpleBombSrv.cpp" />
@@ -195,6 +196,7 @@ COPY "$(SolutionDir)SFML\bin\Release\*" "$(OutDir)"</Command>
     <ClInclude Include="..\STiVCore\Network\NetworkUtils.h" />
     <ClInclude Include="GameObjectsFactory.h" />
     <ClInclude Include="LogicalGameObjects\GameObject.h" />
+    <ClInclude Include="LogicalGameObjects\ServerGameObjectManager.h" />
     <ClInclude Include="ServerGameObjects\BonusSrv.h" />
     <ClInclude Include="ServerGameObjects\Gravity\PlanetSrv.h" />
     <ClInclude Include="ServerGameObjects\Tank\Missiles\MissileSimpleBombSrv.h" />

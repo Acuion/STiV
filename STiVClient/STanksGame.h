@@ -12,7 +12,7 @@ using namespace std::chrono_literals;
 class STanksGame
 {
 public:
-    STanksGame(sf::RenderWindow & wnd);
+    explicit STanksGame(sf::RenderWindow & wnd);
 
     ~STanksGame();
 
@@ -41,6 +41,7 @@ private:
     sf::View mCenteredView;
 
     sf::TcpSocket mTcpClient;
+    Timer mTransiveTimer;
 
     bool mIsReturningToMainMenu = false;
 

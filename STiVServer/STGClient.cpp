@@ -8,22 +8,13 @@ STGClient::~STGClient()
     delete mSocket;
 }
 
-STGClient::STGClient(sf::Vector2i spawnPoint, sf::TcpSocket* socket, sf::Vector2i levelSize)
+STGClient::STGClient(sf::Vector2i spawnPoint, sf::TcpSocket& socket, sf::Vector2i levelSize)
+    : mSocket(socket)
 {
-    mTank = GameObjectsFactory::newTank((sf::Vector2f)spawnPoint, true);
-    mSocket = socket;
+    mTank = GameObjectsFactory::newTank(static_cast<sf::Vector2f>(spawnPoint), true);
 
-    unsigned char* data = new unsigned char[4];
-    int ptr = 0;
-    Utilites::write2Bytes(levelSize.x, data, ptr);
-    Utilites::write2Bytes(levelSize.y, data, ptr);
-    mSocket->send(data, 4);
-    delete[] data;
-}
 
-void STGClient::unselectSocket(sf::SocketSelector & selector)
-{
-    selector.remove(*mSocket);
+    mSocket.send(data, 4);
 }
 
 void STGClient::sendWorld(unsigned char * world, int size)
@@ -32,11 +23,6 @@ void STGClient::sendWorld(unsigned char * world, int size)
     Utilites::write2Bytes(mTank->getPosition().y, world, size);
     world[size++] = mTank->getHP() / 10;
     mSocket->send(world, size);
-}
-
-bool STGClient::isReadyToUpdate(sf::SocketSelector& selector)
-{
-    return selector.isReady(*mSocket);
 }
 
 void STGClient::updateFromNetwork()

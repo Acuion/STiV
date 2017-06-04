@@ -113,6 +113,9 @@
     <ClCompile Include="ServerGameObjects\Tank\Missiles\MissileSniperSrv.cpp">
       <Filter>Source\ServerGameObjects\Tank\Missiles</Filter>
     </ClCompile>
+    <ClCompile Include="LogicalGameObjects\ServerGameObjectManager.cpp">
+      <Filter>Source\LogicalGameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObjectsFactory.h">
@@ -177,6 +180,9 @@
     </ClInclude>
     <ClInclude Include="..\STiVCore\Network\NetworkUtils.h">
       <Filter>Source\Core\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="LogicalGameObjects\ServerGameObjectManager.h">
+      <Filter>Source\LogicalGameObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

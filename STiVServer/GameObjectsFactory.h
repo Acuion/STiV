@@ -4,6 +4,7 @@
 #include "ServerGameObjects/Tank/TankSrv.h"
 #include "ServerGameObjects/BonusSrv.h"
 #include "ServerGameObjects/Gravity/PlanetSrv.h"
+#include "LogicalGameObjects/ServerGameObjectManager.h"
 
 class GameObjectsFactory
 {
@@ -40,7 +41,7 @@ public:
 
     static GameObjectManager& instanceOfGoM()
     {
-        return ServerGameObjectManager::getInstance();//todo: для каждого клиена свой, получается о_О
+        return ServerGameObjectManager::getInstance();
     }
 
 private:

@@ -7,6 +7,7 @@
 
 STanksGame::STanksGame(sf::RenderWindow & wnd)
     : mWindow(wnd)
+    , mTransiveTimer(30)
 {
     mConsolas.loadFromFile("Content\\consola.ttf");
     mHpText.setFont(mConsolas);
@@ -50,28 +51,23 @@ bool STanksGame::connect(std::string srvIp, int srvPort)
 
 void STanksGame::update(int dt)
 {
-    try
+    if (mTransiveTimer.isExpired())
     {
-        ClientGameObjectManager::getInstance().updateFromServer(mTcpClient);
-    }
-    catch (...)
-    {
-        mIsReturningToMainMenu = true;
-        return;
+        try
+        {
+            ClientGameObjectManager::getInstance().updateFromServer(mTcpClient);
+
+            NetworkUtils::sendDisconenctCheck(mTcpClient, mPlayerTank->getBarrelAngle());
+            NetworkUtils::sendDisconenctCheck(mTcpClient, mPlayerTank->wantToLaunchMissile());
+        }
+        catch (...)
+        {
+            mIsReturningToMainMenu = true;
+            return;
+        }
     }
 
     ClientGameObjectManager::getInstance().update(dt);
-
-    try
-    {
-        NetworkUtils::sendDisconenctCheck(mTcpClient, mPlayerTank->getBarrelAngle());
-        NetworkUtils::sendDisconenctCheck(mTcpClient, mPlayerTank->wantToLaunchMissile());
-    }
-    catch (...)
-    {
-        mIsReturningToMainMenu = true;
-        return;
-    }
 
     mCenteredView.setCenter({ std::min(std::max(mPlayerTank->getPosition().x, mHalfScreen.x), mCurrLevelSize.x - mHalfScreen.x),
         std::min(std::max(mPlayerTank->getPosition().y, mHalfScreen.y), mCurrLevelSize.y - mHalfScreen.y) });

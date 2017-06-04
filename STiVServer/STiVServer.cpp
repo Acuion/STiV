@@ -3,8 +3,8 @@
 
 int main()
 {
-    std::ios_base::sync_with_stdio(0);
-    srand(time(0));
+    std::ios_base::sync_with_stdio(false);
+    srand(static_cast<unsigned int>(time(nullptr)));
 
     MaterialStorage::initMaterials();
 
@@ -12,9 +12,12 @@ int main()
     STG->loadLevel("test");
     STG->listen(58000);
 
+    Timer updateTimer(10);
+
     while (true)
     {
-        STG->update(10);
+        if (updateTimer.isExpired())
+            STG->update(10);
     }
 
     return 0;

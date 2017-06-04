@@ -2,13 +2,13 @@
 #include "LogicalGameObjects/Bonus.h"
 #include <iostream>
 #include <fstream>
+#include <chrono>
 #include "GameObjectsFactory.h"
 
 STanksGame::STanksGame()
     : mSpawnBonus(3000)
     , mSendTimer(30)
 {
-
 }
 
 STanksGame::~STanksGame()
@@ -16,16 +16,16 @@ STanksGame::~STanksGame()
     mIsWorking = false;
     if (mAccThread)
         mAccThread->join();
-    if (mLsnThread)
-        mLsnThread->join();
 }
 
 void STanksGame::acceptClients()
 {
+    using namespace std::chrono_literals;
+
     while (mIsWorking)
     {
-        sf::TcpSocket* curSock = new sf::TcpSocket();
-        while (mTcpServer.accept(*curSock) != sf::Socket::Status::Done)
+        sf::TcpSocket curSock;
+        while (mTcpServer.accept(curSock) != sf::Socket::Status::Done)
         {
 
             std::this_thread::sleep_for(100ms);
@@ -34,40 +34,9 @@ void STanksGame::acceptClients()
         }
         //hello!
         mClientsWork.lock();
-        mSocketSelector.add(*curSock);
         mClients.emplace_back(mSpawnPoint, curSock, mCurrLevelSize);
         std::cout << "New client!\n";
         mClientsWork.unlock();
-    }
-}
-
-void STanksGame::listenClients()
-{
-    bool wasDeleted;
-    while (mIsWorking)
-    {
-        if (!mClients.size())
-            std::this_thread::sleep_for(100ms);
-        mSocketSelector.wait(sf::seconds(1));
-        for (auto iter = mClients.begin(); iter != mClients.end();)
-        {
-            wasDeleted = false;
-            STGClient& client = *iter;
-            if (client.isReadyToUpdate(mSocketSelector))
-            {
-                mClientsWork.lock();
-                client.updateFromNetwork();
-                if (client.isDisconnected())
-                {
-                    wasDeleted = true;
-                    client.unselectSocket(mSocketSelector);
-                    iter = mClients.erase(iter);
-                }
-                mClientsWork.unlock();
-            }
-            if (!wasDeleted)
-                ++iter;
-        }
     }
 }
 
@@ -77,7 +46,6 @@ bool STanksGame::listen(int srvPort)
         return false;
     mTcpServer.setBlocking(false);
     mAccThread = new std::thread(&STanksGame::acceptClients, this);
-    mLsnThread = new std::thread(&STanksGame::listenClients, this);
     return true;
 }
 
@@ -110,18 +78,13 @@ void STanksGame::update(int dt)
     for (auto& client : mClients)
         client.checkHP(mSpawnPoint);
 
-    GameObjectManager::update(dt);
+    ServerGameObjectManager::getInstance().update(dt);
 
     if (mSendTimer.isExpired())
     {
-        int ptr = 2;
-        unsigned char* data = Visualizer::pack(ptr);
-        int pt0 = 0;
-        Utilites::write2Bytes(ptr - 2, data, pt0);
-        for (auto& client : mClients)
-            client.sendWorld(data, ptr);
-        delete[] data;
+        //send
     }
+
     mClientsWork.unlock();
 }
 
@@ -131,7 +94,7 @@ void STanksGame::loadLevel(std::string name)
     int goc;
     int x, y, radius, power;
     levelfile >> x >> y;
-    GameObjectManager::reset(x, y);
+    ServerGameObjectManager::getInstance().reset(x, y);
     mCurrLevelSize.x = x;
     mCurrLevelSize.y = y;
     levelfile >> x >> y;
@@ -143,7 +106,7 @@ void STanksGame::loadLevel(std::string name)
     {
         levelfile >> x >> y >> radius >> power;
 
-        GameObjectsFactory::newPlanet({ (float)x, (float)y }, radius, power);
+        GameObjectsFactory::newPlanet(sf::Vector2f(x, y), radius, power);
     }
 
     levelfile >> goc;
@@ -151,6 +114,6 @@ void STanksGame::loadLevel(std::string name)
     for (int i = 0; i < goc; ++i)
     {
         levelfile >> x >> y;
-        mBonusSpawnPoints.push_back({ (float)x,(float)y });
+        mBonusSpawnPoints.push_back(sf::Vector2f(x, y));
     }
 }
