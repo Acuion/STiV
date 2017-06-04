@@ -13,19 +13,33 @@ namespace NetworkUtils
         ObjPlanet
     };
 
-    template<typename T>
-    void receiveDisconnectCheck(sf::TcpSocket& rcvSocket, T& obj)
+    inline sf::Packet readPacket(sf::TcpSocket& socket)
     {
-        size_t size;
-        if (rcvSocket.receive(&obj, sizeof(obj), size) != sf::Socket::Status::Done)
-            throw sf::Socket::Status::Disconnected;
+        sf::Packet packet;
+        socket.receive(packet);
+        return packet;
     }
 
-    template<typename T>
-    void sendDisconenctCheck(sf::TcpSocket& sndSocket, const T& obj)
+    inline sf::Packet& operator>>(sf::Packet& packet, sf::Vector2f& vector)
     {
-        size_t size;
-        if (sndSocket.send(&obj, sizeof(obj), size) != sf::Socket::Status::Done)
-            throw sf::Socket::Status::Disconnected;
+        return packet >> vector.x >> vector.y;
+    }
+
+    inline sf::Packet& operator>>(sf::Packet& packet, sf::Vector2i& vector)
+    {
+        sf::Int32 x, y;
+        packet >> x >> y;
+        vector.x = x;
+        vector.y = y;
+        return packet;
+    }
+
+    inline sf::Packet& operator>>(sf::Packet& packet, b2Vec2& vector)
+    {
+        sf::Int32 x, y;
+        packet >> x >> y;
+        vector.x = x;
+        vector.y = y;
+        return packet;
     }
 }

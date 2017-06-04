@@ -2,6 +2,8 @@
 #include "Network/NetworkUtils.h"
 #include "../GameObjectsFactory.h"
 
+using namespace NetworkUtils;
+
 ClientGameObjectManager::ClientGameObjectManager()
 {
 }
@@ -14,31 +16,31 @@ ClientGameObjectManager & ClientGameObjectManager::getInstance()
 
 Tank* ClientGameObjectManager::fillFromServerAndGetPlayerTank(sf::TcpSocket& socket)
 {
-    unsigned int objectsInTheWorldCount;
-    NetworkUtils::receiveDisconnectCheck(socket, objectsInTheWorldCount);
+    auto packet = readPacket(socket);
+    sf::Uint32 objectsInTheWorldCount;
+    packet >> objectsInTheWorldCount;
     while (objectsInTheWorldCount--)
     {
-        NetworkUtils::ObjectTypeEnum objectType;
-        unsigned int objectNum;
-        NetworkUtils::receiveDisconnectCheck(socket, objectType);
-        NetworkUtils::receiveDisconnectCheck(socket, objectNum);
+        sf::Uint16 objectType;
+        sf::Uint32 objectNum;
+        packet >> objectType >> objectNum;
         switch (objectType)
         {
         case NetworkUtils::ObjBonus:
         {
-            BonusType bonusType;
-            int value;
+            sf::Uint16 bonusType;
+            sf::Int32 value;
             sf::Vector2f pos;
-            NetworkUtils::receiveDisconnectCheck(socket, bonusType);
-            NetworkUtils::receiveDisconnectCheck(socket, value);
-            NetworkUtils::receiveDisconnectCheck(socket, pos);
-            mObjectsIndex[objectNum] = GameObjectsFactory::newBonus(bonusType, value, pos);
+            packet >> bonusType;
+            packet >> value;
+            packet >> pos;
+            mObjectsIndex[objectNum] = GameObjectsFactory::newBonus(static_cast<BonusType>(bonusType), value, pos);
         }
         break;
         case  NetworkUtils::ObjTank:
         {
             sf::Vector2f pos;
-            NetworkUtils::receiveDisconnectCheck(socket, pos);
+            packet >> pos;
             mObjectsIndex[objectNum] = GameObjectsFactory::newTank(pos, true); //todo: w/o true
         }
         break;
@@ -47,9 +49,9 @@ Tank* ClientGameObjectManager::fillFromServerAndGetPlayerTank(sf::TcpSocket& soc
             sf::Vector2f pos;
             float angle;
             b2Vec2 tankLinVel;
-            NetworkUtils::receiveDisconnectCheck(socket, pos);
-            NetworkUtils::receiveDisconnectCheck(socket, angle);
-            NetworkUtils::receiveDisconnectCheck(socket, tankLinVel);
+            packet >> pos;
+            packet >> angle;
+            packet >> tankLinVel;
             mObjectsIndex[objectNum] = GameObjectsFactory::newMissileSniper(pos, angle, tankLinVel);
         }
         break;
@@ -58,20 +60,20 @@ Tank* ClientGameObjectManager::fillFromServerAndGetPlayerTank(sf::TcpSocket& soc
             sf::Vector2f pos;
             float angle;
             b2Vec2 tankLinVel;
-            NetworkUtils::receiveDisconnectCheck(socket, pos);
-            NetworkUtils::receiveDisconnectCheck(socket, angle);
-            NetworkUtils::receiveDisconnectCheck(socket, tankLinVel);
+            packet >> pos;
+            packet >> angle;
+            packet >> tankLinVel;
             mObjectsIndex[objectNum] = GameObjectsFactory::newMissileSimpleBomb(pos, angle, tankLinVel);
         }
         break;
         case  NetworkUtils::ObjPlanet:
         {
             sf::Vector2f pos;
-            int radius;
-            int power;
-            NetworkUtils::receiveDisconnectCheck(socket, pos);
-            NetworkUtils::receiveDisconnectCheck(socket, radius);
-            NetworkUtils::receiveDisconnectCheck(socket, power);
+            sf::Int32 radius;
+            sf::Int32 power;
+            packet >> pos;
+            packet >> radius;
+            packet >> power;
             mObjectsIndex[objectNum] = GameObjectsFactory::newPlanet(pos, radius, power);
         }
         break;
@@ -81,15 +83,15 @@ Tank* ClientGameObjectManager::fillFromServerAndGetPlayerTank(sf::TcpSocket& soc
 
         //info
 
-        int hp;
+        sf::Int32 hp;
         b2Vec2 pos, linVel;
         float32 angle, angVel;
 
-        NetworkUtils::receiveDisconnectCheck(socket, pos);
-        NetworkUtils::receiveDisconnectCheck(socket, linVel);
-        NetworkUtils::receiveDisconnectCheck(socket, angle);
-        NetworkUtils::receiveDisconnectCheck(socket, angVel);
-        NetworkUtils::receiveDisconnectCheck(socket, hp);
+        packet >> pos;
+        packet >> linVel;
+        packet >> angle;
+        packet >> angVel;
+        packet >> hp;
 
         mObjectsIndex[objectNum]->mBody->SetTransform(pos, angle);
         mObjectsIndex[objectNum]->mBody->SetLinearVelocity(linVel);
@@ -97,39 +99,40 @@ Tank* ClientGameObjectManager::fillFromServerAndGetPlayerTank(sf::TcpSocket& soc
         mObjectsIndex[objectNum]->mHP = hp;
     }
 
-    int playerTankNum;
-    NetworkUtils::receiveDisconnectCheck(socket, playerTankNum);
+    sf::Int32 playerTankNum;
+    packet >> playerTankNum;
 
     return static_cast<Tank*>(mObjectsIndex[playerTankNum]);
 }
 
 void ClientGameObjectManager::updateFromServer(sf::TcpSocket& socket)
 {
-    unsigned int newObjectsCount;
-    NetworkUtils::receiveDisconnectCheck(socket, newObjectsCount);
+    auto packet = readPacket(socket);
+    sf::Uint32 newObjectsCount;
+    packet >> newObjectsCount;
     while (newObjectsCount--)
     {
-        NetworkUtils::ObjectTypeEnum objectType;
-        unsigned int objectNum;
-        NetworkUtils::receiveDisconnectCheck(socket, objectType);
-        NetworkUtils::receiveDisconnectCheck(socket, objectNum);
+        sf::Int16 objectType;
+        sf::Uint32 objectNum;
+        packet >> objectType;
+        packet >> objectNum;
         switch (objectType)
         {
         case NetworkUtils::ObjBonus:
         {
-            BonusType bonusType;
-            int value;
+            sf::Int16 bonusType;
+            sf::Int32 value;
             sf::Vector2f pos;
-            NetworkUtils::receiveDisconnectCheck(socket, bonusType);
-            NetworkUtils::receiveDisconnectCheck(socket, value);
-            NetworkUtils::receiveDisconnectCheck(socket, pos);
-            mObjectsIndex[objectNum] = GameObjectsFactory::newBonus(bonusType, value, pos);
+            packet >> bonusType;
+            packet >> value;
+            packet >> pos;
+            mObjectsIndex[objectNum] = GameObjectsFactory::newBonus(static_cast<BonusType>(bonusType), value, pos);
         }
         break;
         case  NetworkUtils::ObjTank:
         {
             sf::Vector2f pos;
-            NetworkUtils::receiveDisconnectCheck(socket, pos);
+            packet >> pos;
             mObjectsIndex[objectNum] = GameObjectsFactory::newTank(pos, true); //todo: w/o true
         }
         break;
@@ -138,9 +141,9 @@ void ClientGameObjectManager::updateFromServer(sf::TcpSocket& socket)
             sf::Vector2f pos;
             float angle;
             b2Vec2 tankLinVel;
-            NetworkUtils::receiveDisconnectCheck(socket, pos);
-            NetworkUtils::receiveDisconnectCheck(socket, angle);
-            NetworkUtils::receiveDisconnectCheck(socket, tankLinVel);
+            packet >> pos;
+            packet >> angle;
+            packet >> tankLinVel;
             mObjectsIndex[objectNum] = GameObjectsFactory::newMissileSniper(pos, angle, tankLinVel);
         }
         break;
@@ -149,20 +152,20 @@ void ClientGameObjectManager::updateFromServer(sf::TcpSocket& socket)
             sf::Vector2f pos;
             float angle;
             b2Vec2 tankLinVel;
-            NetworkUtils::receiveDisconnectCheck(socket, pos);
-            NetworkUtils::receiveDisconnectCheck(socket, angle);
-            NetworkUtils::receiveDisconnectCheck(socket, tankLinVel);
+            packet >> pos;
+            packet >> angle;
+            packet >> tankLinVel;
             mObjectsIndex[objectNum] = GameObjectsFactory::newMissileSimpleBomb(pos, angle, tankLinVel);
         }
         break;
         case  NetworkUtils::ObjPlanet:
         {
             sf::Vector2f pos;
-            int radius;
-            int power;
-            NetworkUtils::receiveDisconnectCheck(socket, pos);
-            NetworkUtils::receiveDisconnectCheck(socket, radius);
-            NetworkUtils::receiveDisconnectCheck(socket, power);
+            sf::Int32 radius;
+            sf::Int32 power;
+            packet >> pos;
+            packet >> radius;
+            packet >> power;
             mObjectsIndex[objectNum] = GameObjectsFactory::newPlanet(pos, radius, power);
         }
         break;
@@ -171,21 +174,21 @@ void ClientGameObjectManager::updateFromServer(sf::TcpSocket& socket)
         }
     }
 
-    unsigned int objectsToUpdateCount;
-    NetworkUtils::receiveDisconnectCheck(socket, objectsToUpdateCount);
+    sf::Uint32 objectsToUpdateCount;
+    packet >> objectsToUpdateCount;
 
     while (objectsToUpdateCount--)
     {
-        int objNum, hp;
+        sf::Int32 objNum, hp;
         b2Vec2 pos, linVel;
         float32 angle, angVel;
 
-        NetworkUtils::receiveDisconnectCheck(socket, objNum);
-        NetworkUtils::receiveDisconnectCheck(socket, pos);
-        NetworkUtils::receiveDisconnectCheck(socket, linVel);
-        NetworkUtils::receiveDisconnectCheck(socket, angle);
-        NetworkUtils::receiveDisconnectCheck(socket, angVel);
-        NetworkUtils::receiveDisconnectCheck(socket, hp);
+        packet >> objNum;
+        packet >> pos;
+        packet >> linVel;
+        packet >> angle;
+        packet >> angVel;
+        packet >> hp;
 
         mObjectsIndex[objNum]->mBody->SetTransform(pos, angle);
         mObjectsIndex[objNum]->mBody->SetLinearVelocity(linVel);

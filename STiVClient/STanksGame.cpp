@@ -5,6 +5,8 @@
 #include "Network/NetworkUtils.h"
 #include "LogicalGameObjects/ClientGameObjectManager.h"
 
+using namespace NetworkUtils;
+
 STanksGame::STanksGame(sf::RenderWindow & wnd)
     : mWindow(wnd)
     , mTransiveTimer(30)
@@ -28,7 +30,8 @@ bool STanksGame::connect(std::string srvIp, int srvPort)
 
     try
     {
-        NetworkUtils::receiveDisconnectCheck(mTcpClient, mCurrLevelSize);
+        auto packet = readPacket(mTcpClient);
+        packet >> mCurrLevelSize;
         mPlayerTank = ClientGameObjectManager::getInstance().fillFromServerAndGetPlayerTank(mTcpClient);
     }
     catch (...)
@@ -57,8 +60,9 @@ void STanksGame::update(int dt)
         {
             ClientGameObjectManager::getInstance().updateFromServer(mTcpClient);
 
-            NetworkUtils::sendDisconenctCheck(mTcpClient, mPlayerTank->getBarrelAngle());
-            NetworkUtils::sendDisconenctCheck(mTcpClient, mPlayerTank->wantToLaunchMissile());
+            sf::Packet packet;
+            packet << mPlayerTank->getBarrelAngle() << mPlayerTank->wantToLaunchMissile();
+            mTcpClient.send(packet);
         }
         catch (...)
         {
