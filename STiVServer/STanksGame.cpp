@@ -7,7 +7,7 @@
 
 STanksGame::STanksGame()
     : mSpawnBonus(3000)
-    , mSendTimer(30)
+    , mSendTimer(50)
 {
 }
 
@@ -24,10 +24,9 @@ void STanksGame::acceptClients()
 
     while (mIsWorking)
     {
-        sf::TcpSocket curSock;
-        while (mTcpServer.accept(curSock) != sf::Socket::Status::Done)
+        sf::TcpSocket *curSock = new sf::TcpSocket();
+        while (mTcpServer.accept(*curSock) != sf::Socket::Status::Done)
         {
-
             std::this_thread::sleep_for(100ms);
             if (!mIsWorking)
                 return;
@@ -73,16 +72,15 @@ void STanksGame::update(int dt)
 
     mClientsWork.lock();
     for (auto& client : mClients)
-        client.applyEvents();
-
-    for (auto& client : mClients)
-        client.checkHP(mSpawnPoint);
+        client.applyEvents(mSpawnPoint);
 
     ServerGameObjectManager::getInstance().update(dt);
 
     if (mSendTimer.isExpired())
     {
-        //send
+        for (auto& client : mClients)
+            client.sendNewObjects(ServerGameObjectManager::getInstance().getNewObjects());
+        ServerGameObjectManager::getInstance().clearNewObjects();
     }
 
     mClientsWork.unlock();

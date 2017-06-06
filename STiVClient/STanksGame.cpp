@@ -9,7 +9,7 @@ using namespace NetworkUtils;
 
 STanksGame::STanksGame(sf::RenderWindow & wnd)
     : mWindow(wnd)
-    , mTransiveTimer(30)
+    , mTransiveTimer(50)
 {
     mConsolas.loadFromFile("Content\\consola.ttf");
     mHpText.setFont(mConsolas);
@@ -32,7 +32,8 @@ bool STanksGame::connect(std::string srvIp, int srvPort)
     {
         auto packet = readPacket(mTcpClient);
         packet >> mCurrLevelSize;
-        mPlayerTank = ClientGameObjectManager::getInstance().fillFromServerAndGetPlayerTank(mTcpClient);
+        ClientGameObjectManager::getInstance().reset(mCurrLevelSize.x, mCurrLevelSize.y);
+        mPlayerTank = ClientGameObjectManager::getInstance().fillFromServerAndGetPlayerTank(packet);
     }
     catch (...)
     {
@@ -43,8 +44,6 @@ bool STanksGame::connect(std::string srvIp, int srvPort)
     mSceneSprite = sf::Sprite(mScene.getTexture());
 
     mCenteredView.setSize(static_cast<float>(mScreenSize.x), static_cast<float>(mScreenSize.y));
-
-    mPlayerTank = GameObjectsFactory::newTank();
 
     mLevelBackground = Sprite("globalBackground.png", { mCurrLevelSize.x / 2.0f, mCurrLevelSize.y / 2.0f },
     { 1.0f * mCurrLevelSize.x, 1.0f * mCurrLevelSize.y });//TODO: load background from server

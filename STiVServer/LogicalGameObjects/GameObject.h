@@ -18,6 +18,10 @@ class GameObject
     bool mDeathAnimPlaying = false;
     bool mMayBeDeleted = false;
 
+    static int mObjectNumGlobal;
+    int mObjectNum;
+    bool mDontSendToClients;
+
 protected:
     int mHP;
     b2Body* mBody = nullptr;
@@ -25,16 +29,18 @@ protected:
     virtual void onColide(std::pair<ObjectRealType, GameObject*>* with) {};
 
     explicit GameObject(bool damageable = true);
-    void create(ObjectRealType type, b2BodyDef* bdef, b2FixtureDef* fixture, int HP, bool damageable = true);
+    void create(ObjectRealType type, b2BodyDef* bdef, b2FixtureDef* fixture, int HP, bool damageable = true, bool dontSendToClients = false);
 public:
 
-    GameObject(ObjectRealType type, b2BodyDef* bdef, b2FixtureDef* fixture, int HP, bool damageable = true);
+    GameObject(ObjectRealType type, b2BodyDef* bdef, b2FixtureDef* fixture, int HP, bool damageable = true, bool dontSendToClients = false);
     virtual ~GameObject();
 
     bool isDamageable() const;
 
     bool mayBeDeleted() const;
     int getHP() const;
+    int getObjectNum() const;
+    bool dontSendToClients() const;
 
     sf::Vector2f getPosition() const;
 
@@ -46,6 +52,7 @@ public:
 
     friend class GravityPoint;
     friend class GameObjectManager;
+    friend class STGClient;
 };
 
 using ObjectRealTypeData = std::pair<ObjectRealType, GameObject*>;

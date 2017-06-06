@@ -5,8 +5,13 @@
 
 class Planet : public GameObject
 {
-    GravityPoint mGravityPoint;
+public:
+    sf::Int32 getRadius() const;
+    sf::Int32 getPower() const;
 protected:
     Planet(sf::Vector2f pos, int radius, int power);
     virtual ~Planet();
+private:
+    GravityPoint mGravityPoint;
+    sf::Int32 mRadius, mPower;
 };

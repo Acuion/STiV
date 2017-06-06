@@ -18,5 +18,7 @@ protected:
 public:
     BonusType getType() const;
     int getVal() const;
+    sf::Uint16 getBonusType() const;
+    sf::Int32 getValue() const;
 };
 

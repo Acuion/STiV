@@ -12,6 +12,8 @@ enum MissleType // cannot be enum class
 class TankMissile : public GameObject
 {
     float mKick;
+    float mStartAngle;
+    b2Vec2 mStartLinVel;
 protected:
     int mDamage;
     void create(b2FixtureDef * fdef, float force, const sf::Vector2f& pos,
@@ -22,4 +24,6 @@ protected:
     virtual ~TankMissile();
 public:
     float getKick() const;
+    float getAngle() const;
+    b2Vec2 getTankLinVel() const;
 };

@@ -65,9 +65,6 @@
     <ClCompile Include="..\STiVCore\Misc\MaterialStorage.cpp">
       <Filter>Source\Core\Misc</Filter>
     </ClCompile>
-    <ClCompile Include="..\STiVCore\Misc\tgMath.cpp">
-      <Filter>Source\Core\Misc</Filter>
-    </ClCompile>
     <ClCompile Include="..\STiVCore\Misc\Timer.cpp">
       <Filter>Source\Core\Misc</Filter>
     </ClCompile>
@@ -116,6 +113,9 @@
     <ClCompile Include="LogicalGameObjects\ServerGameObjectManager.cpp">
       <Filter>Source\LogicalGameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="..\STiVCore\Misc\Utilites.cpp">
+      <Filter>Source\Core\Misc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObjectsFactory.h">
@@ -131,9 +131,6 @@
       <Filter>Source\LogicalGameObjects</Filter>
     </ClInclude>
     <ClInclude Include="..\STiVCore\Misc\MaterialStorage.h">
-      <Filter>Source\Core\Misc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\STiVCore\Misc\tgMath.h">
       <Filter>Source\Core\Misc</Filter>
     </ClInclude>
     <ClInclude Include="..\STiVCore\Misc\Timer.h">
@@ -183,6 +180,9 @@
     </ClInclude>
     <ClInclude Include="LogicalGameObjects\ServerGameObjectManager.h">
       <Filter>Source\LogicalGameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\STiVCore\Misc\Utilites.h">
+      <Filter>Source\Core\Misc</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

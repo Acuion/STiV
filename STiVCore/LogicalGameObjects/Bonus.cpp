@@ -1,5 +1,6 @@
 #include "LogicalGameObjects/Bonus.h"
 #include "LogicalGameObjects/Tank/Missiles/TankMissile.h"
+#include "Misc/Utilites.h"
 
 Bonus::Bonus(BonusType bt, int value, sf::Vector2f pos)
 {
@@ -29,6 +30,16 @@ BonusType Bonus::getType() const
 }
 
 int Bonus::getVal() const
+{
+    return mValue;
+}
+
+sf::Uint16 Bonus::getBonusType() const
+{
+    return mBonusType;
+}
+
+sf::Int32 Bonus::getValue() const
 {
     return mValue;
 }

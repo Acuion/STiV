@@ -1,28 +1,36 @@
 #include "LogicalGameObjects/GameObject.h"
 #include "LogicalGameObjects/GameObjectManager.h"
+#include "ServerGameObjectManager.h"
+#include "Misc/Utilites.h"
 
-void GameObject::create(ObjectRealType type, b2BodyDef * bdef, b2FixtureDef * fixture, int HP, bool damageable)
+int GameObject::mObjectNumGlobal = 0;
+
+void GameObject::create(ObjectRealType type, b2BodyDef * bdef, b2FixtureDef * fixture, int HP, bool damageable, bool dontSendToClients)
 {
     mHP = HP;
     mDamageable = damageable;
+    mDontSendToClients = dontSendToClients;
+    if (!dontSendToClients)
+        mObjectNum = mObjectNumGlobal++;
 
-    mBody = GameObjectManager::registerObject(bdef, fixture, this, type);
+    mBody = ServerGameObjectManager::getInstance().registerObject(bdef, fixture, this, type);
 }
 
 GameObject::GameObject(bool damageable)
 {
     mDamageable = damageable;
     mHP = 0;
+    mObjectNum = mObjectNumGlobal++;
 }
 
-GameObject::GameObject(ObjectRealType type, b2BodyDef* bdef, b2FixtureDef* fixture, int HP, bool damageable)
+GameObject::GameObject(ObjectRealType type, b2BodyDef* bdef, b2FixtureDef* fixture, int HP, bool damageable, bool dontSendToClients)
 {
-    create(type, bdef, fixture, HP, damageable);
+    create(type, bdef, fixture, HP, damageable, dontSendToClients);
 }
 
 GameObject::~GameObject()
 {
-    GameObjectManager::unregisterObject(mBody);
+    ServerGameObjectManager::getInstance().unregisterObject(mBody);
 }
 
 bool GameObject::isDamageable() const
@@ -38,6 +46,16 @@ bool GameObject::mayBeDeleted() const
 int GameObject::getHP() const
 {
     return mHP;
+}
+
+int GameObject::getObjectNum() const
+{
+    return mObjectNum;
+}
+
+bool GameObject::dontSendToClients() const
+{
+    return mDontSendToClients;
 }
 
 sf::Vector2f GameObject::getPosition() const

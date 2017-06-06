@@ -1,6 +1,7 @@
 #include "LogicalGameObjects/Gravity/GravityPoint.h"
 #include "LogicalGameObjects/GameObjectManager.h"
 #include "GameObjectsFactory.h"
+#include "Misc/Utilites.h"
 
 GravityPoint::GravityPoint(sf::Vector2f pos, int power)
     : mPower(power)

@@ -1,7 +1,10 @@
 ﻿#include "LogicalGameObjects/Gravity/Planet.h"
+#include "Misc/Utilites.h"
 
 Planet::Planet(sf::Vector2f pos, int radius, int power)
     : mGravityPoint(pos, power)
+    , mRadius(radius)
+    , mPower(power)
 {
     auto planetbdef = new b2BodyDef();
     planetbdef->type = b2_staticBody;
@@ -16,4 +19,14 @@ Planet::Planet(sf::Vector2f pos, int radius, int power)
 
 Planet::~Planet()
 {
+}
+
+sf::Int32 Planet::getRadius() const
+{
+    return mRadius;
+}
+
+sf::Int32 Planet::getPower() const
+{
+    return mPower;
 }

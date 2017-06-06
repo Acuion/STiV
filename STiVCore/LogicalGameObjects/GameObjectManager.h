@@ -11,11 +11,14 @@ protected:
     std::list<GameObject*> mObjects;
     std::list<GravityPoint*> mGravityObjects;
     GameObjectManager() {};
+    virtual void createBorder(b2BodyDef* b2Def, b2FixtureDef* b2FixDef);
 
 public:
+    virtual ~GameObjectManager();
+
     void reset(int sizeX, int sizeY);
 
-    b2Body* registerObject(b2BodyDef* bdef, b2FixtureDef* fixture, GameObject* go, ObjectRealType type);
+    virtual b2Body* registerObject(b2BodyDef* bdef, b2FixtureDef* fixture, GameObject* go, ObjectRealType type);
 
     void unregisterObject(b2Body* body);
 

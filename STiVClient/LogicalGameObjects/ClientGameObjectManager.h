@@ -11,7 +11,7 @@ public:
     static ClientGameObjectManager& getInstance();
 
     void updateFromServer(sf::TcpSocket& socket);
-    Tank* fillFromServerAndGetPlayerTank(sf::TcpSocket& socket);
+    Tank* fillFromServerAndGetPlayerTank(sf::Packet& packet);
 private:
     ClientGameObjectManager();
     ClientGameObjectManager operator=(const ClientGameObjectManager&) = delete;

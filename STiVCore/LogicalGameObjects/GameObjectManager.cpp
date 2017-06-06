@@ -1,11 +1,20 @@
 #include "LogicalGameObjects/GameObjectManager.h"
+#include "Misc/Utilites.h"
+
+void GameObjectManager::createBorder(b2BodyDef* b2Def, b2FixtureDef* b2FixDef)
+{
+    new GameObject(ObjectRealType::rt_Static, b2Def, new b2FixtureDef(*b2FixDef), 0, false);
+}
+
+GameObjectManager::~GameObjectManager()
+{
+}
 
 void GameObjectManager::reset(int sizeX, int sizeY)
 {
     auto iter = mObjects.begin();
     while (iter != mObjects.end())
     {
-        mWorld->DestroyBody((*iter)->mBody);
         delete *iter;
         iter = mObjects.erase(iter);
     }
@@ -28,17 +37,17 @@ void GameObjectManager::reset(int sizeX, int sizeY)
 
     b2BodyDef* bh1 = new b2BodyDef(*borderDef);
     bh1->position.Set(sizeX * Utilites::b2scale / 2, -20 * Utilites::b2scale);
-    new GameObject(ObjectRealType::rt_Static, bh1, new b2FixtureDef(*fdefH), 0, false);
+    createBorder(bh1, fdefH);
     b2BodyDef* bv1 = new b2BodyDef(*borderDef);
     bv1->position.Set(-20 * Utilites::b2scale, sizeY * Utilites::b2scale / 2);
-    new GameObject(ObjectRealType::rt_Static, bv1, new b2FixtureDef(*fdefV), 0, false);
+    createBorder(bv1, fdefV);
 
     b2BodyDef* bh2 = new b2BodyDef(*borderDef);
     bh2->position.Set(sizeX * Utilites::b2scale / 2, sizeY * Utilites::b2scale + 20 * Utilites::b2scale);
-    new GameObject(ObjectRealType::rt_Static, bh2, new b2FixtureDef(*fdefH), 0, false);
+    createBorder(bh2, fdefH);
     b2BodyDef* bv2 = new b2BodyDef(*borderDef);
     bv2->position.Set(sizeX * Utilites::b2scale + 20 * Utilites::b2scale, sizeY * Utilites::b2scale / 2);
-    new GameObject(ObjectRealType::rt_Static, bv2, new b2FixtureDef(*fdefV), 0, false);
+    createBorder(bv2, fdefV);
 
     delete fdefH;
     delete fdefV;

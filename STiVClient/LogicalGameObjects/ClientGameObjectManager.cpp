@@ -14,9 +14,8 @@ ClientGameObjectManager & ClientGameObjectManager::getInstance()
     return singleton;
 }
 
-Tank* ClientGameObjectManager::fillFromServerAndGetPlayerTank(sf::TcpSocket& socket)
+Tank* ClientGameObjectManager::fillFromServerAndGetPlayerTank(sf::Packet& packet)
 {
-    auto packet = readPacket(socket);
     sf::Uint32 objectsInTheWorldCount;
     packet >> objectsInTheWorldCount;
     while (objectsInTheWorldCount--)
@@ -102,7 +101,7 @@ Tank* ClientGameObjectManager::fillFromServerAndGetPlayerTank(sf::TcpSocket& soc
     sf::Int32 playerTankNum;
     packet >> playerTankNum;
 
-    return static_cast<Tank*>(mObjectsIndex[playerTankNum]);
+    return dynamic_cast<Tank*>(mObjectsIndex[playerTankNum]);
 }
 
 void ClientGameObjectManager::updateFromServer(sf::TcpSocket& socket)
