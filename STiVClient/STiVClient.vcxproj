@@ -159,6 +159,7 @@ COPY "$(SolutionDir)SFML\bin\Release\*" "$(OutDir)"</Command>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\STiVCore\GameLevel.cpp" />
     <ClCompile Include="..\STiVCore\LogicalGameObjects\Bonus.cpp" />
     <ClCompile Include="..\STiVCore\LogicalGameObjects\GameObjectManager.cpp" />
     <ClCompile Include="..\STiVCore\LogicalGameObjects\Gravity\GravityPoint.cpp" />
@@ -182,10 +183,11 @@ COPY "$(SolutionDir)SFML\bin\Release\*" "$(OutDir)"</Command>
     <ClCompile Include="VisualGameObjects\Tank\TankVis.cpp" />
     <ClCompile Include="VisualGameObjects\Visualizer.cpp" />
     <ClCompile Include="STiVClient.cpp" />
-    <ClCompile Include="STanksGame.cpp" />
+    <ClCompile Include="GameController.cpp" />
     <ClCompile Include="UI/UIButton.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\STiVCore\GameLevel.h" />
     <ClInclude Include="..\STiVCore\LogicalGameObjects\Bonus.h" />
     <ClInclude Include="..\STiVCore\LogicalGameObjects\GameObjectManager.h" />
     <ClInclude Include="..\STiVCore\LogicalGameObjects\Gravity\GravityPoint.h" />
@@ -204,7 +206,7 @@ COPY "$(SolutionDir)SFML\bin\Release\*" "$(OutDir)"</Command>
     <ClInclude Include="Graphics\Sprite.h" />
     <ClInclude Include="LogicalGameObjects\ClientGameObjectManager.h" />
     <ClInclude Include="LogicalGameObjects\GameObject.h" />
-    <ClInclude Include="STanksGame.h" />
+    <ClInclude Include="GameController.h" />
     <ClInclude Include="UI\UIButton.h" />
     <ClInclude Include="VisualGameObjects\BonusVis.h" />
     <ClInclude Include="VisualGameObjects\Gravity\PlanetVis.h" />

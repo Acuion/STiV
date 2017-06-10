@@ -1,5 +1,5 @@
 #include <iostream>
-#include "STanksGame.h"
+#include "GameServer.h"
 
 int main()
 {
@@ -8,7 +8,7 @@ int main()
 
     MaterialStorage::initMaterials();
 
-    STanksGame* STG = new STanksGame();
+    GameServer* STG = new GameServer();
     STG->loadLevel("test");
     STG->listen(58000);
 

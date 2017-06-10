@@ -7,7 +7,7 @@
 #include "Misc/Timer.h"
 #include <mutex>
 
-class STanksGame
+class GameServer
 {
     sf::Vector2i mCurrLevelSize;
     sf::Vector2i mSpawnPoint;
@@ -20,19 +20,20 @@ class STanksGame
     std::list<STGClient> mClients;
     std::mutex mClientsWork;
     Timer mSendTimer;
+    std::string mCurrLevelName;
 
     bool mIsWorking = true;
 
     void acceptClients();
 public:
-    STanksGame();
+    GameServer();
 
-    ~STanksGame();
+    ~GameServer();
 
     bool listen(int srvPort);
 
     void update(int dt);
 
-    void loadLevel(std::string name);
+    void loadLevel(const std::string& name);
 };
 

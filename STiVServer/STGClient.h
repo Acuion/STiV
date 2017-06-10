@@ -7,7 +7,7 @@
 class STGClient
 {
 public:
-    STGClient(sf::Vector2i spawnPoint, sf::TcpSocket* socket, sf::Vector2i levelSize);
+    STGClient(const std::string& levelName, sf::Vector2i spawnPoint, sf::TcpSocket* socket, sf::Vector2i levelSize);
     ~STGClient();
 
     void sendNewObjects(const std::vector<GameObject*> objects);

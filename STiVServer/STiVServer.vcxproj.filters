@@ -56,9 +56,6 @@
     <ClCompile Include="LogicalGameObjects/GameObject.cpp">
       <Filter>Source\LogicalGameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="STanksGame.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="STGClient.cpp">
       <Filter>Source</Filter>
     </ClCompile>
@@ -116,12 +113,15 @@
     <ClCompile Include="..\STiVCore\Misc\Utilites.cpp">
       <Filter>Source\Core\Misc</Filter>
     </ClCompile>
+    <ClCompile Include="GameServer.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\STiVCore\GameLevel.cpp">
+      <Filter>Source\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObjectsFactory.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="STanksGame.h">
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="STGClient.h">
@@ -183,6 +183,12 @@
     </ClInclude>
     <ClInclude Include="..\STiVCore\Misc\Utilites.h">
       <Filter>Source\Core\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="GameServer.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\STiVCore\GameLevel.h">
+      <Filter>Source\Core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

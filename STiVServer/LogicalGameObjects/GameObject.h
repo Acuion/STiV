@@ -20,7 +20,6 @@ class GameObject
 
     static int mObjectNumGlobal;
     int mObjectNum;
-    bool mDontSendToClients;
 
 protected:
     int mHP;
@@ -29,10 +28,10 @@ protected:
     virtual void onColide(std::pair<ObjectRealType, GameObject*>* with) {};
 
     explicit GameObject(bool damageable = true);
-    void create(ObjectRealType type, b2BodyDef* bdef, b2FixtureDef* fixture, int HP, bool damageable = true, bool dontSendToClients = false);
+    void create(ObjectRealType type, b2BodyDef* bdef, b2FixtureDef* fixture, int HP, bool damageable = true);
 public:
 
-    GameObject(ObjectRealType type, b2BodyDef* bdef, b2FixtureDef* fixture, int HP, bool damageable = true, bool dontSendToClients = false);
+    GameObject(ObjectRealType type, b2BodyDef* bdef, b2FixtureDef* fixture, int HP, bool damageable = true);
     virtual ~GameObject();
 
     bool isDamageable() const;
@@ -40,7 +39,6 @@ public:
     bool mayBeDeleted() const;
     int getHP() const;
     int getObjectNum() const;
-    bool dontSendToClients() const;
 
     sf::Vector2f getPosition() const;
 

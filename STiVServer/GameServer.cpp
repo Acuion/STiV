@@ -1,24 +1,24 @@
-#include "STanksGame.h"
+#include "GameServer.h"
 #include "LogicalGameObjects/Bonus.h"
 #include <iostream>
 #include <fstream>
 #include <chrono>
 #include "GameObjectsFactory.h"
 
-STanksGame::STanksGame()
+GameServer::GameServer()
     : mSpawnBonus(3000)
     , mSendTimer(50)
 {
 }
 
-STanksGame::~STanksGame()
+GameServer::~GameServer()
 {
     mIsWorking = false;
     if (mAccThread)
         mAccThread->join();
 }
 
-void STanksGame::acceptClients()
+void GameServer::acceptClients()
 {
     using namespace std::chrono_literals;
 
@@ -33,22 +33,22 @@ void STanksGame::acceptClients()
         }
         //hello!
         mClientsWork.lock();
-        mClients.emplace_back(mSpawnPoint, curSock, mCurrLevelSize);
+        mClients.emplace_back(mCurrLevelName, mSpawnPoint, curSock, mCurrLevelSize);
         std::cout << "New client!\n";
         mClientsWork.unlock();
     }
 }
 
-bool STanksGame::listen(int srvPort)
+bool GameServer::listen(int srvPort)
 {
     if (mTcpServer.listen(srvPort) != sf::Socket::Done)
         return false;
     mTcpServer.setBlocking(false);
-    mAccThread = new std::thread(&STanksGame::acceptClients, this);
+    mAccThread = new std::thread(&GameServer::acceptClients, this);
     return true;
 }
 
-void STanksGame::update(int dt)
+void GameServer::update(int dt)
 {
     if (mSpawnBonus.isExpired())
     {
@@ -86,8 +86,9 @@ void STanksGame::update(int dt)
     mClientsWork.unlock();
 }
 
-void STanksGame::loadLevel(std::string name)
+void GameServer::loadLevel(const std::string& name)
 {
+    mCurrLevelName = name;
     std::ifstream levelfile("levels\\" + name + ".tgl");
     int goc;
     int x, y, radius, power;
@@ -104,7 +105,7 @@ void STanksGame::loadLevel(std::string name)
     {
         levelfile >> x >> y >> radius >> power;
 
-        GameObjectsFactory::newPlanet(sf::Vector2f(x, y), radius, power);
+        GameObjectsFactory::newPlanet(sf::Vector2f(static_cast<float>(x), static_cast<float>(y)), radius, power);
     }
 
     levelfile >> goc;
@@ -112,6 +113,6 @@ void STanksGame::loadLevel(std::string name)
     for (int i = 0; i < goc; ++i)
     {
         levelfile >> x >> y;
-        mBonusSpawnPoints.push_back(sf::Vector2f(x, y));
+        mBonusSpawnPoints.push_back(sf::Vector2f(static_cast<float>(x), static_cast<float>(y)));
     }
 }

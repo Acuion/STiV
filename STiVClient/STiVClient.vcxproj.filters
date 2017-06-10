@@ -98,9 +98,6 @@
     <ClCompile Include="STiVClient.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="STanksGame.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\STiVCore\Misc\MaterialStorage.cpp">
       <Filter>Source\Core\Misc</Filter>
     </ClCompile>
@@ -137,12 +134,15 @@
     <ClCompile Include="LogicalGameObjects\ClientGameObjectManager.cpp">
       <Filter>Source\LogicalGameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="GameController.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\STiVCore\GameLevel.cpp">
+      <Filter>Source\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObjectsFactory.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="STanksGame.h">
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="Graphics\Sprite.h">
@@ -216,6 +216,12 @@
     </ClInclude>
     <ClInclude Include="LogicalGameObjects\ClientGameObjectManager.h">
       <Filter>Source\LogicalGameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="GameController.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\STiVCore\GameLevel.h">
+      <Filter>Source\Core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

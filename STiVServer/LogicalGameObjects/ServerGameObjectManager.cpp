@@ -29,5 +29,5 @@ void ServerGameObjectManager::clearNewObjects()
 
 void ServerGameObjectManager::createBorder(b2BodyDef* b2Def, b2FixtureDef* b2FixDef)
 {
-    new GameObject(ObjectRealType::rt_Static, b2Def, new b2FixtureDef(*b2FixDef), 0, false, true);
+    new GameObject(ObjectRealType::rt_Static, b2Def, new b2FixtureDef(*b2FixDef), 0, false);
 }

@@ -2,7 +2,6 @@
 #include "Misc/Utilites.h"
 #include "Network/NetworkUtils.h"
 #include "GameObjectsFactory.h"
-#include <iostream>
 
 using namespace NetworkUtils;
 using namespace std::chrono_literals;
@@ -24,24 +23,23 @@ void STGClient::sendNewObjects(const std::vector<GameObject*> objects)
     mNewObjectsLock.unlock();
 }
 
-STGClient::STGClient(sf::Vector2i spawnPoint, sf::TcpSocket* socket, sf::Vector2i levelSize)
+STGClient::STGClient(const std::string& levelName, sf::Vector2i spawnPoint, sf::TcpSocket* socket, sf::Vector2i levelSize)
     : mSocket(socket)
 {
     mTank = GameObjectsFactory::newTank(static_cast<sf::Vector2f>(spawnPoint), true);//todo: танк попадает в список новых объектов и отсылается ещё раз. Проблема
                                                                                      //и изменить dontSendToClients, оно странное
-
+                                                                                     //не отправлять танки в new совсем, только отдельным отделом в пакете, клиент будет сам создавать если нужно
+                                                                                     //инфу о старотовых объектах на карте не передавать, а передать сам файл уровня. Просто сделать clear по новым объектам после загрузки уровня
     sf::Packet packet;
+    packet << levelName;//todo: load info to GoM
     packet << levelSize;
     const auto& objects = ServerGameObjectManager::getInstance().getGameObjects();
     sf::Uint32 objectsInTheWorldCount = 0;
     for (auto& obj : objects)
-        if (!obj->dontSendToClients())
-            objectsInTheWorldCount++;
+        objectsInTheWorldCount++;
     packet << objectsInTheWorldCount;
     for (auto obj : objects)
     {
-        if (obj->dontSendToClients())
-            continue;
         packConstructorObjectsInfo(packet, obj);
         packChangingObjectsInfo(packet, obj);
     }
@@ -100,13 +98,13 @@ void STGClient::packConstructorObjectsInfo(sf::Packet& packet, GameObject* obj)
         packet << pos;
     }
     break;
-    case  NetworkUtils::ObjTank:
+    /*case  NetworkUtils::ObjTank:
     {
         auto tank = dynamic_cast<Tank*>(obj);
         sf::Vector2f pos = tank->getPosition();
         packet << pos;
     }
-    break;
+    break;*/
     case  NetworkUtils::ObjMissileSniper:
     {
         auto sniperMissile = dynamic_cast<MissileSniper*>(obj);
@@ -171,29 +169,24 @@ void STGClient::clientComm()
         mNewObjectsLock.lock();
         sf::Uint32 objectsCount = 0;
         for (auto& obj : mNewObjects)
-            if (!obj->dontSendToClients())
-                objectsCount++;
+            objectsCount++;
         packet << objectsCount;
         for (auto& x : mNewObjects)
-            if (!x->dontSendToClients())
-                packConstructorObjectsInfo(packet, x);
+            packConstructorObjectsInfo(packet, x);
         mNewObjects.clear();
         mNewObjectsLock.unlock();
 
         const auto& exisitingObjects = ServerGameObjectManager::getInstance().getGameObjects();//todo: sync mutex
         objectsCount = 0;
         for (auto& obj : exisitingObjects)
-            if (!obj->dontSendToClients())
-                objectsCount++;
+            objectsCount++;
         packet << objectsCount;
         for (auto obj : exisitingObjects)
         {
-            if (obj->dontSendToClients())
-                continue;
             packet << static_cast<sf::Int32>(obj->getObjectNum());
             packChangingObjectsInfo(packet, obj);
         }
-
+        
         mSocket->send(packet);//blocking?
 
         packet.clear();

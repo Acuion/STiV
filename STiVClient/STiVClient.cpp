@@ -1,4 +1,4 @@
-#include "STanksGame.h"
+#include "GameController.h"
 #include "Graphics/Shaders/PostProcessingManager.h"
 #include "UI/UIButton.h"
 
@@ -18,7 +18,7 @@ namespace Game
         mainMenuSelectMode
     } currentGameState;
 
-    STanksGame* STG = nullptr;
+    GameController* STG = nullptr;
 
     //
     Sprite menu_Logo, menu_MissileI, menu_leftBarrel, menu_rightBarrel;
@@ -122,7 +122,7 @@ namespace Game
         case GameState::mainMenuSelectMode:
             if (menu_asClient.wasPressed(event, mousePos))
             {
-                STG = new STanksGame(window);
+                STG = new GameController(window);
                 if (!STG->connect("127.0.0.1", 58000))
                 {
                     delete STG;

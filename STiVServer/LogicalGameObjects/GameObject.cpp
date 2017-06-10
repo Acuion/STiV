@@ -5,13 +5,11 @@
 
 int GameObject::mObjectNumGlobal = 0;
 
-void GameObject::create(ObjectRealType type, b2BodyDef * bdef, b2FixtureDef * fixture, int HP, bool damageable, bool dontSendToClients)
+void GameObject::create(ObjectRealType type, b2BodyDef * bdef, b2FixtureDef * fixture, int HP, bool damageable)
 {
     mHP = HP;
     mDamageable = damageable;
-    mDontSendToClients = dontSendToClients;
-    if (!dontSendToClients)
-        mObjectNum = mObjectNumGlobal++;
+    mObjectNum = mObjectNumGlobal++;
 
     mBody = ServerGameObjectManager::getInstance().registerObject(bdef, fixture, this, type);
 }
@@ -23,9 +21,9 @@ GameObject::GameObject(bool damageable)
     mObjectNum = mObjectNumGlobal++;
 }
 
-GameObject::GameObject(ObjectRealType type, b2BodyDef* bdef, b2FixtureDef* fixture, int HP, bool damageable, bool dontSendToClients)
+GameObject::GameObject(ObjectRealType type, b2BodyDef* bdef, b2FixtureDef* fixture, int HP, bool damageable)
 {
-    create(type, bdef, fixture, HP, damageable, dontSendToClients);
+    create(type, bdef, fixture, HP, damageable);
 }
 
 GameObject::~GameObject()
@@ -51,11 +49,6 @@ int GameObject::getHP() const
 int GameObject::getObjectNum() const
 {
     return mObjectNum;
-}
-
-bool GameObject::dontSendToClients() const
-{
-    return mDontSendToClients;
 }
 
 sf::Vector2f GameObject::getPosition() const

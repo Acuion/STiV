@@ -9,14 +9,14 @@
 
 using namespace std::chrono_literals;
 
-class STanksGame
+class GameController
 {
 public:
-    explicit STanksGame(sf::RenderWindow & wnd);
+    explicit GameController(sf::RenderWindow & wnd);
 
-    ~STanksGame();
+    ~GameController();
 
-    bool STanksGame::connect(std::string srvIp, int srvPort);
+    bool connect(std::string srvIp, int srvPort);
 
     void update(int dt);
     void draw();

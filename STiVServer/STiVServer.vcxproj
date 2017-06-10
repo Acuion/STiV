@@ -159,6 +159,7 @@ COPY "$(SolutionDir)SFML\bin\Release\*" "$(OutDir)"</Command>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\STiVCore\GameLevel.cpp" />
     <ClCompile Include="..\STiVCore\LogicalGameObjects\Bonus.cpp" />
     <ClCompile Include="..\STiVCore\LogicalGameObjects\GameObjectManager.cpp" />
     <ClCompile Include="..\STiVCore\LogicalGameObjects\Gravity\GravityPoint.cpp" />
@@ -178,10 +179,11 @@ COPY "$(SolutionDir)SFML\bin\Release\*" "$(OutDir)"</Command>
     <ClCompile Include="ServerGameObjects\Tank\Missiles\MissileSniperSrv.cpp" />
     <ClCompile Include="ServerGameObjects\Tank\TankSrv.cpp" />
     <ClCompile Include="STiVServer.cpp" />
-    <ClCompile Include="STanksGame.cpp" />
+    <ClCompile Include="GameServer.cpp" />
     <ClCompile Include="STGClient.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\STiVCore\GameLevel.h" />
     <ClInclude Include="..\STiVCore\LogicalGameObjects\Bonus.h" />
     <ClInclude Include="..\STiVCore\LogicalGameObjects\GameObjectManager.h" />
     <ClInclude Include="..\STiVCore\LogicalGameObjects\Gravity\GravityPoint.h" />
@@ -202,7 +204,7 @@ COPY "$(SolutionDir)SFML\bin\Release\*" "$(OutDir)"</Command>
     <ClInclude Include="ServerGameObjects\Tank\Missiles\MissileSimpleBombSrv.h" />
     <ClInclude Include="ServerGameObjects\Tank\Missiles\MissileSniperSrv.h" />
     <ClInclude Include="ServerGameObjects\Tank\TankSrv.h" />
-    <ClInclude Include="STanksGame.h" />
+    <ClInclude Include="GameServer.h" />
     <ClInclude Include="STGClient.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

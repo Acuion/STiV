@@ -1,4 +1,4 @@
-#include "STanksGame.h"
+#include "GameController.h"
 #include "LogicalGameObjects/Bonus.h"
 #include "VisualGameObjects/Visualizer.h"
 #include "GameObjectsFactory.h"
@@ -7,7 +7,7 @@
 
 using namespace NetworkUtils;
 
-STanksGame::STanksGame(sf::RenderWindow & wnd)
+GameController::GameController(sf::RenderWindow & wnd)
     : mWindow(wnd)
     , mTransiveTimer(50)
 {
@@ -18,11 +18,11 @@ STanksGame::STanksGame(sf::RenderWindow & wnd)
     mHpText.setCharacterSize(50);
 }
 
-STanksGame::~STanksGame()
+GameController::~GameController()
 {
 }
 
-bool STanksGame::connect(std::string srvIp, int srvPort)
+bool GameController::connect(std::string srvIp, int srvPort)
 {
     auto res = mTcpClient.connect(sf::IpAddress(srvIp.c_str()), srvPort, sf::seconds(5));
     if (res != sf::Socket::Done)
@@ -31,6 +31,8 @@ bool STanksGame::connect(std::string srvIp, int srvPort)
     try
     {
         auto packet = readPacket(mTcpClient);
+        std::string levelName;
+        packet >> levelName;
         packet >> mCurrLevelSize;
         ClientGameObjectManager::getInstance().reset(mCurrLevelSize.x, mCurrLevelSize.y);
         mPlayerTank = ClientGameObjectManager::getInstance().fillFromServerAndGetPlayerTank(packet);
@@ -51,7 +53,7 @@ bool STanksGame::connect(std::string srvIp, int srvPort)
     return true;
 }
 
-void STanksGame::update(int dt)
+void GameController::update(int dt)
 {
     if (mTransiveTimer.isExpired())
     {
@@ -78,7 +80,7 @@ void STanksGame::update(int dt)
     mHpText.setString(std::to_string(mPlayerTank->getHP()));
 }
 
-void STanksGame::draw()
+void GameController::draw()
 {
     sf::FloatRect viewRect = sf::FloatRect(mCenteredView.getCenter().x - mCenteredView.getSize().x / 2 - 100,
         mCenteredView.getCenter().y - mCenteredView.getSize().y / 2 - 100,
@@ -97,7 +99,7 @@ void STanksGame::draw()
     mWindow.draw(mHpText); //TODO: UI
 }
 
-void STanksGame::setResolution(const sf::Vector2i& res)
+void GameController::setResolution(const sf::Vector2i& res)
 {
     mScreenSize = res;
     mCenteredView.setSize(static_cast<sf::Vector2f>(res));
@@ -106,12 +108,12 @@ void STanksGame::setResolution(const sf::Vector2i& res)
     mHalfScreen = { res.x / 2.0f,res.y / 2.0f };
 }
 
-bool STanksGame::isReturningToMainMenu() const
+bool GameController::isReturningToMainMenu() const
 {
     return mIsReturningToMainMenu;
 }
 
-void STanksGame::handleEvent(const sf::Event & event)
+void GameController::handleEvent(const sf::Event & event)
 {
     switch (event.type)
     {
