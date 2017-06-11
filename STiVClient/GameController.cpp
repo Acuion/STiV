@@ -70,6 +70,8 @@ void GameController::update(int dt)
         }
     }
 
+    mPlayerTank->updateMousePos(mSceneToWindow.mapPixelToCoords(sf::Mouse::getPosition()));
+    mPlayerTank->update();
     ClientGameObjectManager::getInstance().update(dt);
 
     mCenteredView.setCenter({ std::min(std::max(mPlayerTank->getPosition().x, mHalfScreen.x), mCurrGameLevel.getCurrLevelSize().x - mHalfScreen.x),

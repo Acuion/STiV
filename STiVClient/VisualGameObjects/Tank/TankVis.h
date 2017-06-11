@@ -5,7 +5,7 @@
 class TankVis : public Tank
 {
 public:
-    TankVis(sf::Vector2f pos, bool client = false);
+    TankVis(sf::Vector2f pos);
     TankVis();
     ~TankVis();
 

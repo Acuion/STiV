@@ -27,7 +27,7 @@ STGClient::STGClient(const GameLevel& gameLevel, sf::TcpSocket* socket)
     : mSocket(socket)
     , mCurrGameLevel(gameLevel)
 {
-    mTank = GameObjectsFactory::newTank(static_cast<sf::Vector2f>(mCurrGameLevel.getSpawnPoint()), true);
+    mTank = GameObjectsFactory::newTank(static_cast<sf::Vector2f>(mCurrGameLevel.getSpawnPoint()));
 
     sf::Packet packet;
     packet << mCurrGameLevel;

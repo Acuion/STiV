@@ -13,23 +13,31 @@ void Tank::setMissle(MissleType mt)
 
 bool Tank::tryToLaunchMissile()
 {
-    TankMissile* fired = nullptr;
+    TankMissile* firedMissile = nullptr;
+    bool fired = false;
     switch (mCurrMissleType)
     {
     case MissleType::simpleBomb:
         if (Timer::getElapsedTime() - mLastFire < MissileSimpleBomb::mCd)
             break;
-        fired = GameObjectsFactory::newMissileSimpleBomb(sf::Vector2f(getPosition().x + (50 + 30) * cos(mBarrelAngle), getPosition().y + (50 + 30) * sin(mBarrelAngle)), mBarrelAngle, mBody->GetLinearVelocity());
+        fired = true;
+        if (!mPlayerControlled)
+            firedMissile = GameObjectsFactory::newMissileSimpleBomb(sf::Vector2f(getPosition().x + (50 + 30) * cos(mBarrelAngle), getPosition().y + (50 + 30) * sin(mBarrelAngle)), mBarrelAngle, mBody->GetLinearVelocity());
         break;
     case MissleType::sniper:
         if (Timer::getElapsedTime() - mLastFire < MissileSniper::mCd)
             break;
-        fired = GameObjectsFactory::newMissileSniper(sf::Vector2f(getPosition().x + (50 + 30) * cos(mBarrelAngle), getPosition().y + (50 + 30) * sin(mBarrelAngle)), mBarrelAngle, mBody->GetLinearVelocity());
+        fired = true;
+        if (!mPlayerControlled)
+            firedMissile = GameObjectsFactory::newMissileSniper(sf::Vector2f(getPosition().x + (50 + 30) * cos(mBarrelAngle), getPosition().y + (50 + 30) * sin(mBarrelAngle)), mBarrelAngle, mBody->GetLinearVelocity());
         break;
     }
     if (fired)
     {
-        mBody->ApplyForceToCenter({ fired->getKick() * cos(mBarrelAngle), fired->getKick() * sin(mBarrelAngle) }, true);
+        if (!mPlayerControlled)
+            mBody->ApplyForceToCenter({ firedMissile->getKick() * cos(mBarrelAngle), firedMissile->getKick() * sin(mBarrelAngle) }, true);
+        else
+            mWantLaunchMissile = true;
         mLastFire = Timer::getElapsedTime();
         return true;
     }
@@ -61,9 +69,8 @@ void Tank::onColide(ObjectRealTypeData * with)
     }
 }
 
-Tank::Tank(sf::Vector2f pos, bool client) : GameObject()
+Tank::Tank(sf::Vector2f pos) : GameObject()
 {
-    mClient = client;
     b2BodyDef* bdef = new b2BodyDef();
     bdef->type = b2_dynamicBody;
     bdef->position.Set(pos.x * Utilites::b2scale, pos.y * Utilites::b2scale);
@@ -79,7 +86,6 @@ Tank::Tank(sf::Vector2f pos, bool client) : GameObject()
 
 Tank::Tank()
 {
-    mClient = true;
 }
 
 Tank::~Tank()
@@ -91,10 +97,7 @@ void Tank::handleEvents(const sf::Event & ev)
     switch (ev.type)
     {
     case sf::Event::MouseButtonPressed:
-        if (!mClient)
-            tryToLaunchMissile();
-        else
-            mWantLaunchMissile = true;
+        tryToLaunchMissile();
         break;
     }
 }
@@ -107,13 +110,18 @@ void Tank::updateMousePos(const sf::Vector2f& mousePos)
 void Tank::update()
 {
     GameObject::update();
-    if (!mClient)
+    if (mPlayerControlled)
         mBarrelAngle = Utilites::atan2Points(getPosition(), mMousePos);
+}
+
+void Tank::setPlayerControlled(bool playerControlled)
+{
+    mPlayerControlled = playerControlled;
 }
 
 void Tank::setBarrelAngle(float angle)
 {
-    assert(mClient);
+    assert(!mPlayerControlled);
 
     mBarrelAngle = angle;
 }
@@ -125,7 +133,7 @@ float Tank::getBarrelAngle() const
 
 bool Tank::wantToLaunchMissile()
 {
-    assert(mClient);
+    assert(mPlayerControlled);
     bool ans = mWantLaunchMissile;
     mWantLaunchMissile = false;
     return ans;

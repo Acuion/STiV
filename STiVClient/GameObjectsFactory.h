@@ -19,9 +19,9 @@ public:
         return new MissileSniperVis(pos, angle, tankLinVel);
     }
 
-    static Tank* newTank(sf::Vector2f pos, bool client = false)
+    static Tank* newTank(sf::Vector2f pos)
     {
-        return new TankVis(pos, client);
+        return new TankVis(pos);
     }
 
     static Tank* newTank()

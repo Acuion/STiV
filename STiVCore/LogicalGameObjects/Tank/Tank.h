@@ -11,14 +11,14 @@ class Tank : public GameObject
 
     void onColide(ObjectRealTypeData* with) override;
 
-    bool mClient = false, mWantLaunchMissile = false;
+    bool mPlayerControlled = false, mWantLaunchMissile = false;
 protected:
     float mBarrelAngle = 0;
     MissleType mCurrMissleType;
 
     virtual void setMissle(MissleType mt);
 
-    Tank(sf::Vector2f pos, bool client = false);
+    Tank(sf::Vector2f pos);
     Tank();
     virtual ~Tank();
 
@@ -31,6 +31,8 @@ public:
     void handleEvents(const sf::Event& ev);
     void updateMousePos(const sf::Vector2f& mousePos);
     void update() override;
+
+    void setPlayerControlled(bool playerControlled);
 
     void setBarrelAngle(float angle);
     float getBarrelAngle() const;

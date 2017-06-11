@@ -43,7 +43,7 @@ Tank* ClientGameObjectManager::fillFromServerAndGetPlayerTank(sf::Packet& packet
         {
             sf::Vector2f pos;
             packet >> pos;
-            mObjectsIndex[objectNum] = GameObjectsFactory::newTank(pos, true); //todo: w/o true
+            mObjectsIndex[objectNum] = GameObjectsFactory::newTank(pos);
         }
         break;
         case  NetworkUtils::ObjMissileSniper:
@@ -105,7 +105,9 @@ Tank* ClientGameObjectManager::fillFromServerAndGetPlayerTank(sf::Packet& packet
 
     packet >> mPlayerTankNum;
 
-    return dynamic_cast<Tank*>(mObjectsIndex[mPlayerTankNum]);
+    auto tankPtr = dynamic_cast<Tank*>(mObjectsIndex[mPlayerTankNum]);
+    tankPtr->setPlayerControlled(true);
+    return tankPtr;
 }
 
 void ClientGameObjectManager::updateFromServer(sf::TcpSocket& socket)
@@ -137,7 +139,7 @@ void ClientGameObjectManager::updateFromServer(sf::TcpSocket& socket)
             sf::Vector2f pos;
             packet >> pos;
             if (objectNum != mPlayerTankNum)
-                mObjectsIndex[objectNum] = GameObjectsFactory::newTank(pos, true); //todo: w/o true
+                mObjectsIndex[objectNum] = GameObjectsFactory::newTank(pos);
         }
         break;
         case  NetworkUtils::ObjMissileSniper:
