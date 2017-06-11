@@ -10,11 +10,7 @@
 
 class GameServer
 {
-    sf::Vector2i mCurrLevelSize;
-    sf::Vector2i mSpawnPoint;
-
     Timer mSpawnBonus;
-    std::vector<sf::Vector2f> mBonusSpawnPoints;
 
     sf::TcpListener mTcpServer;
     std::thread* mAccThread = nullptr;

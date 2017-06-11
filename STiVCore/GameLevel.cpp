@@ -4,6 +4,10 @@
 
 using namespace NetworkUtils;
 
+GameLevel::GameLevel()
+{
+}
+
 GameLevel::GameLevel(const std::string& levelName)
 {
     mCurrLevelName = levelName;

@@ -31,10 +31,8 @@ bool GameController::connect(std::string srvIp, int srvPort)
     try
     {
         auto packet = readPacket(mTcpClient);
-        std::string levelName;
-        packet >> levelName;
-        packet >> mCurrLevelSize;
-        ClientGameObjectManager::getInstance().reset(mCurrLevelSize.x, mCurrLevelSize.y);
+        packet >> mCurrGameLevel;
+        ClientGameObjectManager::getInstance().reset(mCurrGameLevel.getCurrLevelSize().x, mCurrGameLevel.getCurrLevelSize().y);
         mPlayerTank = ClientGameObjectManager::getInstance().fillFromServerAndGetPlayerTank(packet);
     }
     catch (...)
@@ -42,13 +40,13 @@ bool GameController::connect(std::string srvIp, int srvPort)
         return false;
     }
 
-    mScene.create(mCurrLevelSize.x, mCurrLevelSize.y);
+    mScene.create(mCurrGameLevel.getCurrLevelSize().x, mCurrGameLevel.getCurrLevelSize().y);
     mSceneSprite = sf::Sprite(mScene.getTexture());
 
     mCenteredView.setSize(static_cast<float>(mScreenSize.x), static_cast<float>(mScreenSize.y));
 
-    mLevelBackground = Sprite("globalBackground.png", { mCurrLevelSize.x / 2.0f, mCurrLevelSize.y / 2.0f },
-    { 1.0f * mCurrLevelSize.x, 1.0f * mCurrLevelSize.y });//TODO: load background from server
+    mLevelBackground = Sprite("globalBackground.png", { mCurrGameLevel.getCurrLevelSize().x / 2.0f, mCurrGameLevel.getCurrLevelSize().y / 2.0f },
+    { 1.0f * mCurrGameLevel.getCurrLevelSize().x, 1.0f * mCurrGameLevel.getCurrLevelSize().y });//TODO: load background from server
 
     return true;
 }
@@ -74,8 +72,8 @@ void GameController::update(int dt)
 
     ClientGameObjectManager::getInstance().update(dt);
 
-    mCenteredView.setCenter({ std::min(std::max(mPlayerTank->getPosition().x, mHalfScreen.x), mCurrLevelSize.x - mHalfScreen.x),
-        std::min(std::max(mPlayerTank->getPosition().y, mHalfScreen.y), mCurrLevelSize.y - mHalfScreen.y) });
+    mCenteredView.setCenter({ std::min(std::max(mPlayerTank->getPosition().x, mHalfScreen.x), mCurrGameLevel.getCurrLevelSize().x - mHalfScreen.x),
+        std::min(std::max(mPlayerTank->getPosition().y, mHalfScreen.y), mCurrGameLevel.getCurrLevelSize().y - mHalfScreen.y) });
     mSceneToWindow.setView(mCenteredView);
     mHpText.setString(std::to_string(mPlayerTank->getHP()));
 }

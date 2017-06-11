@@ -12,6 +12,7 @@ GameObjectManager::~GameObjectManager()
 
 void GameObjectManager::reset(int sizeX, int sizeY)
 {
+    //GameObject::resetNumeration();
     auto iter = mObjects.begin();
     while (iter != mObjects.end())
     {

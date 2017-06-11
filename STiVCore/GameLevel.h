@@ -13,6 +13,7 @@ public:
         sf::Int32 mRadius, mPower;
     };
 
+    GameLevel();
     explicit GameLevel(const std::string& levelName);
 
     const sf::Vector2i& getCurrLevelSize() const;

@@ -51,6 +51,11 @@ int GameObject::getObjectNum() const
     return mObjectNum;
 }
 
+/*void GameObject::resetNumeration()
+{
+    mObjectNumGlobal = 0;
+}*/
+
 sf::Vector2f GameObject::getPosition() const
 {
     return { mBody->GetPosition().x / Utilites::b2scale, mBody->GetPosition().y / Utilites::b2scale };

@@ -1,5 +1,4 @@
 #include "STGClient.h"
-#include "GameLevel.h"
 #include "Network/NetworkUtils.h"
 #include "GameObjectsFactory.h"
 
@@ -23,13 +22,14 @@ void STGClient::sendNewObjects(const std::vector<GameObject*> objects)
     mNewObjectsLock.unlock();
 }
 
-STGClient::STGClient(const GameLevel& gameLevel, sf::Vector2i spawnPoint, sf::TcpSocket* socket, sf::Vector2i levelSize)
+STGClient::STGClient(const GameLevel& gameLevel, sf::TcpSocket* socket)
     : mSocket(socket)
+    , mCurrGameLevel(gameLevel)
 {
-    mTank = GameObjectsFactory::newTank(static_cast<sf::Vector2f>(spawnPoint), true);//todo: танк попадает в список новых объектов и отсылается ещё раз. Проблема                                                                          //не отправлять танки в new совсем, только отдельным отделом в пакете, клиент будет сам создавать если нужно
+    mTank = GameObjectsFactory::newTank(static_cast<sf::Vector2f>(mCurrGameLevel.getSpawnPoint()), true);//todo: танк попадает в список новых объектов и отсылается ещё раз. Проблема                                                                          //не отправлять танки в new совсем, только отдельным отделом в пакете, клиент будет сам создавать если нужно
                                                                                      //инфу о старотовых объектах на карте не передавать, а передать сам файл уровня. Просто сделать clear по новым объектам после загрузки уровня
     sf::Packet packet;
-    packet << gameLevel;
+    packet << mCurrGameLevel;
     const auto& objects = ServerGameObjectManager::getInstance().getGameObjects();
     sf::Uint32 objectsInTheWorldCount = 0;
     for (auto& obj : objects)
@@ -58,12 +58,12 @@ Tank* STGClient::getPlayerTank() const
     return mTank;
 }
 
-void STGClient::applyEvents(sf::Vector2i spawnPoint)
+void STGClient::applyEvents()
 {
     if (mMousePressed)
         mTank->tryToLaunchMissile();
     if (mTank->getHP() <= 0)
-        mTank->respawnAt(spawnPoint);
+        mTank->respawnAt(mCurrGameLevel.getSpawnPoint());
 }
 
 void STGClient::packConstructorObjectsInfo(sf::Packet& packet, GameObject* obj)

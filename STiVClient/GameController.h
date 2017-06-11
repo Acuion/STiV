@@ -6,6 +6,7 @@
 #include "LogicalGameObjects/GameObject.h"
 #include "LogicalGameObjects/GameObjectManager.h"
 #include "LogicalGameObjects/Tank/Tank.h"
+#include "GameLevel.h"
 
 using namespace std::chrono_literals;
 
@@ -30,11 +31,9 @@ private:
     sf::RenderTexture mScene, mSceneToWindow;
     sf::Sprite mSceneSprite, mSceneToWindowSprite;
 
+    GameLevel mCurrGameLevel;
     sf::Vector2i mScreenSize;
     sf::Vector2f mHalfScreen;
-    sf::Vector2i mCurrLevelSize;
-    sf::Vector2i mSpawnPoint;
-
     sf::Vector2i mMousePos;
 
     Tank *mPlayerTank = nullptr;

@@ -11,6 +11,12 @@ GameServer::GameServer(const std::string& levelName)
     , mSendTimer(50)
     , mCurrLevel(levelName)
 {
+    ServerGameObjectManager::getInstance().reset(mCurrLevel.getCurrLevelSize().x, mCurrLevel.getCurrLevelSize().y);
+    for (auto planetInfo : mCurrLevel.getPlanets())
+    {
+        GameObjectsFactory::newPlanet(static_cast<sf::Vector2f>(planetInfo.mPos), planetInfo.mRadius, planetInfo.mPower);
+    }
+    ServerGameObjectManager::getInstance().clearNewObjects();
 }
 
 GameServer::~GameServer()
@@ -35,7 +41,7 @@ void GameServer::acceptClients()
         }
         //hello!
         mClientsWork.lock();
-        mClients.emplace_back(mCurrLevel, mSpawnPoint, curSock, mCurrLevelSize);
+        mClients.emplace_back(mCurrLevel, curSock);
         std::cout << "New client!\n";
         mClientsWork.unlock();
     }
@@ -54,7 +60,7 @@ void GameServer::update(int dt)
 {
     if (mSpawnBonus.isExpired())
     {
-        sf::Vector2f bonusPos = mBonusSpawnPoints[rand() % mBonusSpawnPoints.size()];
+        sf::Vector2f bonusPos = static_cast<sf::Vector2f>(mCurrLevel.getBonusSpawnPoints()[rand() % mCurrLevel.getBonusSpawnPoints().size()]);
         int rnd = rand();
         if (rnd % 2)
             GameObjectsFactory::newBonus(BonusType::bt_heal, 10, bonusPos);
@@ -74,7 +80,7 @@ void GameServer::update(int dt)
 
     mClientsWork.lock();
     for (auto& client : mClients)
-        client.applyEvents(mSpawnPoint);
+        client.applyEvents();
 
     ServerGameObjectManager::getInstance().update(dt);
 

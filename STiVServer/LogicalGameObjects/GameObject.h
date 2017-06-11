@@ -40,6 +40,8 @@ public:
     int getHP() const;
     int getObjectNum() const;
 
+    //static void resetNumeration(); //todo: not a member?
+
     sf::Vector2f getPosition() const;
 
     void doDamage(int dmg);
