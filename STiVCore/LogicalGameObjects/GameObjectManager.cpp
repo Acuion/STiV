@@ -1,9 +1,10 @@
 #include "LogicalGameObjects/GameObjectManager.h"
 #include "Misc/Utilites.h"
+#include "StaticObject.h"
 
 void GameObjectManager::createBorder(b2BodyDef* b2Def, b2FixtureDef* b2FixDef)
 {
-    new GameObject(ObjectRealType::rt_Static, b2Def, new b2FixtureDef(*b2FixDef), 0, false);
+    new StaticObject(b2Def, new b2FixtureDef(*b2FixDef));
 }
 
 GameObjectManager::~GameObjectManager()

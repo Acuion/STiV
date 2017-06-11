@@ -164,6 +164,7 @@ COPY "$(SolutionDir)SFML\bin\Release\*" "$(OutDir)"</Command>
     <ClCompile Include="..\STiVCore\LogicalGameObjects\GameObjectManager.cpp" />
     <ClCompile Include="..\STiVCore\LogicalGameObjects\Gravity\GravityPoint.cpp" />
     <ClCompile Include="..\STiVCore\LogicalGameObjects\Gravity\Planet.cpp" />
+    <ClCompile Include="..\STiVCore\LogicalGameObjects\StaticObject.cpp" />
     <ClCompile Include="..\STiVCore\LogicalGameObjects\Tank\Missiles\MissileSimpleBomb.cpp" />
     <ClCompile Include="..\STiVCore\LogicalGameObjects\Tank\Missiles\MissileSniper.cpp" />
     <ClCompile Include="..\STiVCore\LogicalGameObjects\Tank\Missiles\TankMissile.cpp" />
@@ -188,6 +189,7 @@ COPY "$(SolutionDir)SFML\bin\Release\*" "$(OutDir)"</Command>
     <ClInclude Include="..\STiVCore\LogicalGameObjects\GameObjectManager.h" />
     <ClInclude Include="..\STiVCore\LogicalGameObjects\Gravity\GravityPoint.h" />
     <ClInclude Include="..\STiVCore\LogicalGameObjects\Gravity\Planet.h" />
+    <ClInclude Include="..\STiVCore\LogicalGameObjects\StaticObject.h" />
     <ClInclude Include="..\STiVCore\LogicalGameObjects\Tank\Missiles\MissileSimpleBomb.h" />
     <ClInclude Include="..\STiVCore\LogicalGameObjects\Tank\Missiles\MissileSniper.h" />
     <ClInclude Include="..\STiVCore\LogicalGameObjects\Tank\Missiles\TankMissile.h" />

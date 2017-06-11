@@ -119,6 +119,9 @@
     <ClCompile Include="..\STiVCore\GameLevel.cpp">
       <Filter>Source\Core</Filter>
     </ClCompile>
+    <ClCompile Include="..\STiVCore\LogicalGameObjects\StaticObject.cpp">
+      <Filter>Source\Core\LogicalGameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObjectsFactory.h">
@@ -189,6 +192,9 @@
     </ClInclude>
     <ClInclude Include="..\STiVCore\GameLevel.h">
       <Filter>Source\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\STiVCore\LogicalGameObjects\StaticObject.h">
+      <Filter>Source\Core\LogicalGameObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

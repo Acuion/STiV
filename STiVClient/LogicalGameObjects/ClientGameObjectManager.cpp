@@ -25,6 +25,9 @@ Tank* ClientGameObjectManager::fillFromServerAndGetPlayerTank(sf::Packet& packet
         packet >> objectType >> objectNum;
         switch (objectType)
         {
+        case NetworkUtils::ObjStatic:
+            mObjectsIndex[objectNum] = nullptr;
+            break;
         case NetworkUtils::ObjBonus:
         {
             sf::Uint16 bonusType;
@@ -92,6 +95,8 @@ Tank* ClientGameObjectManager::fillFromServerAndGetPlayerTank(sf::Packet& packet
         packet >> angVel;
         packet >> hp;
 
+        if (!mObjectsIndex[objectNum])
+            continue;//static object
         mObjectsIndex[objectNum]->mBody->SetTransform(pos, angle);
         mObjectsIndex[objectNum]->mBody->SetLinearVelocity(linVel);
         mObjectsIndex[objectNum]->mBody->SetAngularVelocity(angVel);
@@ -189,6 +194,8 @@ void ClientGameObjectManager::updateFromServer(sf::TcpSocket& socket)
         packet >> angVel;
         packet >> hp;
 
+        if (!mObjectsIndex[objNum])
+            continue;//static object
         mObjectsIndex[objNum]->mBody->SetTransform(pos, angle);
         mObjectsIndex[objNum]->mBody->SetLinearVelocity(linVel);
         mObjectsIndex[objNum]->mBody->SetAngularVelocity(angVel);

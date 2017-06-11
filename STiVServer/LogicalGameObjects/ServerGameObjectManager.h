@@ -11,8 +11,6 @@ public:
     std::list<GameObject*> getGameObjects() const;
     const std::vector<GameObject*>& getNewObjects() const;
     void clearNewObjects();
-protected:
-    void createBorder(b2BodyDef* b2Def, b2FixtureDef* b2FixDef) override;
 private:
     std::vector<GameObject*> mNewObjects;
 };

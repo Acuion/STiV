@@ -1,6 +1,7 @@
 #include "STGClient.h"
 #include "Network/NetworkUtils.h"
 #include "GameObjectsFactory.h"
+#include "LogicalGameObjects/StaticObject.h"
 
 using namespace NetworkUtils;
 using namespace std::chrono_literals;
@@ -77,11 +78,15 @@ void STGClient::packConstructorObjectsInfo(sf::Packet& packet, GameObject* obj)
         objectType = NetworkUtils::ObjMissileSimpleBomb;
     else if (dynamic_cast<Planet*>(obj))
         objectType = NetworkUtils::ObjPlanet;
+    else if (dynamic_cast<StaticObject*>(obj))
+        objectType = NetworkUtils::ObjStatic;
     else assert(false);
 
     packet << objectType << static_cast<sf::Uint32>(obj->getObjectNum());
     switch (objectType)
     {
+    case NetworkUtils::ObjStatic:
+        break;
     case NetworkUtils::ObjBonus:
     {
         auto bonus = dynamic_cast<Bonus*>(obj);
