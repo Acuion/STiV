@@ -4,10 +4,12 @@
 #include <SFML/Network.hpp>
 #include <mutex>
 
+class GameLevel;
+
 class STGClient
 {
 public:
-    STGClient(const std::string& levelName, sf::Vector2i spawnPoint, sf::TcpSocket* socket, sf::Vector2i levelSize);
+    STGClient(const GameLevel& gameLevel, sf::Vector2i spawnPoint, sf::TcpSocket* socket, sf::Vector2i levelSize);
     ~STGClient();
 
     void sendNewObjects(const std::vector<GameObject*> objects);

@@ -8,8 +8,7 @@ int main()
 
     MaterialStorage::initMaterials();
 
-    GameServer* STG = new GameServer();
-    STG->loadLevel("test");
+    GameServer* STG = new GameServer("test");
     STG->listen(58000);
 
     Timer updateTimer(10);

@@ -4,10 +4,12 @@
 #include <fstream>
 #include <chrono>
 #include "GameObjectsFactory.h"
+#include "GameLevel.h"
 
-GameServer::GameServer()
+GameServer::GameServer(const std::string& levelName)
     : mSpawnBonus(3000)
     , mSendTimer(50)
+    , mCurrLevel(levelName)
 {
 }
 
@@ -33,7 +35,7 @@ void GameServer::acceptClients()
         }
         //hello!
         mClientsWork.lock();
-        mClients.emplace_back(mCurrLevelName, mSpawnPoint, curSock, mCurrLevelSize);
+        mClients.emplace_back(mCurrLevel, mSpawnPoint, curSock, mCurrLevelSize);
         std::cout << "New client!\n";
         mClientsWork.unlock();
     }
@@ -84,35 +86,4 @@ void GameServer::update(int dt)
     }
 
     mClientsWork.unlock();
-}
-
-void GameServer::loadLevel(const std::string& name)
-{
-    mCurrLevelName = name;
-    std::ifstream levelfile("levels\\" + name + ".tgl");
-    int goc;
-    int x, y, radius, power;
-    levelfile >> x >> y;
-    ServerGameObjectManager::getInstance().reset(x, y);
-    mCurrLevelSize.x = x;
-    mCurrLevelSize.y = y;
-    levelfile >> x >> y;
-    mSpawnPoint.x = x;
-    mSpawnPoint.y = y;
-
-    levelfile >> goc;
-    for (int i = 0; i < goc; ++i)
-    {
-        levelfile >> x >> y >> radius >> power;
-
-        GameObjectsFactory::newPlanet(sf::Vector2f(static_cast<float>(x), static_cast<float>(y)), radius, power);
-    }
-
-    levelfile >> goc;
-    mBonusSpawnPoints.clear();
-    for (int i = 0; i < goc; ++i)
-    {
-        levelfile >> x >> y;
-        mBonusSpawnPoints.push_back(sf::Vector2f(static_cast<float>(x), static_cast<float>(y)));
-    }
 }

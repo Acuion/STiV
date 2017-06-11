@@ -1,5 +1,5 @@
 #include "STGClient.h"
-#include "Misc/Utilites.h"
+#include "GameLevel.h"
 #include "Network/NetworkUtils.h"
 #include "GameObjectsFactory.h"
 
@@ -23,16 +23,13 @@ void STGClient::sendNewObjects(const std::vector<GameObject*> objects)
     mNewObjectsLock.unlock();
 }
 
-STGClient::STGClient(const std::string& levelName, sf::Vector2i spawnPoint, sf::TcpSocket* socket, sf::Vector2i levelSize)
+STGClient::STGClient(const GameLevel& gameLevel, sf::Vector2i spawnPoint, sf::TcpSocket* socket, sf::Vector2i levelSize)
     : mSocket(socket)
 {
-    mTank = GameObjectsFactory::newTank(static_cast<sf::Vector2f>(spawnPoint), true);//todo: танк попадает в список новых объектов и отсылается ещё раз. Проблема
-                                                                                     //и изменить dontSendToClients, оно странное
-                                                                                     //не отправлять танки в new совсем, только отдельным отделом в пакете, клиент будет сам создавать если нужно
+    mTank = GameObjectsFactory::newTank(static_cast<sf::Vector2f>(spawnPoint), true);//todo: танк попадает в список новых объектов и отсылается ещё раз. Проблема                                                                          //не отправлять танки в new совсем, только отдельным отделом в пакете, клиент будет сам создавать если нужно
                                                                                      //инфу о старотовых объектах на карте не передавать, а передать сам файл уровня. Просто сделать clear по новым объектам после загрузки уровня
     sf::Packet packet;
-    packet << levelName;//todo: load info to GoM
-    packet << levelSize;
+    packet << gameLevel;
     const auto& objects = ServerGameObjectManager::getInstance().getGameObjects();
     sf::Uint32 objectsInTheWorldCount = 0;
     for (auto& obj : objects)

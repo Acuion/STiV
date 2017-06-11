@@ -6,6 +6,7 @@
 #include "STGClient.h"
 #include "Misc/Timer.h"
 #include <mutex>
+#include "GameLevel.h"
 
 class GameServer
 {
@@ -20,20 +21,18 @@ class GameServer
     std::list<STGClient> mClients;
     std::mutex mClientsWork;
     Timer mSendTimer;
-    std::string mCurrLevelName;
+    GameLevel mCurrLevel;
 
     bool mIsWorking = true;
 
     void acceptClients();
 public:
-    GameServer();
+    explicit GameServer(const std::string& levelName);
 
     ~GameServer();
 
     bool listen(int srvPort);
 
     void update(int dt);
-
-    void loadLevel(const std::string& name);
 };
 
