@@ -17,4 +17,5 @@ private:
     ClientGameObjectManager operator=(const ClientGameObjectManager&) = delete;
 
     std::map<int, GameObject*> mObjectsIndex;
+    sf::Int32 mPlayerTankNum;
 };

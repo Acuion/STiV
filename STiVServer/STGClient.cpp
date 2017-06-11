@@ -26,14 +26,12 @@ STGClient::STGClient(const GameLevel& gameLevel, sf::TcpSocket* socket)
     : mSocket(socket)
     , mCurrGameLevel(gameLevel)
 {
-    mTank = GameObjectsFactory::newTank(static_cast<sf::Vector2f>(mCurrGameLevel.getSpawnPoint()), true);//todo: танк попадает в список новых объектов и отсылается ещё раз. Проблема                                                                          //не отправлять танки в new совсем, только отдельным отделом в пакете, клиент будет сам создавать если нужно
-                                                                                     //инфу о старотовых объектах на карте не передавать, а передать сам файл уровня. Просто сделать clear по новым объектам после загрузки уровня
+    mTank = GameObjectsFactory::newTank(static_cast<sf::Vector2f>(mCurrGameLevel.getSpawnPoint()), true);
+
     sf::Packet packet;
     packet << mCurrGameLevel;
     const auto& objects = ServerGameObjectManager::getInstance().getGameObjects();
-    sf::Uint32 objectsInTheWorldCount = 0;
-    for (auto& obj : objects)
-        objectsInTheWorldCount++;
+    sf::Uint32 objectsInTheWorldCount = objects.size();
     packet << objectsInTheWorldCount;
     for (auto obj : objects)
     {
@@ -95,13 +93,13 @@ void STGClient::packConstructorObjectsInfo(sf::Packet& packet, GameObject* obj)
         packet << pos;
     }
     break;
-    /*case  NetworkUtils::ObjTank:
+    case  NetworkUtils::ObjTank:
     {
         auto tank = dynamic_cast<Tank*>(obj);
         sf::Vector2f pos = tank->getPosition();
         packet << pos;
     }
-    break;*/
+    break;
     case  NetworkUtils::ObjMissileSniper:
     {
         auto sniperMissile = dynamic_cast<MissileSniper*>(obj);
@@ -164,9 +162,7 @@ void STGClient::clientComm()
         packet.clear();
 
         mNewObjectsLock.lock();
-        sf::Uint32 objectsCount = 0;
-        for (auto& obj : mNewObjects)
-            objectsCount++;
+        sf::Uint32 objectsCount = mNewObjects.size();
         packet << objectsCount;
         for (auto& x : mNewObjects)
             packConstructorObjectsInfo(packet, x);
@@ -174,9 +170,7 @@ void STGClient::clientComm()
         mNewObjectsLock.unlock();
 
         const auto& exisitingObjects = ServerGameObjectManager::getInstance().getGameObjects();//todo: sync mutex
-        objectsCount = 0;
-        for (auto& obj : exisitingObjects)
-            objectsCount++;
+        objectsCount = exisitingObjects.size();
         packet << objectsCount;
         for (auto obj : exisitingObjects)
         {

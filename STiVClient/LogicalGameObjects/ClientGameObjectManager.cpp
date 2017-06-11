@@ -98,10 +98,9 @@ Tank* ClientGameObjectManager::fillFromServerAndGetPlayerTank(sf::Packet& packet
         mObjectsIndex[objectNum]->mHP = hp;
     }
 
-    sf::Int32 playerTankNum;
-    packet >> playerTankNum;
+    packet >> mPlayerTankNum;
 
-    return dynamic_cast<Tank*>(mObjectsIndex[playerTankNum]);
+    return dynamic_cast<Tank*>(mObjectsIndex[mPlayerTankNum]);
 }
 
 void ClientGameObjectManager::updateFromServer(sf::TcpSocket& socket)
@@ -132,7 +131,8 @@ void ClientGameObjectManager::updateFromServer(sf::TcpSocket& socket)
         {
             sf::Vector2f pos;
             packet >> pos;
-            mObjectsIndex[objectNum] = GameObjectsFactory::newTank(pos, true); //todo: w/o true
+            if (objectNum != mPlayerTankNum)
+                mObjectsIndex[objectNum] = GameObjectsFactory::newTank(pos, true); //todo: w/o true
         }
         break;
         case  NetworkUtils::ObjMissileSniper:
