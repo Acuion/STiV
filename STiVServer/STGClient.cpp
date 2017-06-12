@@ -183,7 +183,7 @@ void STGClient::clientComm()
             packChangingObjectsInfo(packet, obj);
         }
         
-        mSocket->send(packet);//blocking?
+        mSocket->send(packet);
 
         packet.clear();
 

@@ -70,7 +70,7 @@ void GameController::update(int dt)
         }
     }
 
-    mPlayerTank->updateMousePos(mSceneToWindow.mapPixelToCoords(sf::Mouse::getPosition()));
+    mPlayerTank->updateMousePos(mSceneToWindow.mapPixelToCoords(sf::Mouse::getPosition(mWindow)));
     mPlayerTank->update();
     ClientGameObjectManager::getInstance().update(dt);
 

@@ -82,14 +82,13 @@ void GameServer::update(int dt)
     for (auto& client : mClients)
         client.applyEvents();
 
-    ServerGameObjectManager::getInstance().update(dt);
-
     if (mSendTimer.isExpired())
     {
         for (auto& client : mClients)
             client.sendNewObjects(ServerGameObjectManager::getInstance().getNewObjects());
         ServerGameObjectManager::getInstance().clearNewObjects();
     }
-
     mClientsWork.unlock();
+
+    ServerGameObjectManager::getInstance().update(dt);
 }
