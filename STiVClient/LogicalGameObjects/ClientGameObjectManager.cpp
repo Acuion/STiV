@@ -1,6 +1,7 @@
 ﻿#include "ClientGameObjectManager.h"
 #include "Network/NetworkUtils.h"
 #include "../GameObjectsFactory.h"
+#include <iostream>
 
 using namespace NetworkUtils;
 
@@ -182,7 +183,7 @@ void ClientGameObjectManager::updateFromServer(sf::TcpSocket& socket)
 
     sf::Uint32 objectsToUpdateCount;
     packet >> objectsToUpdateCount;
-
+    std::cout << objectsToUpdateCount << std::endl;
     while (objectsToUpdateCount--)
     {
         sf::Int32 objNum, hp;

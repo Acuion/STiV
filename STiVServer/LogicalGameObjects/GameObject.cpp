@@ -11,7 +11,7 @@ void GameObject::create(ObjectRealType type, b2BodyDef * bdef, b2FixtureDef * fi
     mDamageable = damageable;
     mObjectNum = mObjectNumGlobal++;
 
-    mBody = ServerGameObjectManager::getInstance().registerObject(bdef, fixture, this, type);
+    ServerGameObjectManager::getInstance().registerObject(bdef, fixture, this, type);
 }
 
 GameObject::GameObject(bool damageable)

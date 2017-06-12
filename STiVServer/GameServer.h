@@ -14,9 +14,8 @@ class GameServer
 
     sf::TcpListener mTcpServer;
     std::thread* mAccThread = nullptr;
-    std::list<STGClient> mClients;
+    std::list<STGClient*> mClients;
     std::mutex mClientsWork;
-    Timer mSendTimer;
     GameLevel mCurrLevel;
 
     bool mIsWorking = true;

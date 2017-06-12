@@ -8,7 +8,6 @@
 
 GameServer::GameServer(const std::string& levelName)
     : mSpawnBonus(3000)
-    , mSendTimer(50)
     , mCurrLevel(levelName)
 {
     ServerGameObjectManager::getInstance().reset(mCurrLevel.getCurrLevelSize().x, mCurrLevel.getCurrLevelSize().y);
@@ -16,7 +15,6 @@ GameServer::GameServer(const std::string& levelName)
     {
         GameObjectsFactory::newPlanet(static_cast<sf::Vector2f>(planetInfo.mPos), planetInfo.mRadius, planetInfo.mPower);
     }
-    ServerGameObjectManager::getInstance().clearNewObjects();
 }
 
 GameServer::~GameServer()
@@ -41,7 +39,7 @@ void GameServer::acceptClients()
         }
         //hello!
         mClientsWork.lock();
-        mClients.emplace_back(mCurrLevel, curSock);
+        mClients.push_back(new STGClient(mCurrLevel, curSock));
         std::cout << "New client!\n";
         mClientsWork.unlock();
     }
@@ -79,16 +77,21 @@ void GameServer::update(int dt)
     }
 
     mClientsWork.lock();
-    for (auto& client : mClients)
-        client.applyEvents();
-
-    if (mSendTimer.isExpired())
+    auto begin = mClients.begin();
+    while (begin != mClients.end())
     {
-        for (auto& client : mClients)
-            client.sendNewObjects(ServerGameObjectManager::getInstance().getNewObjects());
-        ServerGameObjectManager::getInstance().clearNewObjects();
+        if ((*begin)->isDisconnected())
+        {
+            delete *begin;
+            begin = mClients.erase(begin);
+        }
+        else
+            ++begin;
     }
-    mClientsWork.unlock();
 
+    for (auto& client : mClients)
+        client->applyEvents();
+    
     ServerGameObjectManager::getInstance().update(dt);
+    mClientsWork.unlock();
 }

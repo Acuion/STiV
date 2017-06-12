@@ -1,16 +1,23 @@
 ﻿#pragma once
 #include "LogicalGameObjects/GameObjectManager.h"
+#include "STGClient.h"
 
 class ServerGameObjectManager : public GameObjectManager
 {
 public:
     static ServerGameObjectManager& getInstance();
 
-    b2Body* registerObject(b2BodyDef* bdef, b2FixtureDef* fixture, GameObject* go, ObjectRealType type) override;
+    void registerObject(b2BodyDef* bdef, b2FixtureDef* fixture, GameObject* go, ObjectRealType type) override;
 
-    std::list<GameObject*> getGameObjects() const;
-    const std::vector<GameObject*>& getNewObjects() const;
-    void clearNewObjects();
+    const std::list<GameObject*>& getGameObjects() const;
+    void update(int dt) override;
+
+    void lockObjects();
+    void unlockObjects();
+
+    void subscribeClient(STGClient* client);
+    void unsubscribeClient(STGClient* client);
 private:
-    std::vector<GameObject*> mNewObjects;
+    std::list<STGClient*> mNewObjSubscribers;
+    std::mutex mObjectsLock;
 };

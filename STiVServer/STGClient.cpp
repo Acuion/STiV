@@ -8,6 +8,7 @@ using namespace std::chrono_literals;
 
 STGClient::~STGClient()
 {
+    ServerGameObjectManager::getInstance().unsubscribeClient(this);
     ServerGameObjectManager::getInstance().forcedDelete(mTank);
     mSocket->disconnect();
     mCommThread->join();
@@ -15,11 +16,11 @@ STGClient::~STGClient()
     delete mSocket;
 }
 
-void STGClient::sendNewObjects(const std::vector<GameObject*> objects)
+void STGClient::procNewObject(GameObject* object)
 {
     mNewObjectsLock.lock();
-    for (auto& x : objects)
-        mNewObjects.push_back(x);
+    packConstructorObjectsInfo(mNewObjectsPacket, object);
+    mUnitsInNewoPacket++;
     mNewObjectsLock.unlock();
 }
 
@@ -27,6 +28,8 @@ STGClient::STGClient(const GameLevel& gameLevel, sf::TcpSocket* socket)
     : mSocket(socket)
     , mCurrGameLevel(gameLevel)
 {
+    ServerGameObjectManager::getInstance().subscribeClient(this);
+
     mTank = GameObjectsFactory::newTank(static_cast<sf::Vector2f>(mCurrGameLevel.getSpawnPoint()));
 
     sf::Packet packet;
@@ -167,22 +170,22 @@ void STGClient::clientComm()
         packet.clear();
 
         mNewObjectsLock.lock();
-        sf::Uint32 objectsCount = mNewObjects.size();
-        packet << objectsCount;
-        for (auto& x : mNewObjects)
-            packConstructorObjectsInfo(packet, x);
-        mNewObjects.clear();
+        packet << mUnitsInNewoPacket;
+        packet.append(mNewObjectsPacket.getData(), mNewObjectsPacket.getDataSize());
+        mNewObjectsPacket.clear();
+        mUnitsInNewoPacket = 0;
         mNewObjectsLock.unlock();
 
+        ServerGameObjectManager::getInstance().lockObjects();
         const auto& exisitingObjects = ServerGameObjectManager::getInstance().getGameObjects();//todo: sync mutex
-        objectsCount = exisitingObjects.size();
+        sf::Uint32 objectsCount = exisitingObjects.size();
         packet << objectsCount;
         for (auto obj : exisitingObjects)
         {
             packet << static_cast<sf::Int32>(obj->getObjectNum());
             packChangingObjectsInfo(packet, obj);
         }
-        
+        ServerGameObjectManager::getInstance().unlockObjects();
         mSocket->send(packet);
 
         packet.clear();
@@ -194,7 +197,7 @@ void STGClient::clientComm()
                 mDisconnected = true;
                 return;
             }
-            std::this_thread::sleep_for(10ms);
+            std::this_thread::sleep_for(15ms);
         }
 
         float angle;

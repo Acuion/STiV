@@ -18,7 +18,7 @@ public:
 
     void reset(int sizeX, int sizeY);
 
-    virtual b2Body* registerObject(b2BodyDef* bdef, b2FixtureDef* fixture, GameObject* go, ObjectRealType type);
+    virtual void registerObject(b2BodyDef* bdef, b2FixtureDef* fixture, GameObject* go, ObjectRealType type);
 
     void unregisterObject(b2Body* body);
 
@@ -26,7 +26,7 @@ public:
 
     void unregisterGravityPoint(GravityPoint* gravo);
 
-    void update(int dt);
+    virtual void update(int dt);
 
     void forcedDelete(GameObject* obj);
 };

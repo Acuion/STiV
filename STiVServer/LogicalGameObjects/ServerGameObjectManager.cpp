@@ -6,23 +6,41 @@ ServerGameObjectManager & ServerGameObjectManager::getInstance()
     return singleton;
 }
 
-b2Body* ServerGameObjectManager::registerObject(b2BodyDef* bdef, b2FixtureDef* fixture, GameObject* go, ObjectRealType type)
+void ServerGameObjectManager::registerObject(b2BodyDef* bdef, b2FixtureDef* fixture, GameObject* go, ObjectRealType type)
 {
-    mNewObjects.push_back(go);
-    return GameObjectManager::registerObject(bdef, fixture, go, type);
+    GameObjectManager::registerObject(bdef, fixture, go, type);;
+    for (auto& x : mNewObjSubscribers)
+        x->procNewObject(go);
 }
 
-std::list<GameObject*> ServerGameObjectManager::getGameObjects() const
+const std::list<GameObject*>& ServerGameObjectManager::getGameObjects() const
 {
     return mObjects;
 }
 
-const std::vector<GameObject*>& ServerGameObjectManager::getNewObjects() const
+void ServerGameObjectManager::update(int dt)
 {
-    return mNewObjects;
+    mObjectsLock.lock();
+    GameObjectManager::update(dt);
+    mObjectsLock.unlock();
 }
 
-void ServerGameObjectManager::clearNewObjects()
+void ServerGameObjectManager::lockObjects()
 {
-    mNewObjects.clear();
+    mObjectsLock.lock();
+}
+
+void ServerGameObjectManager::unlockObjects()
+{
+    mObjectsLock.unlock();
+}
+
+void ServerGameObjectManager::subscribeClient(STGClient* client)
+{
+    mNewObjSubscribers.push_back(client);
+}
+
+void ServerGameObjectManager::unsubscribeClient(STGClient* client)
+{
+    mNewObjSubscribers.remove(client);
 }

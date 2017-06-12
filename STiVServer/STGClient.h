@@ -11,8 +11,8 @@ public:
     STGClient(const GameLevel& gameLevel, sf::TcpSocket* socket);
     ~STGClient();
 
-    void sendNewObjects(const std::vector<GameObject*> objects);
-
+    void procNewObject(GameObject* object);
+    
     void applyEvents();
 
     bool isDisconnected() const;
@@ -27,7 +27,8 @@ private:
     static void packChangingObjectsInfo(sf::Packet& packet, GameObject* obj);
 
     std::mutex mNewObjectsLock;
-    std::vector<GameObject*> mNewObjects;
+    sf::Uint32 mUnitsInNewoPacket = 0;
+    sf::Packet mNewObjectsPacket;
 
     const GameLevel& mCurrGameLevel;
 

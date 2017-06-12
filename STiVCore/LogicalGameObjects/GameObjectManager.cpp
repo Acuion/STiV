@@ -55,13 +55,13 @@ void GameObjectManager::reset(int sizeX, int sizeY)
     delete fdefV;
 }
 
-b2Body* GameObjectManager::registerObject(b2BodyDef* bdef, b2FixtureDef* fixture, GameObject* go, ObjectRealType type)
+void GameObjectManager::registerObject(b2BodyDef* bdef, b2FixtureDef* fixture, GameObject* go, ObjectRealType type)
 {
     b2Body* body = mWorld->CreateBody(bdef);
     body->CreateFixture(fixture);
     body->SetUserData(new std::pair<ObjectRealType, GameObject*>(type, go));
     mObjects.push_back(go);
-    return body;
+    go->mBody = body;
 }
 
 void GameObjectManager::unregisterObject(b2Body* body)

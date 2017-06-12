@@ -8,7 +8,7 @@ void GameObject::create(ObjectRealType type, b2BodyDef * bdef, b2FixtureDef * fi
     mHP = HP;
     mDamageable = damageable;
 
-    mBody = GameObjectsFactory::instanceOfGoM().registerObject(bdef, fixture, this, type);
+    GameObjectsFactory::instanceOfGoM().registerObject(bdef, fixture, this, type);
 }
 
 GameObject::GameObject(bool damageable)
