@@ -2,6 +2,7 @@
 
 #include "LogicalGameObjects/GameObjectManager.h"
 #include <SFML/Network/TcpSocket.hpp>
+#include <SFML/Network/Packet.hpp>
 
 class Tank;
 
@@ -14,8 +15,9 @@ public:
     Tank* fillFromServerAndGetPlayerTank(sf::Packet& packet);
 private:
     ClientGameObjectManager();
-    ClientGameObjectManager operator=(const ClientGameObjectManager&) = delete;
+    void operator=(const ClientGameObjectManager&) = delete;
 
     std::map<int, GameObject*> mObjectsIndex;
     sf::Int32 mPlayerTankNum;
+    sf::Packet mPrvPacket;
 };

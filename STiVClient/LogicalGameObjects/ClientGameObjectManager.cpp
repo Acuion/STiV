@@ -111,11 +111,85 @@ Tank* ClientGameObjectManager::fillFromServerAndGetPlayerTank(sf::Packet& packet
     return tankPtr;
 }
 
+b2Vec2 operator*(const b2Vec2& lhs, const int& rhs)
+{
+    return { lhs.x * rhs, lhs.y * rhs };
+}
+
 void ClientGameObjectManager::updateFromServer(sf::TcpSocket& socket)
 {
+    if (!mPrvPacket.endOfPacket())
+    {
+        sf::Uint32 newObjectsCount;
+        mPrvPacket >> newObjectsCount;
+        while (newObjectsCount--)
+        {
+            sf::Int16 objectType;
+            sf::Uint32 objectNum;
+            mPrvPacket >> objectType;
+            mPrvPacket >> objectNum;
+            switch (objectType)
+            {
+            case NetworkUtils::ObjBonus:
+            {
+                sf::Int16 bonusType;
+                sf::Int32 value;
+                sf::Vector2f pos;
+                mPrvPacket >> bonusType;
+                mPrvPacket >> value;
+                mPrvPacket >> pos;
+                mObjectsIndex[objectNum] = GameObjectsFactory::newBonus(static_cast<BonusType>(bonusType), value, pos);
+            }
+            break;
+            case  NetworkUtils::ObjTank:
+            {
+                sf::Vector2f pos;
+                mPrvPacket >> pos;
+                if (objectNum != mPlayerTankNum)
+                    mObjectsIndex[objectNum] = GameObjectsFactory::newTank(pos);
+            }
+            break;
+            case  NetworkUtils::ObjMissileSniper:
+            {
+                sf::Vector2f pos;
+                float angle;
+                b2Vec2 tankLinVel;
+                mPrvPacket >> pos;
+                mPrvPacket >> angle;
+                mPrvPacket >> tankLinVel;
+                mObjectsIndex[objectNum] = GameObjectsFactory::newMissileSniper(pos, angle, tankLinVel);
+            }
+            break;
+            case  NetworkUtils::ObjMissileSimpleBomb:
+            {
+                sf::Vector2f pos;
+                float angle;
+                b2Vec2 tankLinVel;
+                mPrvPacket >> pos;
+                mPrvPacket >> angle;
+                mPrvPacket >> tankLinVel;
+                mObjectsIndex[objectNum] = GameObjectsFactory::newMissileSimpleBomb(pos, angle, tankLinVel);
+            }
+            break;
+            case  NetworkUtils::ObjPlanet:
+            {
+                sf::Vector2f pos;
+                sf::Int32 radius;
+                sf::Int32 power;
+                mPrvPacket >> pos;
+                mPrvPacket >> radius;
+                mPrvPacket >> power;
+                mObjectsIndex[objectNum] = GameObjectsFactory::newPlanet(pos, radius, power);
+            }
+            break;
+            default:
+                assert(false);
+            }
+        }
+    }
+
     auto packet = readPacket(socket);
 
-    //todo: handle nonexis
     sf::Uint32 objectsToUpdateCount;
     packet >> objectsToUpdateCount;
     while (objectsToUpdateCount--)
@@ -133,76 +207,15 @@ void ClientGameObjectManager::updateFromServer(sf::TcpSocket& socket)
 
         if (!mObjectsIndex[objNum])
             continue;//static object
-        mObjectsIndex[objNum]->mBody->SetTransform(pos, angle);
-        mObjectsIndex[objNum]->mBody->SetLinearVelocity(linVel);
-        mObjectsIndex[objNum]->mBody->SetAngularVelocity(angVel);
-        mObjectsIndex[objNum]->mHP = hp;
+        //mObjectsIndex[objNum]->mBody->SetTransform(pos, angle);
+        //mObjectsIndex[objNum]->mBody->SetLinearVelocity(linVel);
+        //mObjectsIndex[objNum]->mBody->SetAngularVelocity(angVel);
+        auto prvPos = mObjectsIndex[objNum]->mBody->GetPosition();
+        auto prvAngle = mObjectsIndex[objNum]->mBody->GetAngle();
+        mObjectsIndex[objNum]->mBody->SetLinearVelocity((pos - prvPos) * (100 / cNetworkDelayInCalls));
+        mObjectsIndex[objNum]->mBody->SetAngularVelocity((angle - prvAngle)* (100 / cNetworkDelayInCalls));
+        //mObjectsIndex[objNum]->mHP = hp;
     }
 
-    sf::Uint32 newObjectsCount;
-    packet >> newObjectsCount;
-    while (newObjectsCount--)
-    {
-        sf::Int16 objectType;
-        sf::Uint32 objectNum;
-        packet >> objectType;
-        packet >> objectNum;
-        switch (objectType)
-        {
-        case NetworkUtils::ObjBonus:
-        {
-            sf::Int16 bonusType;
-            sf::Int32 value;
-            sf::Vector2f pos;
-            packet >> bonusType;
-            packet >> value;
-            packet >> pos;
-            mObjectsIndex[objectNum] = GameObjectsFactory::newBonus(static_cast<BonusType>(bonusType), value, pos);
-        }
-        break;
-        case  NetworkUtils::ObjTank:
-        {
-            sf::Vector2f pos;
-            packet >> pos;
-            if (objectNum != mPlayerTankNum)
-                mObjectsIndex[objectNum] = GameObjectsFactory::newTank(pos);
-        }
-        break;
-        case  NetworkUtils::ObjMissileSniper:
-        {
-            sf::Vector2f pos;
-            float angle;
-            b2Vec2 tankLinVel;
-            packet >> pos;
-            packet >> angle;
-            packet >> tankLinVel;
-            mObjectsIndex[objectNum] = GameObjectsFactory::newMissileSniper(pos, angle, tankLinVel);
-        }
-        break;
-        case  NetworkUtils::ObjMissileSimpleBomb:
-        {
-            sf::Vector2f pos;
-            float angle;
-            b2Vec2 tankLinVel;
-            packet >> pos;
-            packet >> angle;
-            packet >> tankLinVel;
-            mObjectsIndex[objectNum] = GameObjectsFactory::newMissileSimpleBomb(pos, angle, tankLinVel);
-        }
-        break;
-        case  NetworkUtils::ObjPlanet:
-        {
-            sf::Vector2f pos;
-            sf::Int32 radius;
-            sf::Int32 power;
-            packet >> pos;
-            packet >> radius;
-            packet >> power;
-            mObjectsIndex[objectNum] = GameObjectsFactory::newPlanet(pos, radius, power);
-        }
-        break;
-        default:
-            assert(false);
-        }
-    }
+    mPrvPacket = packet;
 }

@@ -40,7 +40,7 @@ private:
     sf::View mCenteredView;
 
     sf::TcpSocket mTcpClient;
-    Timer mTransiveTimer;
+    CallTimer mTransiveTimer;
 
     bool mIsReturningToMainMenu = false;
 
