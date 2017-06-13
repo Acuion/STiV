@@ -7,17 +7,18 @@ void TankMissile::create(b2FixtureDef* fdef, float force, const sf::Vector2f& po
 {
     b2BodyDef* bdef = new b2BodyDef();
     bdef->type = b2_dynamicBody;
+    bdef->linearVelocity = tankLinVel + b2Vec2(force * cos(angle), force * sin(angle));
+    bdef->position = { pos.x * Utilites::b2scale, pos.y * Utilites::b2scale };
+    bdef->angle = angle;
+    bdef->bullet = true;
+    bdef->fixedRotation = fixedRotation;
 
     mDamage = damage;
-    GameObjectsFactory::instanceOfGoM().registerObject(bdef, fdef, this, ObjectRealType::rt_Missile);
-    mBody->SetLinearVelocity(tankLinVel + b2Vec2(force * cos(angle), force * sin(angle)));
-    mBody->SetTransform({ pos.x * Utilites::b2scale, pos.y * Utilites::b2scale }, angle);
-    mBody->SetBullet(true);
-    mBody->SetFixedRotation(fixedRotation);
-
     mKick = kick;
     mStartAngle = angle;
     mStartLinVel = tankLinVel;
+
+    GameObjectsFactory::instanceOfGoM().registerObject(bdef, fdef, this, ObjectRealType::rt_Missile);
 }
 
 void TankMissile::onColide(ObjectRealTypeData* with)

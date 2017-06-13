@@ -10,7 +10,6 @@ STGClient::~STGClient()
 {
     ServerGameObjectManager::getInstance().unsubscribeClient(this);
     ServerGameObjectManager::getInstance().forcedDelete(mTank);
-    mSocket->disconnect();
     delete mSocket;
 }
 
@@ -160,15 +159,11 @@ void STGClient::transive()
 {
     sf::Packet packet;
 
-    mNewObjectsLock.lock();
-    packet << mUnitsInNewoPacket;
-    packet.append(mNewObjectsPacket.getData(), mNewObjectsPacket.getDataSize());
-    mNewObjectsPacket.clear();
-    mUnitsInNewoPacket = 0;
-    mNewObjectsLock.unlock();
+    //send:
 
+    //existing objects:
     ServerGameObjectManager::getInstance().lockObjects();
-    const auto& exisitingObjects = ServerGameObjectManager::getInstance().getGameObjects();//todo: sync mutex
+    const auto& exisitingObjects = ServerGameObjectManager::getInstance().getGameObjects();
     sf::Uint32 objectsCount = exisitingObjects.size();
     packet << objectsCount;
     for (auto obj : exisitingObjects)
@@ -177,9 +172,17 @@ void STGClient::transive()
         packChangingObjectsInfo(packet, obj);
     }
     ServerGameObjectManager::getInstance().unlockObjects();
+    //new objects:
+    mNewObjectsLock.lock();
+    packet << mUnitsInNewoPacket;
+    packet.append(mNewObjectsPacket.getData(), mNewObjectsPacket.getDataSize());
+    mNewObjectsPacket.clear();
+    mUnitsInNewoPacket = 0;
+    mNewObjectsLock.unlock();
+
     mSocket->send(packet);
 
-    packet.clear();
+    //recieve:
 
     auto status = mSocket->receive(packet);
     if (status != sf::Socket::Status::Done)

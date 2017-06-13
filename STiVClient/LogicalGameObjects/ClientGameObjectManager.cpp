@@ -114,6 +114,31 @@ Tank* ClientGameObjectManager::fillFromServerAndGetPlayerTank(sf::Packet& packet
 void ClientGameObjectManager::updateFromServer(sf::TcpSocket& socket)
 {
     auto packet = readPacket(socket);
+
+    //todo: handle nonexis
+    sf::Uint32 objectsToUpdateCount;
+    packet >> objectsToUpdateCount;
+    while (objectsToUpdateCount--)
+    {
+        sf::Int32 objNum, hp;
+        b2Vec2 pos, linVel;
+        float32 angle, angVel;
+
+        packet >> objNum;
+        packet >> pos;
+        packet >> linVel;
+        packet >> angle;
+        packet >> angVel;
+        packet >> hp;
+
+        if (!mObjectsIndex[objNum])
+            continue;//static object
+        mObjectsIndex[objNum]->mBody->SetTransform(pos, angle);
+        mObjectsIndex[objNum]->mBody->SetLinearVelocity(linVel);
+        mObjectsIndex[objNum]->mBody->SetAngularVelocity(angVel);
+        mObjectsIndex[objNum]->mHP = hp;
+    }
+
     sf::Uint32 newObjectsCount;
     packet >> newObjectsCount;
     while (newObjectsCount--)
@@ -179,29 +204,5 @@ void ClientGameObjectManager::updateFromServer(sf::TcpSocket& socket)
         default:
             assert(false);
         }
-    }
-
-    sf::Uint32 objectsToUpdateCount;
-    packet >> objectsToUpdateCount;
-    std::cout << objectsToUpdateCount << std::endl;
-    while (objectsToUpdateCount--)
-    {
-        sf::Int32 objNum, hp;
-        b2Vec2 pos, linVel;
-        float32 angle, angVel;
-
-        packet >> objNum;
-        packet >> pos;
-        packet >> linVel;
-        packet >> angle;
-        packet >> angVel;
-        packet >> hp;
-
-        if (!mObjectsIndex[objNum])
-            continue;//static object
-        mObjectsIndex[objNum]->mBody->SetTransform(pos, angle);
-        mObjectsIndex[objNum]->mBody->SetLinearVelocity(linVel);
-        mObjectsIndex[objNum]->mBody->SetAngularVelocity(angVel);
-        mObjectsIndex[objNum]->mHP = hp;
     }
 }

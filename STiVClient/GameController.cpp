@@ -86,7 +86,7 @@ void GameController::draw()
         mCenteredView.getCenter().y - mCenteredView.getSize().y / 2 - 100,
         mCenteredView.getSize().x + 200,
         mCenteredView.getSize().y + 200);
-
+    
     mScene.clear(sf::Color::Green);
     mLevelBackground.draw(mScene, viewRect);
     Visualizer::draw(mScene, viewRect);
