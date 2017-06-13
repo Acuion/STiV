@@ -84,6 +84,7 @@ void GameServer::update(int dt)
     {
         if ((*begin)->isDisconnected())
         {
+            std::cout << "Client disconnected :(\n";
             delete *begin;
             begin = mClients.erase(begin);
         }
