@@ -8,6 +8,7 @@
 
 GameServer::GameServer(const std::string& levelName)
     : mSpawnBonus(3000)
+    , mTransiveTimer(5)
     , mCurrLevel(levelName)
 {
     ServerGameObjectManager::getInstance().reset(mCurrLevel.getCurrLevelSize().x, mCurrLevel.getCurrLevelSize().y);
@@ -88,10 +89,14 @@ void GameServer::update(int dt)
         else
             ++begin;
     }
-
+    if (mTransiveTimer.isExpired())
+    {
+        for (auto& client : mClients)
+            client->transive();
+    }
     for (auto& client : mClients)
         client->applyEvents();
-    
+
     ServerGameObjectManager::getInstance().update(dt);
     mClientsWork.unlock();
 }

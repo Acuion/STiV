@@ -11,8 +11,6 @@ STGClient::~STGClient()
     ServerGameObjectManager::getInstance().unsubscribeClient(this);
     ServerGameObjectManager::getInstance().forcedDelete(mTank);
     mSocket->disconnect();
-    mCommThread->join();
-    delete mCommThread;
     delete mSocket;
 }
 
@@ -47,7 +45,6 @@ STGClient::STGClient(const GameLevel& gameLevel, sf::TcpSocket* socket)
     packet << playerTankNum;
 
     mSocket->send(packet);
-    mCommThread = new std::thread(&STGClient::clientComm, this);
 }
 
 bool STGClient::isDisconnected() const
@@ -159,49 +156,39 @@ void STGClient::packChangingObjectsInfo(sf::Packet& packet, GameObject* obj)
     packet << hp;
 }
 
-void STGClient::clientComm()
+void STGClient::transive()
 {
-    mSocket->setBlocking(false);
-
     sf::Packet packet;
 
-    while (true)
+    mNewObjectsLock.lock();
+    packet << mUnitsInNewoPacket;
+    packet.append(mNewObjectsPacket.getData(), mNewObjectsPacket.getDataSize());
+    mNewObjectsPacket.clear();
+    mUnitsInNewoPacket = 0;
+    mNewObjectsLock.unlock();
+
+    ServerGameObjectManager::getInstance().lockObjects();
+    const auto& exisitingObjects = ServerGameObjectManager::getInstance().getGameObjects();//todo: sync mutex
+    sf::Uint32 objectsCount = exisitingObjects.size();
+    packet << objectsCount;
+    for (auto obj : exisitingObjects)
     {
-        packet.clear();
-
-        mNewObjectsLock.lock();
-        packet << mUnitsInNewoPacket;
-        packet.append(mNewObjectsPacket.getData(), mNewObjectsPacket.getDataSize());
-        mNewObjectsPacket.clear();
-        mUnitsInNewoPacket = 0;
-        mNewObjectsLock.unlock();
-
-        ServerGameObjectManager::getInstance().lockObjects();
-        const auto& exisitingObjects = ServerGameObjectManager::getInstance().getGameObjects();//todo: sync mutex
-        sf::Uint32 objectsCount = exisitingObjects.size();
-        packet << objectsCount;
-        for (auto obj : exisitingObjects)
-        {
-            packet << static_cast<sf::Int32>(obj->getObjectNum());
-            packChangingObjectsInfo(packet, obj);
-        }
-        ServerGameObjectManager::getInstance().unlockObjects();
-        mSocket->send(packet);
-
-        packet.clear();
-
-        while (auto status = mSocket->receive(packet))// != sf::Socket::Status::Done
-        {
-            if (status != sf::Socket::Status::NotReady)
-            {
-                mDisconnected = true;
-                return;
-            }
-            std::this_thread::sleep_for(15ms);
-        }
-
-        float angle;
-        packet >> angle >> mMousePressed;
-        mTank->setBarrelAngle(angle);
+        packet << static_cast<sf::Int32>(obj->getObjectNum());
+        packChangingObjectsInfo(packet, obj);
     }
+    ServerGameObjectManager::getInstance().unlockObjects();
+    mSocket->send(packet);
+
+    packet.clear();
+
+    auto status = mSocket->receive(packet);
+    if (status != sf::Socket::Status::Done)
+    {
+        mDisconnected = true;
+        return;
+    }
+
+    float angle;
+    packet >> angle >> mMousePressed;
+    mTank->setBarrelAngle(angle);
 }

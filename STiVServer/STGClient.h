@@ -14,6 +14,7 @@ public:
     void procNewObject(GameObject* object);
     
     void applyEvents();
+    void transive();
 
     bool isDisconnected() const;
     Tank* getPlayerTank() const;
@@ -31,7 +32,4 @@ private:
     sf::Packet mNewObjectsPacket;
 
     const GameLevel& mCurrGameLevel;
-
-    std::thread *mCommThread = nullptr;
-    void clientComm();
 };

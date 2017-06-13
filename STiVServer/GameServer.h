@@ -11,6 +11,7 @@
 class GameServer
 {
     Timer mSpawnBonus;
+    CallTimer mTransiveTimer;
 
     sf::TcpListener mTcpServer;
     std::thread* mAccThread = nullptr;
