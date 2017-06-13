@@ -40,7 +40,7 @@ STGClient::STGClient(const GameLevel& gameLevel, sf::TcpSocket* socket)
     sf::Packet packet;
     packet << mCurrGameLevel;
     const auto& objects = ServerGameObjectManager::getInstance().getGameObjects();
-    sf::Uint32 objectsInTheWorldCount = objects.size();
+    sf::Uint32 objectsInTheWorldCount = static_cast<sf::Uint32>(objects.size());
     packet << objectsInTheWorldCount;
     for (auto obj : objects)
     {
@@ -172,7 +172,7 @@ void STGClient::transive()
     //existing objects:
     ServerGameObjectManager::getInstance().lockObjects();
     const auto& exisitingObjects = ServerGameObjectManager::getInstance().getGameObjects();
-    sf::Uint32 objectsCount = exisitingObjects.size();
+    sf::Uint32 objectsCount = static_cast<sf::Uint32>(exisitingObjects.size());
     packet << objectsCount;
     for (auto obj : exisitingObjects)
     {

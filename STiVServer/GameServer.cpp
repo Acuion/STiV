@@ -93,7 +93,7 @@ void GameServer::update(int dt)
     if (mTransiveTimer.isExpired())
     {
         for (auto& client : mClients)
-            client->transive();
+            client->transive();//todo: async transive
     }
     for (auto& client : mClients)
         client->applyEvents();
