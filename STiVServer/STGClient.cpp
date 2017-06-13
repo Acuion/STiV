@@ -2,6 +2,7 @@
 #include "Network/NetworkUtils.h"
 #include "GameObjectsFactory.h"
 #include "LogicalGameObjects/StaticObject.h"
+#include <iostream>
 
 using namespace NetworkUtils;
 using namespace std::chrono_literals;
@@ -19,6 +20,13 @@ void STGClient::procNewObject(GameObject* object)
     packConstructorObjectsInfo(mNewObjectsPacket, object);
     mUnitsInNewoPacket++;
     mNewObjectsLock.unlock();
+}
+
+void STGClient::procDelObject(GameObject* object)
+{
+    mObjectsToDeleteLock.lock();
+    mObjectsToDelete.push_back(object->getObjectNum());
+    mObjectsToDeleteLock.unlock();
 }
 
 STGClient::STGClient(const GameLevel& gameLevel, sf::TcpSocket* socket)
@@ -172,6 +180,7 @@ void STGClient::transive()
         packChangingObjectsInfo(packet, obj);
     }
     ServerGameObjectManager::getInstance().unlockObjects();
+
     //new objects:
     mNewObjectsLock.lock();
     packet << mUnitsInNewoPacket;
@@ -179,6 +188,12 @@ void STGClient::transive()
     mNewObjectsPacket.clear();
     mUnitsInNewoPacket = 0;
     mNewObjectsLock.unlock();
+
+    //objects to del:
+    mObjectsToDeleteLock.lock();
+    packet << mObjectsToDelete;
+    mObjectsToDelete.clear();
+    mObjectsToDeleteLock.unlock();
 
     mSocket->send(packet);
 

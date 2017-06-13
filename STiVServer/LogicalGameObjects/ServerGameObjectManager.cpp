@@ -13,6 +13,13 @@ void ServerGameObjectManager::registerObject(b2BodyDef* bdef, b2FixtureDef* fixt
         x->procNewObject(go);
 }
 
+void ServerGameObjectManager::unregisterObject(GameObject* object)
+{
+    GameObjectManager::unregisterObject(object);
+    for (auto& x : mNewObjSubscribers)
+        x->procDelObject(object);
+}
+
 const std::list<GameObject*>& ServerGameObjectManager::getGameObjects() const
 {
     return mObjects;

@@ -25,7 +25,7 @@ GameObject::GameObject(ObjectRealType type, b2BodyDef* bdef, b2FixtureDef* fixtu
 GameObject::~GameObject()
 {
     Visualizer::unregisterSprite(&mSprite);
-    GameObjectsFactory::instanceOfGoM().unregisterObject(mBody);
+    GameObjectsFactory::instanceOfGoM().unregisterObject(this);
 }
 
 bool GameObject::isDamageable() const
@@ -53,6 +53,13 @@ void GameObject::doDamage(int dmg)
     mHP -= dmg;
 }
 
+void GameObject::playDeathAnim()
+{
+    mDeathAnimPlaying = true;
+    mSprite.playAnimationOnce(1);
+    //todo: ignore collisions
+}
+
 void GameObject::applyForce(float force, float angle)
 {
     mBody->ApplyForceToCenter({ force * cos(angle), force * sin(angle) }, true);
@@ -60,20 +67,9 @@ void GameObject::applyForce(float force, float angle)
 
 void GameObject::update()
 {
-    if (mHP <= 0 && mDamageable)
-    {
-        if (!mDeathAnimPlaying)
-        {
-            //b2Filter& filter = mBody->GetFixtureList()->GetFilterData();
-            //filter.maskBits = 0;
-            //mBody->GetFixtureList()->SetFilterData(filter);
-            //TODO: ignore collisions
-            mSprite.playAnimationOnce(1);
-            mDeathAnimPlaying = true;
-        }
-        if (!mSprite.isPlaying())
-            mMayBeDeleted = true;
-    }
+    if (mDeathAnimPlaying && !mSprite.isPlaying())
+        mMayBeDeleted = true;
+
     mSprite.setPosition({ mBody->GetPosition().x / Utilites::b2scale, mBody->GetPosition().y / Utilites::b2scale });
     mSprite.setRotation(Utilites::radToDeg(mBody->GetAngle()));
     mSprite.update();

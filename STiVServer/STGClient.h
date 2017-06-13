@@ -12,6 +12,7 @@ public:
     ~STGClient();
 
     void procNewObject(GameObject* object);
+    void procDelObject(GameObject* object);
     
     void applyEvents();
     void transive();
@@ -27,9 +28,10 @@ private:
     static void packConstructorObjectsInfo(sf::Packet& packet, GameObject* obj);
     static void packChangingObjectsInfo(sf::Packet& packet, GameObject* obj);
 
-    std::mutex mNewObjectsLock;
+    std::mutex mNewObjectsLock, mObjectsToDeleteLock;
     sf::Uint32 mUnitsInNewoPacket = 0;
     sf::Packet mNewObjectsPacket;
+    std::vector<sf::Uint32> mObjectsToDelete;
 
     const GameLevel& mCurrGameLevel;
 };

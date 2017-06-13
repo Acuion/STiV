@@ -64,9 +64,9 @@ void GameObjectManager::registerObject(b2BodyDef* bdef, b2FixtureDef* fixture, G
     go->mBody = body;
 }
 
-void GameObjectManager::unregisterObject(b2Body* body)
+void GameObjectManager::unregisterObject(GameObject* go)
 {
-    mWorld->DestroyBody(body);
+    mWorld->DestroyBody(go->mBody);
 }
 
 void GameObjectManager::registerGravityPoint(GravityPoint* gravo)
@@ -79,14 +79,17 @@ void GameObjectManager::unregisterGravityPoint(GravityPoint* gravo)
     mGravityObjects.remove(gravo);
 }
 
-void GameObjectManager::update(int dt)
+void GameObjectManager::doGravity()
 {
     for (auto gb : mGravityObjects)
     {
         for (auto o : mObjects)
             gb->affect(*o);
     }
+}
 
+void GameObjectManager::update(int dt)
+{
     for (auto iter = mObjects.begin(); iter != mObjects.end(); ++iter)
     {
         if (!(*iter)->mayBeDeleted())

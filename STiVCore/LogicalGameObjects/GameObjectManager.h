@@ -12,7 +12,7 @@ protected:
     std::list<GravityPoint*> mGravityObjects;
     GameObjectManager() {};
     virtual void createBorder(b2BodyDef* b2Def, b2FixtureDef* b2FixDef);
-
+    virtual void doGravity();
 public:
     virtual ~GameObjectManager();
 
@@ -20,7 +20,7 @@ public:
 
     virtual void registerObject(b2BodyDef* bdef, b2FixtureDef* fixture, GameObject* go, ObjectRealType type);
 
-    void unregisterObject(b2Body* body);
+    virtual void unregisterObject(GameObject* go);
 
     void registerGravityPoint(GravityPoint* gravo);
 

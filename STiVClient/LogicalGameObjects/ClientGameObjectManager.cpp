@@ -186,6 +186,13 @@ void ClientGameObjectManager::updateFromServer(sf::TcpSocket& socket)
                 assert(false);
             }
         }
+
+        std::vector<sf::Uint32> objectsToDel;
+        mPrvPacket >> objectsToDel;
+        for (auto& x : objectsToDel)
+        {
+            mObjectsIndex[x]->playDeathAnim();
+        }
     }
 
     auto packet = readPacket(socket);
@@ -213,9 +220,14 @@ void ClientGameObjectManager::updateFromServer(sf::TcpSocket& socket)
         auto prvPos = mObjectsIndex[objNum]->mBody->GetPosition();
         auto prvAngle = mObjectsIndex[objNum]->mBody->GetAngle();
         mObjectsIndex[objNum]->mBody->SetLinearVelocity((pos - prvPos) * (100 / cNetworkDelayInCalls));
-        mObjectsIndex[objNum]->mBody->SetAngularVelocity((angle - prvAngle)* (100 / cNetworkDelayInCalls));
+        mObjectsIndex[objNum]->mBody->SetAngularVelocity((angle - prvAngle) * (100 / cNetworkDelayInCalls));
         //mObjectsIndex[objNum]->mHP = hp;
     }
 
     mPrvPacket = packet;
+}
+
+void ClientGameObjectManager::doGravity()
+{
+    //no grvity in client
 }

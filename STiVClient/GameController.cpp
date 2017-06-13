@@ -9,7 +9,7 @@ using namespace NetworkUtils;
 
 GameController::GameController(sf::RenderWindow & wnd)
     : mWindow(wnd)
-    , mTransiveTimer(5)
+    , mTransiveTimer(cNetworkDelayInCalls)
 {
     mConsolas.loadFromFile("Content\\consola.ttf");
     mHpText.setFont(mConsolas);

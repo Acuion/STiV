@@ -13,6 +13,8 @@ public:
 
     void updateFromServer(sf::TcpSocket& socket);
     Tank* fillFromServerAndGetPlayerTank(sf::Packet& packet);
+protected:
+    void doGravity() override;
 private:
     ClientGameObjectManager();
     void operator=(const ClientGameObjectManager&) = delete;

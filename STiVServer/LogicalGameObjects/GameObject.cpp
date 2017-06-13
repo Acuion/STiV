@@ -28,7 +28,7 @@ GameObject::GameObject(ObjectRealType type, b2BodyDef* bdef, b2FixtureDef* fixtu
 
 GameObject::~GameObject()
 {
-    ServerGameObjectManager::getInstance().unregisterObject(mBody);
+    ServerGameObjectManager::getInstance().unregisterObject(this);
 }
 
 bool GameObject::isDamageable() const

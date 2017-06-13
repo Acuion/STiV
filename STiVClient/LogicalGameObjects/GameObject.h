@@ -41,6 +41,7 @@ public:
     sf::Vector2f getPosition() const;
 
     void doDamage(int dmg);
+    void playDeathAnim();
 
     void applyForce(float force, float angle);
 

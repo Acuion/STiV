@@ -8,7 +8,7 @@ public:
     static ServerGameObjectManager& getInstance();
 
     void registerObject(b2BodyDef* bdef, b2FixtureDef* fixture, GameObject* go, ObjectRealType type) override;
-
+    void unregisterObject(GameObject* object) override;
     const std::list<GameObject*>& getGameObjects() const;
     void update(int dt) override;
 

@@ -67,7 +67,7 @@ namespace NetworkUtils
     }
 
     template<typename T>
-    sf::Packet& operator<<(sf::Packet& packet, const std::vector<T> vec)
+    sf::Packet& operator<<(sf::Packet& packet, const std::vector<T>& vec)
     {
         packet << static_cast<sf::Uint32>(vec.size());
         for (auto& x : vec)
@@ -76,7 +76,7 @@ namespace NetworkUtils
     }
     
     template<typename T>
-    sf::Packet& operator>>(sf::Packet& packet, std::vector<T> vec)
+    sf::Packet& operator>>(sf::Packet& packet, std::vector<T>& vec)
     {
         sf::Uint32 size;
         T temp;

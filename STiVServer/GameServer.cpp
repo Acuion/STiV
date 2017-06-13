@@ -5,10 +5,11 @@
 #include <chrono>
 #include "GameObjectsFactory.h"
 #include "GameLevel.h"
+#include "Network/NetworkUtils.h"
 
 GameServer::GameServer(const std::string& levelName)
     : mSpawnBonus(3000)
-    , mTransiveTimer(5)
+    , mTransiveTimer(NetworkUtils::cNetworkDelayInCalls)
     , mCurrLevel(levelName)
 {
     ServerGameObjectManager::getInstance().reset(mCurrLevel.getCurrLevelSize().x, mCurrLevel.getCurrLevelSize().y);
