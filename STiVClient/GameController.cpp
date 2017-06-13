@@ -121,5 +121,5 @@ void GameController::handleEvent(const sf::Event & event)
         mMousePos = sf::Mouse::getPosition(mWindow);
         break;
     }
-    mPlayerTank->handleEvents(event);
+    mPlayerTank->handleEvents(event);//todo: create a missile before the server answer
 }

@@ -176,7 +176,7 @@ void STGClient::transive()
     packet << objectsCount;
     for (auto obj : exisitingObjects)
     {
-        packet << static_cast<sf::Int32>(obj->getObjectNum());
+        packet << static_cast<sf::Int32>(obj->getObjectNum());//todo: hp to client, rm useless params (velocity)
         packChangingObjectsInfo(packet, obj);
     }
     ServerGameObjectManager::getInstance().unlockObjects();
@@ -194,6 +194,13 @@ void STGClient::transive()
     packet << mObjectsToDelete;
     mObjectsToDelete.clear();
     mObjectsToDeleteLock.unlock();
+
+    //todo: players info:
+    //tank id
+    //nickname
+    //score
+    //barrel angle
+    //barrel type
 
     mSocket->send(packet);
 
