@@ -3,6 +3,7 @@
 #include "GameObjectsFactory.h"
 #include "LogicalGameObjects/StaticObject.h"
 #include "LogicalGameObjects/Tank/Tank.h"
+#include <iostream>
 
 using namespace NetworkUtils;
 using namespace std::chrono_literals;
@@ -38,6 +39,8 @@ STGClient::STGClient(const GameLevel& gameLevel, sf::TcpSocket* socket)
     packet >> mNickname;
     packet.clear();
 
+    std::cout << "Yay, new client: " << mNickname << " from " << socket->getRemoteAddress().toString() << std::endl;
+
     ServerGameObjectManager::getInstance().subscribeClient(this);
 
     mTank = GameObjectsFactory::newTank(static_cast<sf::Vector2f>(mCurrGameLevel.getSpawnPoint()), mNickname);
@@ -71,6 +74,11 @@ const Tank* STGClient::getPlayerTank() const
 sf::Int32 STGClient::getScore() const
 {
     return mScore;
+}
+
+const std::string& STGClient::getNickname() const
+{
+    return mNickname;
 }
 
 void STGClient::applyEvents()

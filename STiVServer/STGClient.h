@@ -22,6 +22,7 @@ public:
     bool isDisconnected() const;
     const Tank* getPlayerTank() const;
     sf::Int32 getScore() const;
+    const std::string& getNickname() const;
 private:
     Tank* mTank = nullptr;
     std::string mNickname;

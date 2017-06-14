@@ -42,7 +42,6 @@ void GameServer::acceptClients()
         //hello!
         mClientsWork.lock();
         mClients.push_back(new STGClient(mCurrLevel, curSock));
-        std::cout << "New client!\n";
         mClientsWork.unlock();
     }
 }
@@ -84,7 +83,7 @@ void GameServer::update(int dt)
     {
         if ((*begin)->isDisconnected())
         {
-            std::cout << "Client disconnected :(\n";
+            std::cout << "Bye, " << (*begin)->getNickname() << " :(\n";
             delete *begin;
             begin = mClients.erase(begin);
         }

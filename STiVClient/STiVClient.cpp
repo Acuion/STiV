@@ -2,6 +2,7 @@
 #include "Graphics/Shaders/PostProcessingManager.h"
 #include "UI/UIButton.h"
 #include "FontStorage.h"
+#include <iostream>
 
 namespace Game
 {
@@ -20,6 +21,7 @@ namespace Game
     } currentGameState;
 
     GameController* STG = nullptr;
+    std::string ip, port, nickname;
 
     //
     Sprite menu_Logo, menu_MissileI, menu_leftBarrel, menu_rightBarrel;
@@ -125,7 +127,7 @@ namespace Game
             if (menu_asClient.wasPressed(event, mousePos))
             {
                 STG = new GameController(window);
-                if (!STG->connect("127.0.0.1", 58000, "Player!"))
+                if (!STG->connect(ip, stol(port), nickname))
                 {
                     delete STG;
                     break;
@@ -221,6 +223,17 @@ int main()
     std::ios_base::sync_with_stdio(false);
 
     Game::preloadContent();
+
+    std::cout << "Enter a server's ip (or press enter for 127.0.0.1): ";
+    std::getline(std::cin, Game::ip);
+    if (Game::ip == "")
+        Game::ip = "127.0.0.1";
+    std::cout << "Enter a server's port (or press enter for 58000): ";
+    std::getline(std::cin, Game::port);
+    if (Game::port == "")
+        Game::port = "58000";
+    std::cout << "Enter a nickname: ";
+    std::getline(std::cin, Game::nickname);
 
     Game::window.create(sf::VideoMode(Game::srcRes.x, Game::srcRes.y), "STiV!", sf::Style::Close | sf::Style::Titlebar);
     Game::window.setVerticalSyncEnabled(true);
