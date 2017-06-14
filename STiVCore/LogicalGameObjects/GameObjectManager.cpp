@@ -90,6 +90,8 @@ void GameObjectManager::doGravity()
 
 void GameObjectManager::update(int dt)
 {
+    doGravity();
+
     for (auto iter = mObjects.begin(); iter != mObjects.end(); ++iter)
     {
         if (!(*iter)->mayBeDeleted())

@@ -2,7 +2,7 @@
 #include "Network/NetworkUtils.h"
 #include "GameObjectsFactory.h"
 #include "LogicalGameObjects/StaticObject.h"
-#include <iostream>
+#include "LogicalGameObjects/Tank/Tank.h"
 
 using namespace NetworkUtils;
 using namespace std::chrono_literals;
@@ -33,11 +33,15 @@ STGClient::STGClient(const GameLevel& gameLevel, sf::TcpSocket* socket)
     : mSocket(socket)
     , mCurrGameLevel(gameLevel)
 {
+    sf::Packet packet;
+    mSocket->receive(packet);
+    packet >> mNickname;
+    packet.clear();
+
     ServerGameObjectManager::getInstance().subscribeClient(this);
 
-    mTank = GameObjectsFactory::newTank(static_cast<sf::Vector2f>(mCurrGameLevel.getSpawnPoint()));
+    mTank = GameObjectsFactory::newTank(static_cast<sf::Vector2f>(mCurrGameLevel.getSpawnPoint()), mNickname);
 
-    sf::Packet packet;
     packet << mCurrGameLevel;
     const auto& objects = ServerGameObjectManager::getInstance().getGameObjects();
     sf::Uint32 objectsInTheWorldCount = static_cast<sf::Uint32>(objects.size());
@@ -59,9 +63,14 @@ bool STGClient::isDisconnected() const
     return mDisconnected;
 }
 
-Tank* STGClient::getPlayerTank() const
+const Tank* STGClient::getPlayerTank() const
 {
     return mTank;
+}
+
+sf::Int32 STGClient::getScore() const
+{
+    return mScore;
 }
 
 void STGClient::applyEvents()
@@ -109,7 +118,7 @@ void STGClient::packConstructorObjectsInfo(sf::Packet& packet, GameObject* obj)
     {
         auto tank = dynamic_cast<Tank*>(obj);
         sf::Vector2f pos = tank->getPosition();
-        packet << pos;
+        packet << pos << tank->getNickname();
     }
     break;
     case  NetworkUtils::ObjMissileSniper:
@@ -163,7 +172,7 @@ void STGClient::packChangingObjectsInfo(sf::Packet& packet, GameObject* obj)
     packet << hp;
 }
 
-void STGClient::transive()
+void STGClient::transive(sf::Packet playersInfo)
 {
     sf::Packet packet;
 
@@ -176,7 +185,7 @@ void STGClient::transive()
     packet << objectsCount;
     for (auto obj : exisitingObjects)
     {
-        packet << static_cast<sf::Int32>(obj->getObjectNum());//todo: hp to client, rm useless params (velocity)
+        packet << static_cast<sf::Int32>(obj->getObjectNum());//todo: rm useless params (velocity)
         packChangingObjectsInfo(packet, obj);
     }
     ServerGameObjectManager::getInstance().unlockObjects();
@@ -189,18 +198,14 @@ void STGClient::transive()
     mUnitsInNewoPacket = 0;
     mNewObjectsLock.unlock();
 
+    //players info:
+    packet.append(playersInfo.getData(), playersInfo.getDataSize());
+
     //objects to del:
     mObjectsToDeleteLock.lock();
     packet << mObjectsToDelete;
     mObjectsToDelete.clear();
     mObjectsToDeleteLock.unlock();
-
-    //todo: players info:
-    //tank id
-    //nickname
-    //score
-    //barrel angle
-    //barrel type
 
     mSocket->send(packet);
 

@@ -5,6 +5,7 @@
 #include "VisualGameObjects/BonusVis.h"
 #include "VisualGameObjects/Gravity/PlanetVis.h"
 #include "LogicalGameObjects/ClientGameObjectManager.h"
+#include "FontStorage.h"
 
 class GameObjectsFactory
 {
@@ -19,9 +20,9 @@ public:
         return new MissileSniperVis(pos, angle, tankLinVel);
     }
 
-    static Tank* newTank(sf::Vector2f pos)
+    static Tank* newTank(sf::Vector2f pos, const std::string nickname)
     {
-        return new TankVis(pos);
+        return new TankVis(pos, FontStorage::getFont("consolas"), nickname);
     }
 
     static Tank* newTank()

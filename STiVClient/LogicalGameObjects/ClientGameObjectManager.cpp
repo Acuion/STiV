@@ -43,8 +43,9 @@ Tank* ClientGameObjectManager::fillFromServerAndGetPlayerTank(sf::Packet& packet
         case  NetworkUtils::ObjTank:
         {
             sf::Vector2f pos;
-            packet >> pos;
-            mObjectsIndex[objectNum] = GameObjectsFactory::newTank(pos);
+            std::string nickname;
+            packet >> pos >> nickname;
+            mObjectsIndex[objectNum] = GameObjectsFactory::newTank(pos, nickname);
         }
         break;
         case  NetworkUtils::ObjMissileSniper:
@@ -120,6 +121,29 @@ void ClientGameObjectManager::updateFromServer(sf::TcpSocket& socket)
 {
     if (!mPrvPacket.endOfPacket())
     {
+        sf::Uint32 objectsToUpdateCount;
+        mPrvPacket >> objectsToUpdateCount;
+        while (objectsToUpdateCount--)
+        {
+            sf::Int32 objNum, hp;
+            b2Vec2 pos, linVel;
+            float32 angle, angVel;
+
+            mPrvPacket >> objNum;
+            mPrvPacket >> pos;
+            mPrvPacket >> linVel;
+            mPrvPacket >> angle;
+            mPrvPacket >> angVel;
+            mPrvPacket >> hp;
+
+            if (!mObjectsIndex[objNum])
+                continue;//static object
+            mObjectsIndex[objNum]->mBody->SetTransform(pos, angle);
+            mObjectsIndex[objNum]->mBody->SetLinearVelocity(linVel);
+            mObjectsIndex[objNum]->mBody->SetAngularVelocity(angVel);
+            mObjectsIndex[objNum]->mHP = hp;
+        }
+
         sf::Uint32 newObjectsCount;
         mPrvPacket >> newObjectsCount;
         while (newObjectsCount--)
@@ -144,9 +168,10 @@ void ClientGameObjectManager::updateFromServer(sf::TcpSocket& socket)
             case  NetworkUtils::ObjTank:
             {
                 sf::Vector2f pos;
-                mPrvPacket >> pos;
+                std::string nickname;
+                mPrvPacket >> pos >> nickname;
                 if (objectNum != mPlayerTankNum)
-                    mObjectsIndex[objectNum] = GameObjectsFactory::newTank(pos);
+                    mObjectsIndex[objectNum] = GameObjectsFactory::newTank(pos, nickname);
             }
             break;
             case  NetworkUtils::ObjMissileSniper:
@@ -187,6 +212,24 @@ void ClientGameObjectManager::updateFromServer(sf::TcpSocket& socket)
             }
         }
 
+        sf::Uint32 playersCount;
+        mPrvPacket >> playersCount;
+        while (playersCount--)
+        {
+            sf::Int32 tankId, score, hp;
+            float barrelAngle;
+            sf::Int16 barrelType;
+            mPrvPacket >> tankId >> score >> hp >> barrelAngle >> barrelType;
+
+            if (tankId == mPlayerTankNum)
+                continue;
+
+            Tank * tank = dynamic_cast<Tank*>(mObjectsIndex[tankId]);
+            tank->mHP = hp;
+            tank->setBarrelAngle(barrelAngle);
+            tank->setMissle(static_cast<MissleType>(barrelType));
+        }
+
         std::vector<sf::Uint32> objectsToDel;
         mPrvPacket >> objectsToDel;
         for (auto& x : objectsToDel)
@@ -196,6 +239,7 @@ void ClientGameObjectManager::updateFromServer(sf::TcpSocket& socket)
     }
 
     auto packet = readPacket(socket);
+    mPrvPacket = packet;
 
     sf::Uint32 objectsToUpdateCount;
     packet >> objectsToUpdateCount;
@@ -214,17 +258,11 @@ void ClientGameObjectManager::updateFromServer(sf::TcpSocket& socket)
 
         if (!mObjectsIndex[objNum])
             continue;//static object
-        //mObjectsIndex[objNum]->mBody->SetTransform(pos, angle);
-        //mObjectsIndex[objNum]->mBody->SetLinearVelocity(linVel);
-        //mObjectsIndex[objNum]->mBody->SetAngularVelocity(angVel);
         auto prvPos = mObjectsIndex[objNum]->mBody->GetPosition();
         auto prvAngle = mObjectsIndex[objNum]->mBody->GetAngle();
         mObjectsIndex[objNum]->mBody->SetLinearVelocity((pos - prvPos) * (100 / cNetworkDelayInCalls));
         mObjectsIndex[objNum]->mBody->SetAngularVelocity((angle - prvAngle) * (100 / cNetworkDelayInCalls));
-        //mObjectsIndex[objNum]->mHP = hp;
     }
-
-    mPrvPacket = packet;
 }
 
 void ClientGameObjectManager::doGravity()

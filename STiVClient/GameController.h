@@ -17,7 +17,7 @@ public:
 
     ~GameController();
 
-    bool connect(std::string srvIp, int srvPort);
+    bool connect(const std::string& srvIp, int srvPort, const std::string& nickname);
 
     void update(int dt);
     void draw();
@@ -46,6 +46,5 @@ private:
 
     Sprite mLevelBackground;
     sf::Text mHpText;
-    sf::Font mConsolas;
 };
 

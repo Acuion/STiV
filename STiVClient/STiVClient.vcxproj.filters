@@ -143,6 +143,9 @@
     <ClCompile Include="..\STiVCore\LogicalGameObjects\StaticObject.cpp">
       <Filter>Source\LogicalGameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="FontStorage.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObjectsFactory.h">
@@ -228,6 +231,9 @@
     </ClInclude>
     <ClInclude Include="..\STiVCore\LogicalGameObjects\StaticObject.h">
       <Filter>Source\LogicalGameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="FontStorage.h">
+      <Filter>Source</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

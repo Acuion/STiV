@@ -1,9 +1,16 @@
 #include "TankVis.h"
 #include "VisualGameObjects/Visualizer.h"
 
-TankVis::TankVis(sf::Vector2f pos)
-    : Tank(pos)
+TankVis::TankVis(sf::Vector2f pos, const sf::Font& font, const std::string& nickname)
+    : Tank(pos, nickname)
 {
+    mNickname = sf::Text(nickname, font, 30);
+    mNickname.setFillColor(sf::Color::Black);
+    sf::FloatRect textRect = mNickname.getLocalBounds();
+    mNickname.setOrigin(textRect.left + textRect.width / 2.0f,
+        textRect.top + textRect.height / 2.0f);
+    Visualizer::registerText(&mNickname);
+
     mSprite = Sprite("tankBody.png", pos, 2, { Sprite::Animation(1, 1), Sprite::Animation(1, 1) }, { 70,70 });
     Visualizer::registerSprite(&mSprite);
 
@@ -25,6 +32,7 @@ TankVis::TankVis()
 TankVis::~TankVis()
 {
     Visualizer::unregisterSprite(&mBarrel[mCurrMissleType]);
+    Visualizer::unregisterText(&mNickname);
     delete[] mBarrel;
 }
 
@@ -32,6 +40,7 @@ void TankVis::update()
 {
     Tank::update();
 
+    mNickname.setPosition(getPosition().x, getPosition().y - 60);
     mBarrel[mCurrMissleType].setRotation(Utilites::radToDeg(mBarrelAngle));
     mBarrel[mCurrMissleType].setPosition(getPosition());
     mBarrel[mCurrMissleType].update();

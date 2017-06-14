@@ -5,7 +5,7 @@
 class TankSrv : public Tank
 {
 public:
-    TankSrv(sf::Vector2f pos);
+    TankSrv(sf::Vector2f pos, const std::string& nickname);
     TankSrv();
     ~TankSrv();
 };

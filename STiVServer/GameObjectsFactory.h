@@ -19,9 +19,9 @@ public:
         return new MissileSniperSrv(pos, angle, tankLinVel);
     }
 
-    static Tank* newTank(sf::Vector2f pos)
+    static Tank* newTank(sf::Vector2f pos, const std::string nickname)
     {
-        return new TankSrv(pos);
+        return new TankSrv(pos, nickname);
     }
 
     static Tank* newTank()

@@ -98,8 +98,7 @@
       <AdditionalDependencies>box2Dd.lib;sfml-network-d.lib;sfml-audio-d.lib;sfml-system-d.lib;sfml-window-d.lib;sfml-graphics-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>XCOPY "$(ProjectDir)Content" "$(OutDir)Content" /s /i /y
-XCOPY "$(ProjectDir)Levels" "$(OutDir)Levels" /s /i /y
+      <Command>XCOPY "$(ProjectDir)Levels" "$(OutDir)Levels" /s /i /y
 COPY "$(SolutionDir)SFML\bin\Debug\*" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -123,8 +122,7 @@ COPY "$(SolutionDir)SFML\bin\Debug\*" "$(OutDir)"</Command>
       <AdditionalDependencies>box2D.lib;sfml-network.lib;sfml-audio.lib;sfml-system.lib;sfml-window.lib;sfml-graphics.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>XCOPY "$(ProjectDir)Content" "$(OutDir)Content" /s /i /y
-XCOPY "$(ProjectDir)Levels" "$(OutDir)Levels" /s /i /y
+      <Command>XCOPY "$(ProjectDir)Levels" "$(OutDir)Levels" /s /i /y
 COPY "$(SolutionDir)SFML\bin\Release\*" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

@@ -69,7 +69,9 @@ void Tank::onColide(ObjectRealTypeData * with)
     }
 }
 
-Tank::Tank(sf::Vector2f pos) : GameObject()
+Tank::Tank(sf::Vector2f pos, const std::string& nickname)
+    : GameObject()
+    , mNickname(nickname)
 {
     b2BodyDef* bdef = new b2BodyDef();
     bdef->type = b2_dynamicBody;
@@ -137,4 +139,14 @@ bool Tank::wantToLaunchMissile()
     bool ans = mWantLaunchMissile;
     mWantLaunchMissile = false;
     return ans;
+}
+
+const std::string& Tank::getNickname() const
+{
+    return mNickname;
+}
+
+sf::Int16 Tank::getBarrelType() const
+{
+    return mCurrMissleType;
 }

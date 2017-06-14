@@ -1,4 +1,5 @@
 ﻿#include "ServerGameObjectManager.h"
+#include "STGClient.h"
 
 ServerGameObjectManager & ServerGameObjectManager::getInstance()
 {

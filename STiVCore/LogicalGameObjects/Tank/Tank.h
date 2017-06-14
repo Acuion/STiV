@@ -12,13 +12,13 @@ class Tank : public GameObject
     void onColide(ObjectRealTypeData* with) override;
 
     bool mPlayerControlled = false, mWantLaunchMissile = false;
+
+    std::string mNickname;
 protected:
     float mBarrelAngle = 0;
     MissleType mCurrMissleType;
 
-    virtual void setMissle(MissleType mt);
-
-    Tank(sf::Vector2f pos);
+    Tank(sf::Vector2f pos, const std::string& nickname);
     Tank();
     virtual ~Tank();
 
@@ -37,5 +37,9 @@ public:
     void setBarrelAngle(float angle);
     float getBarrelAngle() const;
     bool wantToLaunchMissile();
+    const std::string& getNickname() const;
+
+    sf::Int16 getBarrelType() const;
+    virtual void setMissle(MissleType mt);
 };
 

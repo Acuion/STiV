@@ -1,6 +1,8 @@
 ﻿#pragma once
 #include "LogicalGameObjects/GameObjectManager.h"
-#include "STGClient.h"
+#include <mutex>
+
+class STGClient;
 
 class ServerGameObjectManager : public GameObjectManager
 {

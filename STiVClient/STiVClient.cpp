@@ -1,6 +1,7 @@
 #include "GameController.h"
 #include "Graphics/Shaders/PostProcessingManager.h"
 #include "UI/UIButton.h"
+#include "FontStorage.h"
 
 namespace Game
 {
@@ -83,6 +84,7 @@ namespace Game
     {
         srand(static_cast<unsigned int>(time(nullptr)));
         MaterialStorage::initMaterials();
+        FontStorage::initFonts();
         PostProcessingManager::init();
 
         createMenu();
@@ -123,7 +125,7 @@ namespace Game
             if (menu_asClient.wasPressed(event, mousePos))
             {
                 STG = new GameController(window);
-                if (!STG->connect("127.0.0.1", 58000))
+                if (!STG->connect("127.0.0.1", 58000, "Player!"))
                 {
                     delete STG;
                     break;

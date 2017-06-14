@@ -93,8 +93,15 @@ void GameServer::update(int dt)
     }
     if (mTransiveTimer.isExpired())
     {
+        sf::Packet playersInfo;
+        playersInfo << static_cast<sf::Uint32>(mClients.size());
+        for (auto& x : mClients)
+        {
+            playersInfo << x->getPlayerTank()->getObjectNum() << x->getScore()
+                << x->getPlayerTank()->getHP() << x->getPlayerTank()->getBarrelAngle() << x->getPlayerTank()->getBarrelType();
+        }
         for (auto& client : mClients)
-            client->transive();//todo: async transive
+            client->transive(playersInfo);//todo: async transive
     }
     for (auto& client : mClients)
         client->applyEvents();

@@ -99,7 +99,6 @@
     </Link>
     <PostBuildEvent>
       <Command>XCOPY "$(ProjectDir)Content" "$(OutDir)Content" /s /i /y
-XCOPY "$(ProjectDir)Levels" "$(OutDir)Levels" /s /i /y
 COPY "$(SolutionDir)SFML\bin\Debug\*" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -124,7 +123,6 @@ COPY "$(SolutionDir)SFML\bin\Debug\*" "$(OutDir)"</Command>
     </Link>
     <PostBuildEvent>
       <Command>XCOPY "$(ProjectDir)Content" "$(OutDir)Content" /s /i /y
-XCOPY "$(ProjectDir)Levels" "$(OutDir)Levels" /s /i /y
 COPY "$(SolutionDir)SFML\bin\Release\*" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -142,6 +140,7 @@ COPY "$(SolutionDir)SFML\bin\Release\*" "$(OutDir)"</Command>
     <ClCompile Include="..\STiVCore\Misc\MaterialStorage.cpp" />
     <ClCompile Include="..\STiVCore\Misc\Utilites.cpp" />
     <ClCompile Include="..\STiVCore\Misc\Timer.cpp" />
+    <ClCompile Include="FontStorage.cpp" />
     <ClCompile Include="Graphics/Shaders/MultitargetShader.cpp" />
     <ClCompile Include="Graphics/Shaders/PostProcessingManager.cpp" />
     <ClCompile Include="Graphics/Sprite.cpp" />
@@ -172,6 +171,7 @@ COPY "$(SolutionDir)SFML\bin\Release\*" "$(OutDir)"</Command>
     <ClInclude Include="..\STiVCore\Misc\Utilites.h" />
     <ClInclude Include="..\STiVCore\Misc\Timer.h" />
     <ClInclude Include="..\STiVCore\Network\NetworkUtils.h" />
+    <ClInclude Include="FontStorage.h" />
     <ClInclude Include="GameObjectsFactory.h" />
     <ClInclude Include="Graphics\Shaders\MultitargetShader.h" />
     <ClInclude Include="Graphics\Shaders\PostProcessingManager.h" />

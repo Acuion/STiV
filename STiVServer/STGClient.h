@@ -1,9 +1,11 @@
 #pragma once
 
-#include "LogicalGameObjects/Tank/Tank.h"
 #include <SFML/Network.hpp>
 #include <mutex>
 #include "GameLevel.h"
+
+class Tank;
+class GameObject;
 
 class STGClient
 {
@@ -15,12 +17,15 @@ public:
     void procDelObject(GameObject* object);
     
     void applyEvents();
-    void transive();
+    void transive(sf::Packet playersInfo);
 
     bool isDisconnected() const;
-    Tank* getPlayerTank() const;
+    const Tank* getPlayerTank() const;
+    sf::Int32 getScore() const;
 private:
     Tank* mTank = nullptr;
+    std::string mNickname;
+    sf::Int32 mScore = 0;
     sf::TcpSocket* mSocket;
     bool mMousePressed = false;
     bool mDisconnected = false;

@@ -1,5 +1,4 @@
 #pragma once
-#include <string>
 #include <SFML/System/Vector2.hpp>
 #include <vector>
 #include <SFML/Network/Packet.hpp>

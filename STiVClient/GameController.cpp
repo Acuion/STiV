@@ -4,6 +4,7 @@
 #include "GameObjectsFactory.h"
 #include "Network/NetworkUtils.h"
 #include "LogicalGameObjects/ClientGameObjectManager.h"
+#include "FontStorage.h"
 
 using namespace NetworkUtils;
 
@@ -11,8 +12,7 @@ GameController::GameController(sf::RenderWindow & wnd)
     : mWindow(wnd)
     , mTransiveTimer(cNetworkDelayInCalls)
 {
-    mConsolas.loadFromFile("Content\\consola.ttf");
-    mHpText.setFont(mConsolas);
+    mHpText.setFont(FontStorage::getFont("consolas"));
     mHpText.setFillColor(sf::Color::Black);
     mHpText.setPosition(35, 35);
     mHpText.setCharacterSize(50);
@@ -22,7 +22,7 @@ GameController::~GameController()
 {
 }
 
-bool GameController::connect(std::string srvIp, int srvPort)
+bool GameController::connect(const std::string& srvIp, int srvPort, const std::string& nickname)
 {
     auto res = mTcpClient.connect(sf::IpAddress(srvIp.c_str()), srvPort, sf::seconds(5));
     if (res != sf::Socket::Done)
@@ -30,7 +30,11 @@ bool GameController::connect(std::string srvIp, int srvPort)
 
     try
     {
-        auto packet = readPacket(mTcpClient);
+        sf::Packet packet;
+        packet << nickname;
+        mTcpClient.send(packet);
+
+        packet = readPacket(mTcpClient);
         packet >> mCurrGameLevel;
         ClientGameObjectManager::getInstance().reset(mCurrGameLevel.getCurrLevelSize().x, mCurrGameLevel.getCurrLevelSize().y);
         mPlayerTank = ClientGameObjectManager::getInstance().fillFromServerAndGetPlayerTank(packet);
