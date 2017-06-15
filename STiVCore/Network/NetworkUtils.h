@@ -5,7 +5,7 @@
 
 namespace NetworkUtils
 {
-    const int cNetworkDelayInCalls = 5;//1call ~ 10ms
+    const int cNetworkDelayInCalls = 2;//1call ~ 10ms
 
     enum ObjectTypeEnum
     {
