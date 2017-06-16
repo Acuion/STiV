@@ -81,7 +81,7 @@ void GameController::update(int dt)
     mCenteredView.setCenter({ std::min(std::max(mPlayerTank->getPosition().x, mHalfScreen.x), mCurrGameLevel.getCurrLevelSize().x - mHalfScreen.x),
         std::min(std::max(mPlayerTank->getPosition().y, mHalfScreen.y), mCurrGameLevel.getCurrLevelSize().y - mHalfScreen.y) });
     mSceneToWindow.setView(mCenteredView);
-    mHpText.setString(std::to_string(mPlayerTank->getHP()));
+    mHpText.setString("HP: " + std::to_string(mPlayerTank->getHP()));
 }
 
 void GameController::draw()

@@ -215,7 +215,6 @@ void STGClient::transive(sf::Packet playersInfo)
     mObjectsToDelete.clear();
     mObjectsToDeleteLock.unlock();
 
-    std::cout << packet.getDataSize() << std::endl;
     mSocket->send(packet);
 
     //recieve:

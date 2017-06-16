@@ -8,6 +8,8 @@ int main()
 
     MaterialStorage::initMaterials();
 
+    std::cout << "Hello, I'm a StiV server!" << std::endl;
+
     GameServer* STG = new GameServer("test");
     STG->listen(58000);
 
